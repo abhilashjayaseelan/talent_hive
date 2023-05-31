@@ -16,33 +16,37 @@ const authController = (
   const dbRepositoryUser = userDbRepository(userDbRepositoryImpl());
   const authService = authServiceInterface(authServiceImpl());
 
-  const userRegister = expressAsyncHandler(async (req: Request, res: Response) => {
-    console.log('body', req.body)
-    const user: CreateUserInterface = req.body;
-    const token = await registerUser(user, dbRepositoryUser, authService);
-    res.json({
+  const userRegister = expressAsyncHandler(
+    async (req: Request, res: Response) => {
+      const user: CreateUserInterface = req.body;
+      const token = await registerUser(user, dbRepositoryUser, authService);
+      res.json({
         status: "success",
         message: "user registered successfully",
-        token
-    })
-  })
-
-  const loginUser = expressAsyncHandler(
-    async (req: Request, res: Response) => {
-        const {email, password} : {email: string, password: string} = req.body;
-        const token = await userLogin(email, password, dbRepositoryUser, authService);
-        res.json({
-            status: "success",
-            message: "user verified",
-            token
-        })
+        token,
+      });
     }
   );
 
+  const loginUser = expressAsyncHandler(async (req: Request, res: Response) => {
+    const { email, password }: { email: string; password: string } = req.body;
+    const token = await userLogin(
+      email,
+      password,
+      dbRepositoryUser,
+      authService
+    );
+    res.json({
+      status: "success",
+      message: "user verified",
+      token,
+    });
+  });
+
   return {
     loginUser,
-    userRegister
-  }
+    userRegister,
+  };
 };
 
 export default authController;

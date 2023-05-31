@@ -5,7 +5,7 @@ import { UserDbInterface } from "../../repositories/userDbRepository";
 import { AuthServiceInterface } from "../../services/authServiceInterface";
 
 // creating a new user
-export const registerUser = async (
+export const registerUser = async (  
     user: CreateUserInterface,
     userRepository: ReturnType<UserDbInterface>,
     authService: ReturnType<AuthServiceInterface>
