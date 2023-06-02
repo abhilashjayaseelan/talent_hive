@@ -13,7 +13,7 @@ export const registerUser = async (
     user.email = user.email.toLowerCase();
     const isExistingEmail = await userRepository.getUserByEmail(user.email);
     if(isExistingEmail) {
-        throw new AppError("email already exists", HttpStatus.UNAUTHORIZED);
+        throw new AppError("email already exists", HttpStatus.CONFLICT);
     }
     user.password = await authService.encryptPassword(user.password ?? '');
     const token = await userRepository.createUser(user);
