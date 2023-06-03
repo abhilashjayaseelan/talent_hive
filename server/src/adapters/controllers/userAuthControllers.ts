@@ -5,7 +5,7 @@ import { AuthServiceInterface } from "../../app/services/authServiceInterface";
 import { UserDbInterface } from "../../app/repositories/userDbRepository";
 import { UserRepositoryMongoDB } from "../../frameworks/database/mongoDb/repositories/userRepositoryMongoDB";
 import { userLogin, registerUser } from "../../app/useCases/auth/userAuth";
-import { CreateUserInterface } from "../../types/userInterface";
+import { UserInterface } from "../../types/userInterface";
 
 const authController = (
   authServiceInterface: AuthServiceInterface,
@@ -19,12 +19,11 @@ const authController = (
   const userRegister = expressAsyncHandler(
     async (req: Request, res: Response) => {
       try {
-        const user: CreateUserInterface = req.body;
-        const token = await registerUser(user, dbRepositoryUser, authService);
+        const user: UserInterface = req.body;
+        await registerUser(user, dbRepositoryUser, authService);
         res.json({
           status: "success",
           message: "user registered successfully",
-          token,
         });
       } catch (error: any) {
         res.status(error.statusCode).json({

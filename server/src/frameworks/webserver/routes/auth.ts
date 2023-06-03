@@ -1,5 +1,5 @@
 import express from "express";
-import authController from "../../../adapters/controllers/authControllers";
+import authController from "../../../adapters/controllers/userAuthControllers";
 import { userDbRepository } from "../../../app/repositories/userDbRepository";
 import { UserRepositoryMongoDB } from "../../database/mongoDb/repositories/userRepositoryMongoDB";
 import { authService } from "../../services/authService";
