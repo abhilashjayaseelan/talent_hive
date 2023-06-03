@@ -26,7 +26,7 @@ const authController = (
           message: "user registered successfully",
         });
       } catch (error: any) {
-        res.status(error.statusCode).json({
+        res.status(error.statusCode ?? 500).json({
           status: "error",
           error,
         });
@@ -49,7 +49,7 @@ const authController = (
         token,
       });
     } catch (error: any) {
-      res.status(error.statusCode).json({
+      res.status(error.statusCode ?? 500).json({
         status: "error",
         error,
       });

@@ -32,15 +32,14 @@ export default function UserLogin() {
   };
   return (
     <div className="flex justify-end h-screen">
-      <div className="flex justify-center items-center w-1/2">
-        {/* Your image here */}
+      <div className="ml-32 flex justify-center items-center">
         <img
           src="https://www.foundit.in/rio/public/images/login-illustration.png"
           alt="Img"
           className="w-80"
         />
       </div>
-      <div className="flex justify-center items-center w-1/2">
+      <div className="flex justify-center items-center w-1/2 mt-10 sm:mx-auto sm:w-full sm:max-w-sm">
         <div className="w-96 p-6 bg-white border border-gray-300 rounded shadow-lg">
           <h2 className="text-2xl font-bold mb-4">Login</h2>
           <form onSubmit={handleSubmit(submitHandler)} className="space-y-4">
@@ -113,22 +112,22 @@ export default function UserLogin() {
                     fill="#EA4335"
                   />
                 </svg>
-                <span className="ml-2">Sign in using Google</span>
+                <span className="ml-2">Login using Google</span>
               </div>
             </a>
-          </div>  
+          </div>
 
           <div className="mt-4 text-center">
             <Link to={"/user/register"}>
               <span className="text-gray-500">
-                Already have an account?
-                <p className="text-purple-600 underline">Sign in</p>
+                Don't have an account?{" "}
+                <p className="text-purple-600 underline">Sign up</p>
               </span>
             </Link>
           </div>
         </div>
       </div>
-      <ToastContainer />
+      <ToastContainer />    
     </div>
   );
 }

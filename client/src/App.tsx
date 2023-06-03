@@ -1,5 +1,6 @@
 import { Route, Routes, BrowserRouter as Router } from "react-router-dom";
 import UserRouter from "./routes/user/UserRouter";
+import EmployerRouter from "./routes/employer/EmployerRouter";
 
 function App() {
   return (
@@ -7,6 +8,7 @@ function App() {
       <Router>
         <Routes>
           <Route path="/user/*" element={<UserRouter />} />
+          <Route path="/employer/*" element={<EmployerRouter />} />
         </Routes>
       </Router>
     </div>

@@ -13,6 +13,14 @@ const employerSchema = new Schema({
     type: String,
     required: [true, "Please add an email"]
   },
+  password: {
+    type: String,
+    required: [true, "Please provide a password"]
+  },
+  isActive: {
+    type: Boolean,
+    default: true
+  },
   location: {
     type: String,
     required: true
@@ -20,6 +28,10 @@ const employerSchema = new Schema({
   logo: {
     type: String,
     required: false,
+  },
+  type: {
+    type: String,
+    default: "employer"
   },
   createdAt: {
     type: Date,

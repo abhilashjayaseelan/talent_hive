@@ -15,8 +15,8 @@ const authRouter = () => {
     UserRepositoryMongoDB
   );
 
-  route.post("/user-register", controller.userRegister);
-  route.post("/user-login", controller.loginUser);
+  route.post("/register", controller.userRegister);
+  route.post("/login", controller.loginUser);
 
   return route;
 };
