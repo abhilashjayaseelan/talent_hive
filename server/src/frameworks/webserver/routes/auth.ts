@@ -5,6 +5,7 @@ import { UserRepositoryMongoDB } from "../../database/mongoDb/repositories/userR
 import { authService } from "../../services/authService";
 import { authServiceInterface } from "../../../app/services/authServiceInterface";
 
+
 const authRouter = () => {
   const route = express.Router();
 

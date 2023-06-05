@@ -8,3 +8,10 @@ export interface SignupPayload extends LoginPayload {
     phone: string,
     confirmPassword: string
 }
+
+export interface EmployerRegisterPayload extends LoginPayload {
+    companyName: string,
+    industry: string,
+    confirmPassword: string,
+    location: string,
+}

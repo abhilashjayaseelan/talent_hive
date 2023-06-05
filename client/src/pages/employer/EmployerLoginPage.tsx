@@ -1,6 +1,6 @@
 import EmployerLogin from "../../components/Employer/EmployerAuth/EmployerLogin";
 
-const UserLoginPage = () => {
+const EmployerLoginPage = () => {
     return (
         <div>
             <EmployerLogin/>
@@ -8,4 +8,4 @@ const UserLoginPage = () => {
     )
 }
 
-export default UserLoginPage;
+export default EmployerLoginPage;

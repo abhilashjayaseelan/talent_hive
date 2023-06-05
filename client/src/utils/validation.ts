@@ -27,3 +27,20 @@ export const userLoginValidationSchema = yup.object().shape({
     .min(6, "Password must be at least 6 characters long"),
 });
 
+export const employerRegisterValidationSchema = yup.object().shape({
+  companyName: yup
+    .string()
+    .required("Name is required")
+    .matches(/^[a-zA-Z][a-zA-Z ]+[a-zA-Z]*$/, "Enter a valid name"),
+  email: yup.string().required("Email is required").email("Invalid email"),
+  industry: yup.string().required("Industry is required"),
+  location: yup.string().required('Location is required'),
+  password: yup
+    .string()
+    .required("Password is required")
+    .min(6, "Password must be at least 6 characters long"),
+  confirmPassword: yup
+    .string()
+    .oneOf([yup.ref("password")], "Password does not match"),
+});
+

@@ -1,11 +1,13 @@
 import { Routes, Route } from "react-router-dom";
-import EmployerLogin from "../../components/Employer/EmployerAuth/EmployerLogin";
+import EmployerLoginPage from "../../pages/employer/EmployerLoginPage";
+import EmployerRegisterPage from "../../pages/employer/EmployerRegisterPage";
 
 const EmployerRouter = () => {
     return (
         <div>
             <Routes>
-                <Route path="/login" element={<EmployerLogin/>}/>
+                <Route path="/login" element={<EmployerLoginPage/>}/>
+                <Route path="/register" element={<EmployerRegisterPage/>}/>
             </Routes>
         </div>
     )
