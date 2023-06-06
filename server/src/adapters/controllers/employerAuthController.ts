@@ -7,14 +7,16 @@ import { EmployerRepositoryMongoDB } from "../../frameworks/database/mongoDb/rep
 import { employerLogin } from "../../app/useCases/auth/employerAuth";
 import { registerEmployer } from "../../app/useCases/auth/employerAuth";
 import { EmployerInterface } from "../../types/employerInterface";
+import { EmployerModel } from "../../frameworks/database/mongoDb/models/employerModel";
 
 const employerAuthController = (
   authServiceInterface: AuthServiceInterface,
   authServiceImpl: AuthService,
   employerDbRepository: EmployerDbInterface,
-  employerDbRepositoryImpl: EmployerRepositoryMongoDB
+  employerDbRepositoryImpl: EmployerRepositoryMongoDB,
+  employer : EmployerModel
 ) => {
-  const dbRepositoryEmployer = employerDbRepository(employerDbRepositoryImpl());
+  const dbRepositoryEmployer = employerDbRepository(employerDbRepositoryImpl(employer));
   const authService = authServiceInterface(authServiceImpl());
 
   const employerRegister = expressAsyncHandler(

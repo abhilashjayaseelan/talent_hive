@@ -1,17 +1,19 @@
 import { CreateUserInterface, UserInterface } from "../../../../types/userInterface";
-import User from "../models/userModel";
+import { UserEntity } from "../../../../entities/user";
+import {UserModel} from "../models/userModel";
 
-export const UserRepositoryMongoDB = () => {
+export const UserRepositoryMongoDB = (model: UserModel) => {
+  const userEntity = new UserEntity(model);
 
   // getting the registered user by the email id
   const getUserByEmail = async (email: string) => {
-    const user: UserInterface | null = await User.findOne({ email });
+    const user = await userEntity.getUserByEmail(email);
     return user;
   };
 
   // adding a new user
   const createUser = async (user: CreateUserInterface)=> {
-    const newUser = await User.create(user);
+    const newUser = await userEntity.creteUser(user);
     return newUser;
   }
 

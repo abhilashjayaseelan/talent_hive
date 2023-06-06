@@ -1,15 +1,17 @@
-import { EmployerInterface, CreateEmployerInterface } from "../../../../types/employerInterface";
-import Employer from "../models/employerModel";
+import { CreateEmployerInterface } from "../../../../types/employerInterface";
+import {EmployerModel} from "../models/employerModel";
+import { EmployerEntity } from "../../../../entities/employer";
 
-export const EmployerRepositoryMongoDB = () =>{
+export const EmployerRepositoryMongoDB = (model: EmployerModel) =>{
+    const employerEntity = new EmployerEntity(model);
 
     const getEmployerByEmail = async (email: string) => {
-        const employer: EmployerInterface | null = await Employer.findOne({email});
+        const employer = employerEntity.getEmployerByEmail(email);
         return employer;
     }
 
     const createEmployer = async (employer: CreateEmployerInterface) => {
-        const newEmployer = await Employer.create(employer);
+        const newEmployer = employerEntity.createEmployer(employer);
         return newEmployer;
     }
 

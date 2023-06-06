@@ -4,6 +4,7 @@ import { employerDbRepository } from "../../../app/repositories/employerDbReposi
 import { EmployerRepositoryMongoDB } from "../../database/mongoDb/repositories/employerRepositoryMongoDB";
 import { authService } from "../../services/authService";
 import { authServiceInterface } from "../../../app/services/authServiceInterface";
+import {Employer} from "../../database/mongoDb/models/employerModel";
 
 const employerAuthRouter = () => {
   const route = express.Router();
@@ -12,7 +13,8 @@ const employerAuthRouter = () => {
     authServiceInterface,
     authService,
     employerDbRepository,
-    EmployerRepositoryMongoDB
+    EmployerRepositoryMongoDB,
+    Employer
   );
 
   route.post("/register", controller.employerRegister);

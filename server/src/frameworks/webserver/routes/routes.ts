@@ -1,4 +1,4 @@
-import authRouter from "./auth";
+import authRouter from "./userAuth";
 import employerAuthRouter from "./employerAuth";
 import { Application } from "express";
 

@@ -39,6 +39,6 @@ const employerSchema = new Schema({
   },
 });
 
-const Employer = model("Employer", employerSchema, "employers")
+export const Employer = model("Employer", employerSchema, "employers")
 
-export default Employer;
+export type EmployerModel = typeof Employer;

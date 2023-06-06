@@ -12,5 +12,5 @@ export interface CreateEmployerInterface {
 }
 
 export interface EmployerInterface extends CreateEmployerInterface {
-    _id: ObjectId
+    _id: any
 }

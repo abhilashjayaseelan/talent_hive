@@ -6,14 +6,16 @@ import { UserDbInterface } from "../../app/repositories/userDbRepository";
 import { UserRepositoryMongoDB } from "../../frameworks/database/mongoDb/repositories/userRepositoryMongoDB";
 import { userLogin, registerUser } from "../../app/useCases/auth/userAuth";
 import { UserInterface } from "../../types/userInterface";
+import { UserModel } from "../../frameworks/database/mongoDb/models/userModel";
 
 const authController = (
   authServiceInterface: AuthServiceInterface,
   authServiceImpl: AuthService,
   userDbRepository: UserDbInterface,
-  userDbRepositoryImpl: UserRepositoryMongoDB
+  userDbRepositoryImpl: UserRepositoryMongoDB,
+  userModel: UserModel
 ) => {
-  const dbRepositoryUser = userDbRepository(userDbRepositoryImpl());
+  const dbRepositoryUser = userDbRepository(userDbRepositoryImpl(userModel));
   const authService = authServiceInterface(authServiceImpl());
 
   const userRegister = expressAsyncHandler(

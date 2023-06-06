@@ -3,12 +3,13 @@ import {
   EmployerRegisterPayload,
   LoginPayload,
 } from "../../types/PayloadInterface";
-import configKeys from "../../utils/config";
+import apiConfig from "../../utils/apiConfig";
+
 
 export const employerLogin = async (payload: LoginPayload): Promise<any> => {
   try {
     const config: AxiosRequestConfig = {
-      url: `${configKeys.API_URL}employer/login`,
+      url: `${apiConfig.employerLogin}`,
       method: "post",
       data: payload,
     };
@@ -26,7 +27,7 @@ export const employerLogin = async (payload: LoginPayload): Promise<any> => {
 export const registerEmployer = async (payload: EmployerRegisterPayload) => {
   try {
     const config: AxiosRequestConfig = {
-      url: `${configKeys.API_URL}employer/register`,
+      url: `${apiConfig.employerRegister}`,
       method: "post",
       data: payload,
     };

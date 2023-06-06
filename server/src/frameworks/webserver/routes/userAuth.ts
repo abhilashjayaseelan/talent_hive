@@ -4,6 +4,7 @@ import { userDbRepository } from "../../../app/repositories/userDbRepository";
 import { UserRepositoryMongoDB } from "../../database/mongoDb/repositories/userRepositoryMongoDB";
 import { authService } from "../../services/authService";
 import { authServiceInterface } from "../../../app/services/authServiceInterface";
+import { User } from "../../database/mongoDb/models/userModel";
 
 
 const authRouter = () => {
@@ -13,7 +14,8 @@ const authRouter = () => {
     authServiceInterface,
     authService,
     userDbRepository,
-    UserRepositoryMongoDB
+    UserRepositoryMongoDB,
+    User
   );
 
   route.post("/register", controller.userRegister);

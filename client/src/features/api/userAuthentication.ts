@@ -1,11 +1,10 @@
 import axios, { AxiosRequestConfig } from "axios";
 import { LoginPayload, SignupPayload } from "../../types/PayloadInterface";
-import configKeys from "../../utils/config";
-
+import apiConfig from "../../utils/apiConfig";
 export const registerUser = async (payload: SignupPayload): Promise<any> => {
   try {
     const config: AxiosRequestConfig = {
-      url: `${configKeys.API_URL}user/register`,
+      url: `${apiConfig.userRegister}`,
       method: "post",
       data: payload,
     };
@@ -23,7 +22,7 @@ export const registerUser = async (payload: SignupPayload): Promise<any> => {
 export const userLogin = async (payload: LoginPayload): Promise<any> => {
   try {
     const config: AxiosRequestConfig = {
-      url: `${configKeys.API_URL}user/login`,
+      url: `${apiConfig.userLogin}`,
       method: "post",
       data: payload,
     };
