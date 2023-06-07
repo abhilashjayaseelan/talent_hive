@@ -1,6 +1,6 @@
 import { CreateEmployerInterface } from "../../../../types/employerInterface";
 import {EmployerModel} from "../models/employerModel";
-import { EmployerEntity } from "../../../../entities/employer";
+import { EmployerEntity } from "../../../../entities/EmployerEntity";
 
 export const EmployerRepositoryMongoDB = (model: EmployerModel) =>{
     const employerEntity = new EmployerEntity(model);

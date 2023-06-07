@@ -32,7 +32,7 @@ const jobSchema = new Schema({
     employer: {
         type: Schema.Types.ObjectId,
         ref: 'Employer',
-        required: true
+        required: [true, 'please add employerId']
     },
     createdAt: {
         type: Date,

@@ -1,6 +1,6 @@
-import { ObjectId } from "mongoose"
+import { Types } from "mongoose"
 export interface UserInterface {
-    _id: any,
+    _id: Types.ObjectId,
     name: string,
     email: string,
     phone: number,

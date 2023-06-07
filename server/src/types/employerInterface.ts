@@ -1,4 +1,4 @@
-import {ObjectId} from "mongoose";
+import {Types} from "mongoose";
 
 export interface CreateEmployerInterface {
     companyName: string,
@@ -12,5 +12,5 @@ export interface CreateEmployerInterface {
 }
 
 export interface EmployerInterface extends CreateEmployerInterface {
-    _id: any
+    _id: Types.ObjectId
 }

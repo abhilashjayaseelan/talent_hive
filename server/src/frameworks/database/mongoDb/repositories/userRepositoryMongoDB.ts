@@ -1,5 +1,5 @@
-import { CreateUserInterface, UserInterface } from "../../../../types/userInterface";
-import { UserEntity } from "../../../../entities/user";
+import { CreateUserInterface } from "../../../../types/userInterface";
+import { UserEntity } from "../../../../entities/UserEntity";
 import {UserModel} from "../models/userModel";
 
 export const UserRepositoryMongoDB = (model: UserModel) => {
