@@ -18,16 +18,25 @@ export class JobEntity {
         if (!existingJob) {
             return null;
         }
-
-        Object.assign(existingJob, updates);
-
+        // updating the job according to the changes
+        Object.assign(existingJob, updates); 
         const updatedJob = await existingJob.save();
         return updatedJob;
-    }
+    }                      
 
     public async deleteJob(jobId: string) : Promise<void> {
         const job = await this.model.findById(jobId);
         if (!job) throw new Error('job not found')
         await this.model.findByIdAndDelete(jobId);
+    }
+    
+    public async getJobByEmployer (employerId : string) : Promise<JobInterface[]> {
+        const jobs = await this.model.find({employer: employerId});
+        return jobs;
+    }
+
+    public async getAllJobs () : Promise<JobInterface[]> {
+        const allJobs = await this.model.find();
+        return allJobs;
     }
 }

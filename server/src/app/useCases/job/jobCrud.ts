@@ -36,3 +36,26 @@ export const deleteJob = async (
     throw new Error("failed to delete the job");
   }
 };
+
+export const findJobByEmployer = async (
+  employerId: string,
+  jobRepository: ReturnType<JobDbInterface>
+) => {
+  try {
+    const jobs = await jobRepository.findJobByEmployer(employerId);
+    return jobs;
+  } catch (error) {
+    throw new Error("failed to find the jobs");
+  }
+};
+
+export const getAllJobs = async (
+  jobRepository: ReturnType<JobDbInterface>
+) => {
+  try {
+    const allJobs = await jobRepository.findAllJobs();
+    return allJobs;
+  } catch (error) {
+    throw new Error("failed to get the jobs")
+  }
+}

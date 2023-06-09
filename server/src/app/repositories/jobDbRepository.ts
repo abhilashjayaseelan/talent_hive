@@ -18,11 +18,23 @@ export const jobDbRepository = (
         await repository.deleteJob(jobId);
     }
 
+    const findJobByEmployer = async (employerId : string) => {
+        const jobs = await repository.findJobByEmployer(employerId);
+        return jobs;
+    }
+
+    const findAllJobs = async () => {
+        const allJobs = await repository.findAllJobs();
+        return allJobs;
+    }
+
     return {
         createJob,
         updateJob,
-        deleteJob
+        deleteJob,
+        findJobByEmployer,
+        findAllJobs
     }
 }
 
-export type JobDbInterface = typeof jobDbRepository;
+export type JobDbInterface = typeof jobDbRepository; 

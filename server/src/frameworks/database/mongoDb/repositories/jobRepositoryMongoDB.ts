@@ -19,10 +19,22 @@ export const JobRepositoryMongoDB = (model: JobModel) => {
         await jobEntity.deleteJob(jobId);
     }
 
+    const findJobByEmployer = async (employerId : string) => {
+        const jobs = await jobEntity.getJobByEmployer(employerId);
+        return jobs;
+    }
+
+    const findAllJobs = async () => {
+        const allJobs = await jobEntity.getAllJobs();
+        return allJobs;
+    }
+
     return {
         createJob,
         updateJob,
         deleteJob,
+        findJobByEmployer,
+        findAllJobs
     }
 }
 

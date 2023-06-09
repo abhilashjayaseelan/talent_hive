@@ -14,51 +14,38 @@ const employerAuthController = (
   authServiceImpl: AuthService,
   employerDbRepository: EmployerDbInterface,
   employerDbRepositoryImpl: EmployerRepositoryMongoDB,
-  employer : EmployerModel
+  employer: EmployerModel
 ) => {
-  const dbRepositoryEmployer = employerDbRepository(employerDbRepositoryImpl(employer));
+  const dbRepositoryEmployer = employerDbRepository(
+    employerDbRepositoryImpl(employer)
+  );
   const authService = authServiceInterface(authServiceImpl());
 
   const employerRegister = expressAsyncHandler(
     async (req: Request, res: Response) => {
-      try {
-        const employer: EmployerInterface = req.body;
-        await registerEmployer(employer, dbRepositoryEmployer, authService);
-        res.json({
-          status: "success",
-          message: "employer registered successfully",
-        });
-      } catch (error: any) {
-        res.status(error.statusCode ?? 500).json({
-          status: "error",
-          error,
-        });
-      }
+      const employer: EmployerInterface = req.body;
+      await registerEmployer(employer, dbRepositoryEmployer, authService);
+      res.json({
+        status: "success",
+        message: "employer registered successfully",
+      });
     }
   );
 
   const loginEmployer = expressAsyncHandler(
     async (req: Request, res: Response) => {
-      try {
-        const { email, password }: { email: string; password: string } =
-          req.body;
-        const token = await employerLogin(
-          email,
-          password,
-          dbRepositoryEmployer,
-          authService
-        );
-        res.json({
-          status: "success",
-          message: "employer verified",
-          token,
-        });
-      } catch (error: any) {
-        res.status(error.statusCode ?? 500).json({
-          status: "error",
-          error,
-        });
-      }
+      const { email, password }: { email: string; password: string } = req.body;
+      const token = await employerLogin(
+        email,
+        password,
+        dbRepositoryEmployer,
+        authService
+      );
+      res.json({
+        status: "success",
+        message: "employer verified",
+        token,
+      });
     }
   );
 

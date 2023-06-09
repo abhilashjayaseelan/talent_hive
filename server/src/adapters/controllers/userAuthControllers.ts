@@ -20,42 +20,28 @@ const authController = (
 
   const userRegister = expressAsyncHandler(
     async (req: Request, res: Response) => {
-      try {
-        const user: UserInterface = req.body;
-        await registerUser(user, dbRepositoryUser, authService);
-        res.json({
-          status: "success",
-          message: "user registered successfully",
-        });
-      } catch (error: any) {
-        res.status(error.statusCode ?? 500).json({
-          status: "error",
-          error,
-        });
-      }
+      const user: UserInterface = req.body;
+      await registerUser(user, dbRepositoryUser, authService);
+      res.json({
+        status: "success",
+        message: "user registered successfully",
+      });
     }
   );
 
   const loginUser = expressAsyncHandler(async (req: Request, res: Response) => {
-    try {
-      const { email, password }: { email: string; password: string } = req.body;
-      const token = await userLogin(
-        email,
-        password,
-        dbRepositoryUser,
-        authService
-      );
-      res.json({
-        status: "success",
-        message: "user verified",
-        token,
-      });
-    } catch (error: any) {
-      res.status(error.statusCode ?? 500).json({
-        status: "error",
-        error,
-      });
-    }
+    const { email, password }: { email: string; password: string } = req.body;
+    const token = await userLogin(
+      email,
+      password,
+      dbRepositoryUser,
+      authService
+    );
+    res.json({
+      status: "success",
+      message: "user verified",
+      token,
+    });
   });
 
   return {

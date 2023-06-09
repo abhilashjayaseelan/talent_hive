@@ -12,6 +12,8 @@ import {
   createJob,
   updateJob,
   deleteJob,
+  findJobByEmployer,
+  getAllJobs,
 } from "../../app/useCases/job/jobCrud";
 
 const jobController = (
@@ -23,92 +25,93 @@ const jobController = (
 
   const createNewJob = expressAsyncHandler(
     async (req: CustomRequest, res: Response) => {
-      try {
-        const job: JobInterface = req.body;
-        const employerId = new Types.ObjectId(req.payload);
-        job.employer = employerId;
+      const job: JobInterface = req.body;
+      const employerId = new Types.ObjectId(req.payload);
+      job.employer = employerId;
+      const createdJob = await createJob(job, dbRepositoryJob);
 
-        const createdJob = await createJob(job, dbRepositoryJob);
-
-        if (!createdJob) {
-          throw new AppError(
-            "Job creation failed",
-            HttpStatus.INTERNAL_SERVER_ERROR
-          );
-        }
-
-        res.json({
-          status: "success",
-          message: "Job created successfully",
-          job: createdJob,
-        });
-      } catch (error: any) {
-        res.status(error.statusCode || HttpStatus.INTERNAL_SERVER_ERROR).json({
-          status: "error",
-          message: error.message || "Job creation failed",
-        });
+      if (!createdJob) {
+        throw new AppError(
+          "Job creation failed",
+          HttpStatus.INTERNAL_SERVER_ERROR
+        );
       }
+      res.json({
+        status: "success",
+        message: "Job created successfully",
+        job: createdJob,
+      });
     }
   );
 
   const updateTheJob = expressAsyncHandler(
     async (req: CustomRequest, res: Response) => {
-      try {
-        const jobId = req.params.id;
-        const update = req.body;
+      const jobId = req.params.id;
+      const update = req.body;
 
-        if (!jobId) {
-          throw new AppError("Job ID is required", HttpStatus.BAD_REQUEST);
-        }
-
-        const updatedJob = await updateJob(update, jobId, dbRepositoryJob);
-
-        if (!updatedJob) {
-          throw new AppError("Job not found", HttpStatus.NOT_FOUND);
-        }
-
-        res.json({
-          status: "success",
-          message: "Job updated successfully",
-          job: updatedJob,
-        });
-      } catch (error: any) {
-        res.status(error.statusCode || HttpStatus.INTERNAL_SERVER_ERROR).json({
-          status: "error",
-          message: error.message || "Job update failed",
-        });
+      if (!jobId) {
+        throw new AppError("Job ID is required", HttpStatus.BAD_REQUEST);
       }
+
+      const updatedJob = await updateJob(update, jobId, dbRepositoryJob);
+
+      if (!updatedJob) {
+        throw new AppError("Job not found", HttpStatus.NOT_FOUND);
+      }
+
+      res.json({
+        status: "success",
+        message: "Job updated successfully",
+        job: updatedJob,
+      });
     }
   );
 
   const deleteTheJob = expressAsyncHandler(
     async (req: Request, res: Response) => {
-      try {
-        const jobId = req.params.id;
+      const jobId = req.params.id;
 
-        if (!jobId) {
-          throw new AppError("Job id is required", HttpStatus.BAD_REQUEST);
-        }
-
-        await deleteJob(jobId, dbRepositoryJob);
-
-        res.json({
-          status: "success",
-          message: "job deleted successfully",
-        });
-      } catch (error) {
-        res.status(500).json({
-          status: "error",
-          message: "job deletion failed",
-        });
+      if (!jobId) {
+        throw new AppError("Job id is required", HttpStatus.BAD_REQUEST);
       }
+
+      await deleteJob(jobId, dbRepositoryJob);
+
+      res.json({
+        status: "success",
+        message: "job deleted successfully",
+      });
+    }
+  );
+
+  const getJobsByEmployer = expressAsyncHandler(
+    async (req: CustomRequest, res: Response) => {
+      const employerId = req.payload ?? "";
+      const jobs = await findJobByEmployer(employerId, dbRepositoryJob);
+      res.json({
+        status: "success",
+        message: "success",
+        jobs,
+      });
+    }
+  );
+
+  const findAllJobs = expressAsyncHandler(
+    async (req: Request, res: Response) => {
+      const allJobs = await getAllJobs(dbRepositoryJob);
+      res.json({
+        status: "success",
+        allJobs
+      })
     }
   );
 
   return {
     createNewJob,
     updateTheJob,
-    deleteTheJob
+    deleteTheJob,
+    getJobsByEmployer,
+    findAllJobs
   };
 };
 
