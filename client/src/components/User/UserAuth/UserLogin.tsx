@@ -2,12 +2,17 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import { useForm } from "react-hook-form";
 import { LoginPayload } from "../../../types/PayloadInterface";
 import { userLoginValidationSchema } from "../../../utils/validation";
-import { userLogin } from "../../../features/api/userAuthentication";
+import { userLogin } from "../../../features/axios/api/userAuthentication";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import { setToken } from "../../../features/redux/slices/tokenSlice";
+import { useDispatch } from "react-redux/es/exports";
 
 export default function UserLogin() {
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+
   const {
     register,
     handleSubmit,
@@ -24,7 +29,12 @@ export default function UserLogin() {
   const submitHandler = async (formData: LoginPayload) => {
     userLogin(formData)
       .then((response) => {
+        const token = response.token;
+        dispatch(setToken(token));
         notify("Login success", "success");
+        setTimeout(() => {
+          navigate('/user/home');
+        }, 2000);
       })
       .catch((error: any) => {
         notify(error.message, "error");

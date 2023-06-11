@@ -17,9 +17,15 @@ export const UserRepositoryMongoDB = (model: UserModel) => {
     return newUser;
   }
 
+  const getUserDataById = async (id: string) => {
+    const userData = await userEntity.getUserDataById(id);
+    return userData;
+  }
+
   return {
     getUserByEmail,
-    createUser
+    createUser,
+    getUserDataById
   };
 };
 

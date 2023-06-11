@@ -2,12 +2,13 @@ import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { userRegisterValidationSchema } from "../../../utils/validation";
 import { SignupPayload } from "../../../types/PayloadInterface";
-import { registerUser } from "../../../features/api/userAuthentication";
+import { registerUser } from "../../../features/axios/api/userAuthentication";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 export default function UserSignup() {
+  const navigate = useNavigate();
   const {
     register,
     handleSubmit,
@@ -25,7 +26,10 @@ export default function UserSignup() {
     registerUser(formData)
       .then((response: any) => {
         notify("User registered successfully", "success");
-        // code for navigating to home page
+
+        setTimeout(() => {
+          navigate("/user/login");
+        }, 2000); 
       })
       .catch((error: any) => {
         notify(error.message, "error");
@@ -156,16 +160,14 @@ export default function UserSignup() {
           </div>
 
           <div className="mt-4 text-center">
-            <Link to={'/user/login'}> 
+            <Link to={"/user/login"}>
               <span className="text-gray-500">
                 Already have an account?
-                <p className="text-purple-600 underline">
-                  Login
-                </p>
+                <p className="text-purple-600 underline">Login</p>
               </span>
             </Link>
           </div>
-        </div>  
+        </div>
       </div>
       <ToastContainer />
     </div>

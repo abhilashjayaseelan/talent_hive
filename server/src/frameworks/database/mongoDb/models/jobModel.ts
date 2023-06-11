@@ -29,6 +29,10 @@ const jobSchema = new Schema({
         type: Number,
         required: false
     },
+    openings: {
+        type: Number,
+        required: [true, "please add the number of openings"]
+    },
     employer: {
         type: Schema.Types.ObjectId,
         ref: 'Employer',

@@ -2,8 +2,8 @@ import axios, { AxiosRequestConfig } from "axios";
 import {
   EmployerRegisterPayload,
   LoginPayload,
-} from "../../types/PayloadInterface";
-import apiConfig from "../../utils/apiConfig";
+} from "../../../types/PayloadInterface";
+import apiConfig from "../../../utils/apiConfig";
 
 
 export const employerLogin = async (payload: LoginPayload): Promise<any> => {

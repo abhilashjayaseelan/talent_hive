@@ -15,3 +15,16 @@ export interface EmployerRegisterPayload extends LoginPayload {
     confirmPassword: string,
     location: string,
 }
+
+export interface UserDataPayload {
+    _id: any,
+    name: string,
+    email: string,
+    phone: number,
+    password?: string,
+    isGoogleUser?: boolean,
+    isActive?: boolean,
+    education?: Array<object>,
+    skills?: Array<string>,
+    createdAt?: Date
+}

@@ -1,26 +1,21 @@
-import express from "express";
-import authController from "../../../adapters/controllers/userAuthControllers";
-import { userDbRepository } from "../../../app/repositories/userDbRepository";
-import { UserRepositoryMongoDB } from "../../database/mongoDb/repositories/userRepositoryMongoDB";
-import { authService } from "../../services/authService";
-import { authServiceInterface } from "../../../app/services/authServiceInterface";
-import { User } from "../../database/mongoDb/models/userModel";
+import express from 'express';
+import userController from '../../../adapters/controllers/userControllers';
+import { userDbRepository } from '../../../app/repositories/userDbRepository';
+import { UserRepositoryMongoDB } from '../../database/mongoDb/repositories/userRepositoryMongoDB';
+import { User } from '../../database/mongoDb/models/userModel';
 
-const userRouter = () => {
-  const route = express.Router();
+const userRouter = ()=> {
+    const route = express.Router();
 
-  const controller = authController(
-    authServiceInterface,
-    authService,
-    userDbRepository,
-    UserRepositoryMongoDB,
-    User
-  );
+    const controller = userController(
+        userDbRepository,
+        UserRepositoryMongoDB,
+        User
+    );
 
-  route.post("/register", controller.userRegister);
-  route.post("/login", controller.loginUser);
+    route.get('/user-data', controller.getUserDataById);
 
-  return route;
-};
+    return route;
+}
 
-export default userRouter;
+export default userRouter;  

@@ -6,7 +6,7 @@ import { authService } from "../../services/authService";
 import { authServiceInterface } from "../../../app/services/authServiceInterface";
 import {Employer} from "../../database/mongoDb/models/employerModel";
 
-const employerRouter = () => {
+const employerAuthRouter = () => {
   const route = express.Router();
 
   const controller = employerAuthController(
@@ -23,4 +23,4 @@ const employerRouter = () => {
   return route;
 };
 
-export default employerRouter;
+export default employerAuthRouter;

@@ -6,6 +6,9 @@ export const theme = {
       sans: ["Open Sans", "Roboto", "Arial", "sans-serif"],
       serif: ["Merriweather", "serif"],
     },
+    colors: {
+       foundItBg:'#f7f2fa'
+    }
   },
 };
 export const plugins = [];

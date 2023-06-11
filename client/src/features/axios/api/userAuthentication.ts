@@ -1,6 +1,7 @@
 import axios, { AxiosRequestConfig } from "axios";
-import { LoginPayload, SignupPayload } from "../../types/PayloadInterface";
-import apiConfig from "../../utils/apiConfig";
+import { LoginPayload, SignupPayload } from "../../../types/PayloadInterface";
+import apiConfig from "../../../utils/apiConfig";
+
 export const registerUser = async (payload: SignupPayload): Promise<any> => {
   try {
     const config: AxiosRequestConfig = {

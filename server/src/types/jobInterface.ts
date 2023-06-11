@@ -8,6 +8,7 @@ export interface JobInterface {
   requirements: string[];
   responsibilities: string[];
   salary?: number;
+  openings: number;
   employer: Types.ObjectId;
   createdAt: Date;
 }

@@ -14,9 +14,15 @@ export const userDbRepository = (
     return await repository.createUser(user);
   };
 
+  const getUserDataById = async (id: string) => {
+    const userData = await repository.getUserDataById(id);
+    return userData;
+  }
+
   return {
     getUserByEmail,
     createUser,
+    getUserDataById
   };
 };
 
