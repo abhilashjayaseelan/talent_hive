@@ -9,14 +9,14 @@ export const registerEmployer = async (
   employerRepository: ReturnType<EmployerDbInterface>,
   authService: ReturnType<AuthServiceInterface>
 ) => {
-  employer.email = employer.email.toLowerCase();
+  employer.email = employer?.email?.toLowerCase();
   const isExistingEmail = await employerRepository.getEmployerByEmail(
-    employer.email
+    employer.email ?? ''
   );
   if (isExistingEmail) {
     throw new AppError("email already exists", HttpStatus.CONFLICT);
   }
-  employer.password = await authService.encryptPassword(employer.password);
+  employer.password = await authService.encryptPassword(employer.password ?? '');
   const result = await employerRepository.createEmployer(employer);
   return result;
 };
@@ -34,7 +34,7 @@ export const employerLogin = async (
 
   const isPasswordCorrect = await authService.comparePassword(
     password,
-    employer.password
+    employer.password ?? ''
   );
   if (!isPasswordCorrect) {
     throw new AppError("Incorrect password", HttpStatus.UNAUTHORIZED);

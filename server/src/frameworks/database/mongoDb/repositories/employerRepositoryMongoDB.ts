@@ -15,9 +15,15 @@ export const EmployerRepositoryMongoDB = (model: EmployerModel) =>{
         return newEmployer;
     }
 
+    const getEmployerById = async (id: string) => {
+        const employer = employerEntity.getEmployerById(id);
+        return employer;
+    }
+
     return {
         getEmployerByEmail,
-        createEmployer
+        createEmployer,
+        getEmployerById
     }
 }
 

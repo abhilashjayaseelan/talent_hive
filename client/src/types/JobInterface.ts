@@ -1,6 +1,5 @@
-import { Types } from "mongoose";
-
-export interface JobInterface {
+export interface JobsInterface {
+  _id: any;
   title: string;
   description: string;
   location: string;
@@ -9,7 +8,7 @@ export interface JobInterface {
   responsibilities: string[];
   salary?: number;
   openings: number;
-  employer: Types.ObjectId;
+  employer: any;
   createdAt: Date;
-  appliedUsers?: Array<string>
+  appliedUsers?: Array<string>;
 }

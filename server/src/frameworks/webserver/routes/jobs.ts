@@ -20,6 +20,7 @@ const jobRouter = () => {
     route.put('/update-job/:id', authenticationMiddleware, controller.updateTheJob);
     route.delete('/delete-job/:id', authenticationMiddleware, controller.deleteTheJob);
     route.get('/all-jobs', authenticationMiddleware, controller.findAllJobs);
+    route.get('/job-data/:id', authenticationMiddleware, controller.jobDataById);
 
     return route;
 }

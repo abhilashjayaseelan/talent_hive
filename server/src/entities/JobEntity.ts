@@ -9,7 +9,7 @@ export class JobEntity {
     }
 
     public async createJob(job: JobInterface) : Promise<JobInterface> {
-        const newJob = this.model.create(job);
+        const newJob = await this.model.create(job);
         return newJob;
     }
 
@@ -38,5 +38,10 @@ export class JobEntity {
     public async getAllJobs () : Promise<JobInterface[]> {
         const allJobs = await this.model.find();
         return allJobs;
+    }
+
+    public async getJobById (Id : string) : Promise<JobInterface | null> {
+        const jobData = await this.model.findById(Id);
+        return jobData;
     }
 }

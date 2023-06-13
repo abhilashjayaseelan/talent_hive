@@ -3,12 +3,14 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import { useForm } from "react-hook-form";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { employerRegisterValidationSchema } from "../../../utils/validation";
 import { registerEmployer } from "../../../features/axios/api/employerAuthentication";
 import { EmployerRegisterPayload } from "../../../types/PayloadInterface";
 
 function EmployerRegister() {
+  const navigate = useNavigate();
+
   const {
     register,
     handleSubmit,
@@ -27,6 +29,9 @@ function EmployerRegister() {
     registerEmployer(formData)
       .then((response) => {
         notify("Registration success", "success");
+        setTimeout(() => {
+          navigate('/employer/login');
+        }, 2000);
       })
       .catch((error: any) => {
         notify(error.message, "error");

@@ -28,12 +28,17 @@ export const jobDbRepository = (
         return allJobs;
     }
 
+    const getJobById = async (id: string) => {
+        const jobData = await repository.findJobById(id);
+        return jobData;
+    }
     return {
         createJob,
         updateJob,
         deleteJob,
         findJobByEmployer,
-        findAllJobs
+        findAllJobs,
+        getJobById
     }
 }
 

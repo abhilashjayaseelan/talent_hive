@@ -29,12 +29,18 @@ export const JobRepositoryMongoDB = (model: JobModel) => {
         return allJobs;
     }
 
+    const findJobById = async (id: string) => {
+        const jobData = await jobEntity.getJobById(id);
+        return jobData;
+    }
+
     return {
         createJob,
         updateJob,
         deleteJob,
         findJobByEmployer,
-        findAllJobs
+        findAllJobs,
+        findJobById
     }
 }
 

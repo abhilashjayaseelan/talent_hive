@@ -10,7 +10,6 @@ const authenticationMiddleware = (
   next: NextFunction
 ) => {
   let token: string | null = "";
-  console.log(req.headers.authorization)
   if ( req.headers.authorization && req.headers.authorization.startsWith("Bearer")) {
     token = req.headers.authorization.split(" ")[1];
   }

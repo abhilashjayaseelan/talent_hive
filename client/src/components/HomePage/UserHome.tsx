@@ -5,11 +5,11 @@ import { userData } from '../../features/axios/api/userDetails';
 
 function UserHome() {
   useEffect(()=> {
-    async function datas () {
+    async function userInfo () {
       const data = await userData()
-      console.log(data, 'data');  
+      console.log(data)
     }
-    datas();
+    userInfo();
   },[]);
 
   return (

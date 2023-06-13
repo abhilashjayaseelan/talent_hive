@@ -38,6 +38,9 @@ const jobSchema = new Schema({
         ref: 'Employer',
         required: [true, 'please add employerId']
     },
+    appliedUsers: {
+        type: Array,
+    },
     createdAt: {
         type: Date,
         default: Date.now()

@@ -34,7 +34,7 @@ export const employerRegisterValidationSchema = yup.object().shape({
     .matches(/^[a-zA-Z][a-zA-Z ]+[a-zA-Z]*$/, "Enter a valid name"),
   email: yup.string().required("Email is required").email("Invalid email"),
   industry: yup.string().required("Industry is required"),
-  location: yup.string().required('Location is required'),
+  location: yup.string().required("Location is required"),
   password: yup
     .string()
     .required("Password is required")
@@ -44,3 +44,24 @@ export const employerRegisterValidationSchema = yup.object().shape({
     .oneOf([yup.ref("password")], "Password does not match"),
 });
 
+export const jobCreationValidationSchema = yup.object().shape({
+  title: yup.string().required("Job Title is required"),
+  description: yup.string().required("Job Description is required"),
+  location: yup.string().required("Location is required"),
+  employmentType: yup.string().required("Employment Type is required"),
+  requirements: yup
+    .string()
+    .required("At least one requirement is required"),
+  responsibilities: yup
+    .string()
+    .required("At least one responsibility is required"),
+  salary: yup
+    .number()
+    .required("Salary is required")
+    .positive("Salary must be a positive number"),
+  openings: yup
+    .number()
+    .required("Openings is required")
+    .integer("Openings must be an integer")
+    .positive("Openings must be a positive number"),
+});

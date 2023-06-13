@@ -3,12 +3,17 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import { useForm } from "react-hook-form";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { userLoginValidationSchema } from "../../../utils/validation";
 import { employerLogin } from "../../../features/axios/api/employerAuthentication";
 import { LoginPayload } from "../../../types/PayloadInterface";
+import { setToken } from "../../../features/redux/slices/tokenSlice";
+import { useDispatch } from "react-redux";
 
 function EmployerLogin() {
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
+
   const {
     register,
     handleSubmit,
@@ -27,6 +32,11 @@ function EmployerLogin() {
     employerLogin(formData)
       .then((response) => {
         notify("Login success", "success");
+        setTimeout(() => {
+          const token = response.token;
+          dispatch(setToken(token));
+          navigate('/employer/home');
+        }, 2000);
       })
       .catch((error: any) => {
         notify(error.message, "error");

@@ -14,6 +14,7 @@ import {
   deleteJob,
   findJobByEmployer,
   getAllJobs,
+  findJobById
 } from "../../app/useCases/job/jobCrud";
 
 const jobController = (
@@ -88,11 +89,7 @@ const jobController = (
     async (req: CustomRequest, res: Response) => {
       const employerId = req.payload ?? "";
       const jobs = await findJobByEmployer(employerId, dbRepositoryJob);
-      res.json({
-        status: "success",
-        message: "success",
-        jobs,
-      });
+      res.json({status: 'success', jobs});
     }
   );
 
@@ -106,12 +103,24 @@ const jobController = (
     }
   );
 
+  const jobDataById = expressAsyncHandler(
+    async (req: CustomRequest, res: Response) => {
+      const jobId = req.params.id;
+      const jobData = await findJobById(jobId, dbRepositoryJob);
+      res.json({
+        status: 'success',
+        jobData
+      })
+    }
+  )
+
   return {
     createNewJob,
     updateTheJob,
     deleteTheJob,
     getJobsByEmployer,
-    findAllJobs
+    findAllJobs,
+    jobDataById
   };
 };
 

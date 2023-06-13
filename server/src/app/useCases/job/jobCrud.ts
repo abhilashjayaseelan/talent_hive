@@ -9,7 +9,8 @@ export const createJob = async (
     const result = await jobRepository.createJob(job);
     return result;
   } catch (error: any) {
-    throw new Error("Failed to create job");
+    console.log(error)
+    throw new Error("Failed to create job")
   }
 };
 
@@ -57,5 +58,17 @@ export const getAllJobs = async (
     return allJobs;
   } catch (error) {
     throw new Error("failed to get the jobs")
+  }
+}
+
+export const findJobById = async (
+  jobId: string,
+  jobRepository: ReturnType<JobDbInterface>
+) => {
+  try {
+    const jobData = await jobRepository.getJobById(jobId);
+    return jobData;
+  } catch (error: any) {
+    throw new Error('failed to get the job data')
   }
 }

@@ -9,7 +9,8 @@ export interface UserInterface {
     isActive?: boolean,
     education?: Array<object>,
     skills?: Array<string>,
-    createdAt?: Date
+    createdAt?: Date,
+    jobsApplied?: Array<string>
 }
 
 export interface CreateUserInterface {

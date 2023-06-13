@@ -40,6 +40,9 @@ const userSchema = new Schema({
     },
     image: {
         type: String,
+    },
+    jobsApplied: {
+        type: Array
     }
 })
 

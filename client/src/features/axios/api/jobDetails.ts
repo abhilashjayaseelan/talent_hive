@@ -4,15 +4,15 @@ import apiConfig from "../../../utils/apiConfig";
 
 const api = setupAxiosInterceptors();
 
-export const userData = async (): Promise <any> => {
+export const jobDetails = async(jobId: string): Promise<any> => {
     try {
         const config : AxiosRequestConfig = {
-            url: apiConfig.userData,
+            url: `${apiConfig.userData}/${jobId}`,
             method: 'get',
         }
         const response = await api(config);
         return response.data;   
     } catch (error) {
-        throw new Error('error while getting user data');    
+        throw new Error('error while getting job data');    
     }
 }
