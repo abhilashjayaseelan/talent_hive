@@ -11,7 +11,6 @@ export const employerJobs = async(): Promise<any> => {
             method: 'get'
         }
         const response = await api(config);
-        console.log(response);
         return response.data;
     } catch (error) {
         throw new Error('error while getting jobs');

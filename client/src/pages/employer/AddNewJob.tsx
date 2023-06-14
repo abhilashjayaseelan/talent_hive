@@ -4,7 +4,7 @@ import EmployerHeader from "../../components/Header/EmployerHeader";
 
 function AddNewJob() {
   return (
-    <div>
+    <div className="bg-foundItBg">
         <EmployerHeader/>
         <PostJob/>
     </div>
