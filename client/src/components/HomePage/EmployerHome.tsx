@@ -1,10 +1,39 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { ToastContainer } from "react-toastify";
 import { FaChartBar, FaBriefcase, FaEnvelope, FaCog } from "react-icons/fa";
 import AllJobsEmployer from "../Employer/Employer/AllJobsEmployer";
-// import { useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { RootState } from "../../features/redux/reducers/Reducer";
+import {
+  fetchEmployer,
+  clearEmployerDetails,
+} from "../../features/redux/slices/employerDetailsSlice";
 
 function EmployerHome() {
+  const dispatch = useDispatch();
+  const employerDetails = useSelector(
+    (state: RootState) => state.employerDetails.employerDetails
+  );
+  const status = useSelector(
+    (state: RootState) => state.employerDetails.status
+  );
+  const error = useSelector((state: RootState) => state.employerDetails.error);
+
+  useEffect(() => {
+    dispatch(fetchEmployer());
+    return () => {
+      dispatch(clearEmployerDetails());
+    };
+  }, [dispatch]);
+
+  if (status === "loading") {
+    return <div>Loading...</div>;
+  }
+
+  if (status === "failed") {
+    return <div>Error: {error}</div>;
+  }
+
   return (
     <div>
       <div className="flex">

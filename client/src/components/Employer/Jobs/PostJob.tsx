@@ -14,7 +14,7 @@ function PostJob() {
     register,
     handleSubmit,
     formState: { errors },
-  } = useForm<JobCreationPayload>({
+  } = useForm<JobCreationPayload>({ 
     resolver: yupResolver(jobCreationValidationSchema),
   });
 
@@ -54,7 +54,7 @@ function PostJob() {
                 <input
                   type="text"
                   id="title"
-                  className="w-full px-3 py-2 border border-gray-300 rounded focus:outline-none"
+                  className="w-full px-3 py-2 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-inset focus:ring-purple-600"
                   required
                   placeholder="Job Title"
                   {...register("title")}
@@ -72,7 +72,7 @@ function PostJob() {
                 </label>
                 <select
                   id="employmentType"
-                  className="w-full px-3 py-2 border border-gray-300 rounded focus:outline-none"
+                  className="w-full px-3 py-2 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-inset focus:ring-purple-600"
                   required
                   placeholder="Employment Type"
                   {...register("employmentType")}
@@ -100,7 +100,7 @@ function PostJob() {
               </label>
               <textarea
                 id="description"
-                className="w-full px-3 py-2 border border-gray-300 rounded focus:outline-none"
+                className="w-full px-3 py-2 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-inset focus:ring-purple-600"
                 required
                 placeholder="Job Description"
                 {...register("description")}
@@ -117,7 +117,7 @@ function PostJob() {
               <input
                 type="text"
                 id="location"
-                className="w-full px-3 py-2 border border-gray-300 rounded focus:outline-none"
+                className="w-full px-3 py-2 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-inset focus:ring-purple-600"
                 required
                 placeholder="Location"
                 {...register("location")}
@@ -133,7 +133,7 @@ function PostJob() {
               </label>
               <textarea
                 id="requirements"
-                className="w-full px-3 py-2 border border-gray-300 rounded focus:outline-none"
+                className="w-full px-3 py-2 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-inset focus:ring-purple-600"
                 required
                 placeholder="Requirements"
                 {...register("requirements")}
@@ -154,7 +154,7 @@ function PostJob() {
               </label>
               <textarea
                 id="responsibilities"
-                className="w-full px-3 py-2 border border-gray-300 rounded focus:outline-none"
+                className="w-full px-3 py-2 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-inset focus:ring-purple-600"
                 required
                 placeholder="Responsibilities"
                 {...register("responsibilities")}
@@ -172,7 +172,7 @@ function PostJob() {
                 <input
                   type="number"
                   id="salary"
-                  className="w-full px-3 py-2 border border-gray-300 rounded focus:outline-none"
+                  className="w-full px-3 py-2 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-inset focus:ring-purple-600"
                   required
                   placeholder="salary"
                   {...register("salary")}
@@ -188,7 +188,7 @@ function PostJob() {
                 <input
                   type="number"
                   id="openings"
-                  className="w-full px-3 py-2 border border-gray-300 rounded focus:outline-none"
+                  className="w-full px-3 py-2 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-inset focus:ring-purple-600"
                   required
                   placeholder="Openings"
                   {...register("openings")}

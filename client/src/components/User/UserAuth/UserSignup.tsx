@@ -37,7 +37,7 @@ export default function UserSignup() {
   };
 
   return (
-    <div className="flex justify-center items-center h-screen ">
+    <div className="bg-slate-100 flex justify-center items-center h-screen ">
       <div className="flex justify-center items-center ">
         <div className="p-6 bg-white border border-gray-300 rounded shadow-lg mt-10 sm:mx-auto sm:w-full sm:max-w-sm">
           <h2 className="text-2xl font-bold mb-4">Sign up</h2>

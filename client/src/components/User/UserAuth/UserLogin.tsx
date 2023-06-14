@@ -41,7 +41,7 @@ export default function UserLogin() {
       });
   };
   return (
-    <div className="flex justify-end h-screen">
+    <div className="flex justify-end h-screen bg-slate-100">
       <div className="ml-32 flex justify-center items-center">
         <img
           src="https://www.foundit.in/rio/public/images/login-illustration.png"

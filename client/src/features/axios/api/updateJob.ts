@@ -12,13 +12,13 @@ const updateJob = async (
   try {
     const config: AxiosRequestConfig = {
       url: `${apiConfig.updateJob}/${jobId}`,
-      method: "post",
+      method: "put",
       data: payload
     };
     const response = await api(config);
     return response.data;
   } catch (error) {
-    throw new Error("error while creating new job");
+    throw new Error("error while updating new job");
   }
 };
 

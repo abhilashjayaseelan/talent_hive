@@ -44,16 +44,94 @@ export const employerRegisterValidationSchema = yup.object().shape({
     .oneOf([yup.ref("password")], "Password does not match"),
 });
 
+export const jobUpdateValidationSchema = yup.object().shape({
+  title: yup.string().required("Job Title is required"),
+  description: yup.string().required("Job Description is required"),
+  location: yup.string().required("Location is required"),
+  employmentType: yup.string().required("Employment Type is required"),
+  requirements: yup
+    .mixed()
+    .test(
+      "isArrayOrString",
+      "Requirements must be an array or a string",
+      function (value) {
+        const { createError, path } = this;
+        if (Array.isArray(value) || typeof value === "string") {
+          return true;
+        }
+        return createError({
+          path,
+          message: "Requirements must be an array or a string",
+        });
+      }
+    )
+    .required("At least one requirement is required"),
+  responsibilities: yup
+    .mixed()
+    .test(
+      "isArrayOrString",
+      "Responsibilities must be an array or a string",
+      function (value) {
+        const { createError, path } = this;
+        if (Array.isArray(value) || typeof value === "string") {
+          return true;
+        }
+        return createError({
+          path,
+          message: "Responsibilities must be an array or a string",
+        });
+      }
+    )
+    .required("At least one responsibility is required"),
+  salary: yup
+    .number()
+    .required("Salary is required")
+    .positive("Salary must be a positive number"),
+  openings: yup
+    .number()
+    .required("Openings is required")
+    .integer("Openings must be an integer")
+    .positive("Openings must be a positive number"),
+});
+
 export const jobCreationValidationSchema = yup.object().shape({
   title: yup.string().required("Job Title is required"),
   description: yup.string().required("Job Description is required"),
   location: yup.string().required("Location is required"),
   employmentType: yup.string().required("Employment Type is required"),
   requirements: yup
-    .string()
+    .mixed()
+    .test(
+      "isArrayOrString",
+      "Requirements must be an array or a string",
+      function (value) {
+        const { createError, path } = this;
+        if (Array.isArray(value) || typeof value === "string") {
+          return true;
+        }
+        return createError({
+          path,
+          message: "Requirements must be an array or a string",
+        });
+      }
+    )
     .required("At least one requirement is required"),
   responsibilities: yup
-    .string()
+    .mixed()
+    .test(
+      "isArrayOrString",
+      "Responsibilities must be an array or a string",
+      function (value) {
+        const { createError, path } = this;
+        if (Array.isArray(value) || typeof value === "string") {
+          return true;
+        }
+        return createError({
+          path,
+          message: "Responsibilities must be an array or a string",
+        });
+      }
+    )
     .required("At least one responsibility is required"),
   salary: yup
     .number()

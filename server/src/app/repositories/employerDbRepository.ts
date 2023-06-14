@@ -12,9 +12,15 @@
         return await repository.createEmployer(employer);
     }
 
+    const findEmployerById = async (id: string) => {
+        const employer = await repository.getEmployerById(id);
+        return employer;
+    }
+
     return {
         getEmployerByEmail,
-        createEmployer
+        createEmployer,
+        findEmployerById
     }
  }
 

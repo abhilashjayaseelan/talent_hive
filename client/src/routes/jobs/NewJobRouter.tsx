@@ -7,7 +7,7 @@ const NewJobRouter = () => {
         <div>
             <Routes>
                 <Route path="/create-job" element= {<AddNewJob/>} />
-                <Route path="/edit-job" element= {<EditJobPage/>} />
+                <Route path="/edit-job/:id" element= {<EditJobPage/>} />
             </Routes>
         </div>
     )
