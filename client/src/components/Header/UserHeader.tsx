@@ -5,8 +5,7 @@ import { Bars3Icon, XMarkIcon } from "@heroicons/react/24/outline";
 import { Link } from "react-router-dom";
 
 const navigation = [
-  { name: "Jobs", href: "f", current: false },
-  { name: "Employer Login", href: "/employer/login", current: false },
+  { name: "Jobs", href: "/job/all-jobs", current: false },
 ];
 
 function classNames(...classes: string[]) {
@@ -15,9 +14,10 @@ function classNames(...classes: string[]) {
 
 function UserHeader() {
   return (
+    <div className="fixed top-0 w-full bg-foundItBg">
     <Disclosure as="nav" className="bg-foundItBg">
       {({ open }) => (
-        <>
+        <div className="">
           <div className="mx-auto max-w-7xl px-2 sm:px-6 lg:px-8">
             <div className="relative flex h-16 items-center justify-between">
               <div className="absolute inset-y-0 left-0 flex items-center sm:hidden">
@@ -125,6 +125,19 @@ function UserHeader() {
                       <Menu.Item>
                         {({ active }) => (
                           <a
+                            href="/employer/login"
+                            className={classNames(
+                              active ? "bg-gray-100" : "",
+                              "block px-4 py-2 text-sm text-black"
+                            )}
+                          >
+                            Employer login
+                          </a>
+                        )}
+                      </Menu.Item>
+                      <Menu.Item>
+                        {({ active }) => (
+                          <a
                             href="d"
                             className={classNames(
                               active ? "bg-gray-100" : "",
@@ -162,9 +175,10 @@ function UserHeader() {
               ))}
             </div>
           </Disclosure.Panel>
-        </>
+        </div>
       )}
     </Disclosure>
+    </div>
   );
 }
 

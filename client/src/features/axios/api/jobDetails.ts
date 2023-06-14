@@ -16,3 +16,16 @@ export const jobDetails = async(jobId: string): Promise<any> => {
         throw new Error('error while getting job data');    
     }
 }
+
+export const allJobs = async (): Promise<any> => {
+    try {
+        const config : AxiosRequestConfig = {
+            url: apiConfig.allJobs,
+            method: 'get'
+        }
+        const response = await api(config);
+        return response?.data;
+    } catch (error) {
+        throw new Error('error while getting all jobs');
+    }
+}
