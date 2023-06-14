@@ -41,7 +41,7 @@ function PostJob() {
     <>
       <div className="max-w-lg mx-auto">
         <h1 className="text-2xl font-bold mb-4">Create New Job</h1>
-        <div className="rounded border border-gray-300 p-4">
+        <div className="rounded border bg-white border-gray-300 p-4">
           <form onSubmit={handleSubmit(submitHandler)}>
             <div className="mb-4 flex justify-between">
               <div className="w-1/2 mr-4">

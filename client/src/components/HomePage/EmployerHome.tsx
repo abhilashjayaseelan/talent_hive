@@ -35,9 +35,9 @@ function EmployerHome() {
   }
 
   return (
-    <div>
+    <div className="h-screen bg-foundItBg">
       <div className="flex">
-        <div className="w-1/5 bg-white shadow-md mt-10 ml-4 rounded border border-gray-300">
+        <div className=" w-1/5 bg-white shadow-md mt-10 ml-4 rounded border border-gray-300">
           <ul className="p-4">
             <li className="mb-4 py-2 px-4 rounded border border-gray-300 flex items-center hover:bg-purple-500 hover:text-white text-sm">
               <FaChartBar className="mr-2" />
@@ -57,7 +57,7 @@ function EmployerHome() {
             </li>
           </ul>
         </div>
-        <div className="w-4/5 bg-white p-10">
+        <div className="w-4/5 p-10">
           {/* <h1 className="text-2xl font-bold mb-4">Welcome, Back ! 🤖</h1> */}
           {/* Rest of the content */}
           <AllJobsEmployer />

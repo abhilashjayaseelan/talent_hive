@@ -1,22 +1,18 @@
 import { AxiosRequestConfig } from "axios";
 import setupAxiosInterceptors from "../interceptors/axiosInterceptor";
 import apiConfig from "../../../utils/apiConfig";
-import { JobCreationPayload } from "../../../types/PayloadInterface";
 
 const api = setupAxiosInterceptors();
 
-const deleteJob = async (
-  payload: JobCreationPayload,
-): Promise<any> => {
+const deleteJob = async (id: string): Promise<any> => {
   try {
     const config: AxiosRequestConfig = {
-      url: '',
+      url: `${apiConfig.deleteJob}/${id}`,
       method: "delete",
     };
-    const response = await api(config);
-    return response.data;
+    await api(config);
   } catch (error) {
-    throw new Error("error while creating new job");
+    throw new Error("error while deleting the job");
   }
 };
 

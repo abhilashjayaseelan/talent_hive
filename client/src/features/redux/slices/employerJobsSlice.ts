@@ -3,10 +3,13 @@ import { JobsInterface } from '../../../types/JobInterface';
 
 interface EmployerJobsState {
   employerJobs: JobsInterface[]; 
+  change: boolean;  
 }
 
 const initialState: EmployerJobsState = {
   employerJobs: [],
+  change: false
+
 };
 
 const employerJobsSlice = createSlice({
@@ -19,8 +22,11 @@ const employerJobsSlice = createSlice({
     clearEmployerJobs: (state) => {
       state.employerJobs = [];
     },
+    deleted: (state) => {
+      state.change = !state.change;
+    }
   },
 });
 
-export const { setEmployerJobs, clearEmployerJobs } = employerJobsSlice.actions;
+export const { setEmployerJobs, clearEmployerJobs, deleted } = employerJobsSlice.actions;
 export default employerJobsSlice.reducer;

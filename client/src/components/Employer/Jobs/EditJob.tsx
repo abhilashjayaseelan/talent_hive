@@ -66,7 +66,7 @@ function EditJob() {
     <div>
       <div className="max-w-lg mx-auto">
         <h1 className="text-2xl font-bold mb-4">Edit job details</h1>
-        <div className="rounded border border-gray-300 p-4">
+        <div className="rounded border border-gray-300 p-4 bg-white">
           <form onSubmit={handleSubmit(submitHandler)}>
             <div className="mb-4 flex justify-between">
               <div className="w-1/2 mr-4">

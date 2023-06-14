@@ -4,7 +4,7 @@ import React from "react";
 
 function EditJobPage() {
   return (
-    <div>
+    <div className="bg-foundItBg">
       <EmployerHeader />
       <EditJob />
     </div>
