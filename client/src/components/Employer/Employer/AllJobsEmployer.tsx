@@ -22,7 +22,7 @@ function AllJobsEmployer() {
     };
     fetchJobsAndStore();
     return ()=> {
-      clearEmployerJobs();
+      dispatch(clearEmployerJobs());
     }
   }, [dispatch, deleted]);
 

@@ -1,6 +1,8 @@
 import React from "react";
 import { Menu, Transition } from "@headlessui/react";
 import { JobsInterface } from "../../../types/JobInterface";
+import { useDispatch } from "react-redux";
+import { setJobId } from "../../../features/redux/slices/jobDetailsSlice";
 import {
   BriefcaseIcon,
   CalendarIcon,
@@ -18,7 +20,12 @@ function classNames(...classes: string[]) {
   return classes.filter(Boolean).join(" ");
 }
 
-const JobList: React.FC<AllJobsProps> = ({ jobs }) =>{
+const JobList: React.FC<AllJobsProps> = ({ jobs }) => {
+  const dispatch = useDispatch();
+  const handleViewJob = (jobId: string) => {
+    dispatch(setJobId(jobId));
+  };
+  
   return (
     <>
       <div className="border border-gray-300 rounded-md p-4 mb-4  bg-white">
@@ -65,6 +72,7 @@ const JobList: React.FC<AllJobsProps> = ({ jobs }) =>{
               <button
                 type="button"
                 className="inline-flex items-center rounded-md bg-white px-3 py-2 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50"
+                onClick={() => handleViewJob(jobs._id)}
               >
                 <LinkIcon
                   className="-ml-0.5 mr-1.5 h-5 w-5 text-gray-400"
@@ -126,6 +134,6 @@ const JobList: React.FC<AllJobsProps> = ({ jobs }) =>{
       </div>
     </>
   );
-}
+};
 
 export default JobList;
