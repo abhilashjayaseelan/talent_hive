@@ -4,7 +4,6 @@ import EmployerRouter from "./routes/employer/EmployerRouter";
 import NotFound from "./components/Error/NotFound";
 import HomeRouter from "./routes/home/HomeRouter";
 import JobRouter from "./routes/jobs/JobRouter";
-
 function App() {
   return (
     <div className="font-roboto">
