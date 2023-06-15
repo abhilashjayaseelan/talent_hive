@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchAllJobs } from "../../../features/redux/slices/getAllJobsSlice";
 import { RootState } from "../../../features/redux/reducers/Reducer";
@@ -11,6 +11,7 @@ function DisplayJobs() {
   const jobs = useSelector((state: RootState) => state.allJobs.jobs);
   const status = useSelector((state: RootState) => state.allJobs.status);
   const error = useSelector((state: RootState) => state.allJobs.error);
+  const [selected, setSelected] = useState("");
 
   useEffect(() => {
     dispatch(fetchAllJobs());
@@ -25,15 +26,24 @@ function DisplayJobs() {
   }
 
   return (
-    <div className="pt-20 px-4 sm:px-8 md:px-16 lg:px-32 flex flex-wrap min-h-screen bg-green-300">
-      <div className="w-full sm:w-2/5 p-4 sm:p-6 bg-slate-400">
-        {jobs &&
-          jobs.map((job: JobsInterface) => (
-            <JobList key={job._id} jobs={job} />
-          ))}
+    <div className="pt-20 px-4 sm:px-8 md:px-16 lg:px-32 flex flex-wrap min-h-screen">
+      <div className="w-full sm:w-2/4 p-4 sm:p-6">
+        <div className="overflow-y-auto p-6" style={{ maxHeight: "calc(100vh - 80px)" }}>
+          {jobs &&
+            jobs.map((job: JobsInterface) => (
+              <JobList
+                key={job._id}
+                jobs={job}
+                selected={selected}
+                setSelected={setSelected}
+              />
+            ))}
+        </div>
       </div>
-      <div className="w-full sm:w-3/5 p-4 sm:p-6 bg-stone-600">
-        <JobDetails />
+      <div className="w-full sm:w-2/4 p-4 sm:p-6 bg-white">
+        <div className="overflow-y-auto" style={{ maxHeight: "calc(100vh - 80px)" }}>
+          <JobDetails />
+        </div>
       </div>
     </div>
   );

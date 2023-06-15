@@ -1,5 +1,6 @@
 import { JobInterface } from "../types/jobInterface";
 import { JobModel } from "../frameworks/database/mongoDb/models/jobModel";
+import { EmployerModel } from "../frameworks/database/mongoDb/models/employerModel";
 
 export class JobEntity {
     private model: JobModel;
@@ -41,7 +42,7 @@ export class JobEntity {
     }
 
     public async getJobById (Id : string) : Promise<JobInterface | null> {
-        const jobData = await this.model.findById(Id);
+        const jobData = await this.model.findById(Id).populate('employer', 'companyName email').exec();
         return jobData;
     }
 }
