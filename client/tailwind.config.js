@@ -7,8 +7,12 @@ export const theme = {
       serif: ["Merriweather", "serif"],
     },
     colors: {
-       foundItBg:'#f7f2fa'
-    }
+      foundItBg: "#f7f2fa",
+      scrollbarTrack: "var(--scrollbar-track-color)",
+      scrollbarThumb: "var(--scrollbar-thumb-color)",
+      scrollbarThumbHover: "var(--scrollbar-thumb-color-hover)",
+    },
   },
+  plugins: [require("tailwind-scrollbar")],
 };
 export const plugins = [];
