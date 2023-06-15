@@ -11,9 +11,11 @@ import {
 
 function EmployerHome() {
   const dispatch = useDispatch();
-  const employerDetails = useSelector(
-    (state: RootState) => state.employerDetails.employerDetails
-  );
+
+  // const employerDetails = useSelector(
+  //   (state: RootState) => state.employerDetails.employerDetails
+  // );
+  
   const status = useSelector(
     (state: RootState) => state.employerDetails.status
   );

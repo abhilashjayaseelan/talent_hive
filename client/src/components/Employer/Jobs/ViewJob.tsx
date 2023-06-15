@@ -1,53 +1,49 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect} from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../../../features/redux/reducers/Reducer";
 import ShimmerJobDetails from "../../../constants/shimmer/ShimmerJobDetails";
 import {
-  fetchJobDetails,
-  clearJObDetails,
-  clearJObId,
-} from "../../../features/redux/slices/jobDetailsSlice";
+  fetchEmployerJobDetails,
+  clearEmployerJobDetails,
+  clearEmployerJobId,
+} from "../../../features/redux/slices/employerJobDetailsSlice";
 import {
   BriefcaseIcon,
   CalendarIcon,
   CurrencyRupeeIcon,
-  LinkIcon,
   MapPinIcon,
 } from "@heroicons/react/20/solid";
 
-function JobDetails() {
+function EmployerViewJob() {
   const dispatch = useDispatch();
   const jobId: string =
-    useSelector((state: RootState) => state.jobDetails.jobId) ?? "";
-  const jobDetails = useSelector(
-    (state: RootState) => state.jobDetails.jobDetails
-  ); 
+    useSelector((state: RootState) => state.employerJobDetails.jobId) ?? "";
 
-  const [isDetailsVisible, setIsDetailsVisible] = useState(false);
+  const jobDetails = useSelector(
+    (state: RootState) => state.employerJobDetails.jobDetails
+  );
+    const status = useSelector((state: RootState) => state.employerJobDetails.status);
+    const error = useSelector((state: RootState) => state.employerJobDetails.error);
 
   useEffect(() => {
-    dispatch(fetchJobDetails(jobId));
-    
-    const timer = setTimeout(() => {
-      setIsDetailsVisible(true);
-    }, 500);
+    dispatch(fetchEmployerJobDetails(jobId));
 
     return () => {
-      clearTimeout(timer);
-      dispatch(clearJObDetails());
-      dispatch(clearJObId());
+      dispatch(clearEmployerJobDetails());
+      dispatch(clearEmployerJobId());
     };
   }, [dispatch, jobId]);
 
-  
+  if( status === 'loading') {
+    return <ShimmerJobDetails/>
+  }
+
+  if( status === 'failed') {
+    return <div>Error: {error}</div>
+  }
 
   return (
-    <div
-      className={`max-w-md mx-auto transition-opacity duration-500 ${
-        isDetailsVisible ? "opacity-100" : "opacity-0"
-      }`}
-    >
-      {jobDetails ? (
+    <div className="">
         <div className="max-w-md mx-auto">
           <div className="p-4 rounded-lg">
             <div className="flex items-center mb-2">
@@ -65,7 +61,7 @@ function JobDetails() {
                 <CalendarIcon className="w-4 h-4 mr-1 text-purple-600" />
                 <span>
                   Posted on{" "}
-                  {new Date(jobDetails?.createdAt).toLocaleDateString()}
+                  {new Date(jobDetails?.createdAt ?? '')?.toLocaleDateString()}
                 </span>
               </div>
             </div>
@@ -101,7 +97,7 @@ function JobDetails() {
                   </dt>
                   <dd className="mt-1 text-sm leading-6 text-gray-700 sm:col-span-2 sm:mt-0">
                     <ul className="list-disc list-inside">
-                      {jobDetails.requirements.map((requirement, index) => (
+                      {jobDetails?.requirements?.map((requirement, index) => (
                         <li key={index}>{requirement}</li>
                       ))}
                     </ul>
@@ -113,7 +109,7 @@ function JobDetails() {
                   </dt>
                   <dd className="mt-1 text-sm leading-6 text-gray-700 sm:col-span-2 sm:mt-0">
                     <ul className="list-disc list-inside">
-                      {jobDetails?.responsibilities.map(
+                      {jobDetails?.responsibilities?.map(
                         (responsibility, index) => (
                           <li key={index}>{responsibility}</li>
                         )
@@ -128,7 +124,7 @@ function JobDetails() {
                   <dd className="mt-1 text-sm leading-6 text-gray-700 sm:col-span-2 sm:mt-0">
                     <div className="flex items-center">
                       <CurrencyRupeeIcon className="w-4 h-4 mr-1 text-purple-600" />
-                      <span>{jobDetails.salary}</span>
+                      <span>{jobDetails?.salary}</span>
                     </div>
                   </dd>
                 </div>
@@ -137,40 +133,15 @@ function JobDetails() {
                     Openings
                   </dt>
                   <dd className="mt-1 text-sm leading-6 text-gray-700 sm:col-span-2 sm:mt-0">
-                    {jobDetails.openings}
-                  </dd>
-                </div>
-                <div className="px-4 py-6 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0">
-                  <dt className="text-sm font-medium leading-6 text-gray-900">
-                    Employer
-                  </dt>
-                  <dd className="mt-1 text-sm leading-6 text-gray-700 sm:col-span-2 sm:mt-0">
-                    <div className="flex items-center">
-                      <div className="flex items-center mr-2">
-                        <BriefcaseIcon className="w-4 h-4 mr-1 text-purple-600" />
-                        <span>{jobDetails?.employer?.companyName}</span>
-                      </div>
-                      <div className="flex items-center">
-                        <LinkIcon className="w-4 h-4 mr-1 text-purple-600" />
-                        <span>{jobDetails?.employer?.email}</span>
-                      </div>
-                    </div>
+                    {jobDetails?.openings}
                   </dd>
                 </div>
               </dl>
             </div>
-            <div className="flex justify-end mt-4">
-              <button className="px-4 py-2 text-sm font-medium text-white bg-purple-700 rounded hover:bg-purple-500">
-                Apply Now
-              </button>
-            </div>
           </div>
         </div>
-      ) : (
-        <ShimmerJobDetails />
-      )}
     </div>
   );
 }
 
-export default JobDetails;
+export default EmployerViewJob;

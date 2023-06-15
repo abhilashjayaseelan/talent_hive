@@ -1,9 +1,11 @@
 import { Menu, Transition } from "@headlessui/react";
 import { JobsInterface } from "../../../types/JobInterface";
 import React, { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import ConfirmDelete from "../Jobs/ConfirmDelete";
 import deleteJob from "../../../features/axios/api/deleteJob";
+import { useDispatch } from "react-redux";
+import { setEmployerJobId } from "../../../features/redux/slices/employerJobDetailsSlice";
 import {
   BriefcaseIcon,
   CalendarIcon,
@@ -26,11 +28,18 @@ function classNames(...classes: string[]) {
 const JobsByEmployer: React.FC<AllJobsProps> = ({ jobs }) => {
   const [showDeleteConfirmation, setShowDeleteConfirmation] = useState(false);
   const [selectedJobId, setSelectedJobId] = useState("");
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
 
   const handleDeleteButtonClick = (jobId: string) => {
     setSelectedJobId(jobId);
     setShowDeleteConfirmation(true);
   };
+
+  const handleViewJob = (jobId: string) => {
+    dispatch(setEmployerJobId(jobId));
+    navigate('/job/view-job');
+  }
 
   return (
     <div className="border border-gray-300 rounded-md p-4 mb-4  bg-white">
@@ -91,6 +100,7 @@ const JobsByEmployer: React.FC<AllJobsProps> = ({ jobs }) => {
             <button
               type="button"
               className="inline-flex items-center rounded-md bg-white px-3 py-2 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50"
+              onClick={()=> handleViewJob(jobs._id)}
             >
               <LinkIcon
                 className="-ml-0.5 mr-1.5 h-5 w-5 text-gray-400"
