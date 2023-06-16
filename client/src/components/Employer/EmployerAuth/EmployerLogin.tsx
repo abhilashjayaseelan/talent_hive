@@ -7,7 +7,7 @@ import { Link, useNavigate } from "react-router-dom";
 import { userLoginValidationSchema } from "../../../utils/validation";
 import { employerLogin } from "../../../features/axios/api/employerAuthentication";
 import { LoginPayload } from "../../../types/PayloadInterface";
-import { setToken } from "../../../features/redux/slices/tokenSlice";
+import { setEmployerToken } from "../../../features/redux/slices/employerTokenSlice";
 import { useDispatch } from "react-redux";
 
 function EmployerLogin() {
@@ -34,7 +34,7 @@ function EmployerLogin() {
         notify("Login success", "success");
         setTimeout(() => {
           const token = response.token;
-          dispatch(setToken(token));
+          dispatch(setEmployerToken(token));
           navigate('/employer/home');
         }, 2000);
       })

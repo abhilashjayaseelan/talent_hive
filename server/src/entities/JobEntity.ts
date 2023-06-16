@@ -1,6 +1,5 @@
 import { JobInterface } from "../types/jobInterface";
 import { JobModel } from "../frameworks/database/mongoDb/models/jobModel";
-import { EmployerModel } from "../frameworks/database/mongoDb/models/employerModel";
 
 export class JobEntity {
     private model: JobModel;

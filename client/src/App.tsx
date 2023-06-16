@@ -9,7 +9,7 @@ function App() {
     <div className="font-roboto">
       <Router>
         <Routes>
-          <Route path="/" element ={<HomeRouter/>}/>
+          <Route path="/*" element ={<HomeRouter/>}/>
           <Route path="/user/*" element={<UserRouter />} />
           <Route path="/employer/*" element={<EmployerRouter />} />
           <Route path="/job/*" element= {<JobRouter/>} />

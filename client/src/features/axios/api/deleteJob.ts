@@ -1,8 +1,8 @@
 import { AxiosRequestConfig } from "axios";
-import setupAxiosInterceptors from "../interceptors/axiosInterceptor";
 import apiConfig from "../../../utils/apiConfig";
+import setupAxiosInterceptorsEmployer from "../interceptors/axiosInterceptorEmployer";
 
-const api = setupAxiosInterceptors();
+const api = setupAxiosInterceptorsEmployer();
 
 const deleteJob = async (id: string): Promise<any> => {
   try {
