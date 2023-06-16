@@ -7,7 +7,7 @@ import { jobUpdateValidationSchema } from "../../../utils/validation";
 import { JobCreationPayload } from "../../../types/PayloadInterface";
 import { useNavigate, useParams } from "react-router-dom";
 import updateJob from "../../../features/axios/api/updateJob";
-import { jobDetails } from "../../../features/axios/api/jobDetails";
+import { jobDetailsEmployer } from "../../../features/axios/api/jobDetailsEmployer";
 import { JobsInterface } from "../../../types/JobInterface";
 
 function EditJob() {
@@ -16,11 +16,11 @@ function EditJob() {
   const { id } = useParams();
   useEffect(() => {
     async function details() {
-      const data = await jobDetails(id ?? "");
+      const data = await jobDetailsEmployer(id ?? "");
       setJobData(data);
     }
     details();
-  }, []);
+  }, [id]);
 
   const {
     register,

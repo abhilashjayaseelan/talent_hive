@@ -12,7 +12,9 @@ const apiConfig = {
     deleteJob: `${configKeys.API_URL}job/delete-job`,
     jobData: `${configKeys.API_URL}job/job-data`,
     employerData: `${configKeys.API_URL}employer/employer-data`,
-    allJobs: `${configKeys.API_URL}job/all-jobs`
+    allJobs: `${configKeys.API_URL}job/all-jobs`,
+    applyJob: `${configKeys.API_URL}job-application/create-application`,
+    isApplied: `${configKeys.API_URL}job-application/is-applied`
 }
 
 export default apiConfig;

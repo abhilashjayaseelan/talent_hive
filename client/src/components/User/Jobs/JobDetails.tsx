@@ -2,6 +2,12 @@ import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../../../features/redux/reducers/Reducer";
 import ShimmerJobDetails from "../../../constants/shimmer/ShimmerJobDetails";
+import { applyForJob } from "../../../features/axios/api/applyForJob";
+import { isApplied } from "../../../features/axios/api/applyForJob";
+import { userData } from "../../../features/axios/api/userDetails";
+import { UserDataPayload } from "../../../types/PayloadInterface";
+import "react-toastify/dist/ReactToastify.css";
+import { ToastContainer, toast } from "react-toastify";
 import {
   fetchJobDetails,
   clearJObDetails,
@@ -21,32 +27,55 @@ function JobDetails() {
     useSelector((state: RootState) => state.jobDetails.jobId) ?? "";
   const jobDetails = useSelector(
     (state: RootState) => state.jobDetails.jobDetails
-  ); 
+  );
 
-  const [isDetailsVisible, setIsDetailsVisible] = useState(false);
+  const [applied, setApplied] = useState('Apply');
+  const [user, setUser] = useState<UserDataPayload>();
 
   useEffect(() => {
     dispatch(fetchJobDetails(jobId));
-    
-    const timer = setTimeout(() => {
-      setIsDetailsVisible(true);
-    }, 500);
 
     return () => {
-      clearTimeout(timer);
       dispatch(clearJObDetails());
       dispatch(clearJObId());
     };
   }, [dispatch, jobId]);
 
-  
+  useEffect(() => {
+    async function userInfo() {
+      const data: UserDataPayload = await userData();
+      setUser(data);
+    }
+    userInfo();
+  }, []);
+
+  useEffect(() => {
+    async function applied() {
+      const status = await isApplied(jobDetails?._id, user?._id);
+      setApplied(status?.status);
+    }
+    applied();
+  }, [jobDetails?._id, user?._id]);
+
+  const notify = (msg: string, type: string) => {
+    type === "error"
+      ? toast.error(msg, { position: toast.POSITION.TOP_RIGHT })
+      : toast.success(msg, { position: toast.POSITION.TOP_RIGHT });
+  };
+
+  const jobApplyHandler = async (jobID: string, empID: string) => {
+    await applyForJob(jobID, empID)
+      .then((application) => {
+        notify("Job applied successfully", "success");
+        setApplied('Applied')
+      })
+      .catch((error: any) => {
+        notify(error.message, "error");
+      });
+  };
 
   return (
-    <div
-      className={`max-w-md mx-auto transition-opacity duration-500 ${
-        isDetailsVisible ? "opacity-100" : "opacity-0"
-      }`}
-    >
+    <div className={`max-w-md mx-auto transition-opacity duration-500`}>
       {jobDetails ? (
         <div className="max-w-md mx-auto">
           <div className="p-4 rounded-lg">
@@ -160,8 +189,14 @@ function JobDetails() {
               </dl>
             </div>
             <div className="flex justify-end mt-4">
-              <button className="px-4 py-2 text-sm font-medium text-white bg-purple-700 rounded hover:bg-purple-500">
-                Apply Now
+              <button
+                className="px-4 py-2 text-sm font-medium text-white bg-purple-700 rounded hover:bg-purple-500"
+                disabled={applied === "Applied"}
+                onClick={() =>
+                  jobApplyHandler(jobDetails._id, jobDetails?.employer?._id)
+                }
+              >
+                {applied}
               </button>
             </div>
           </div>
@@ -169,6 +204,7 @@ function JobDetails() {
       ) : (
         <ShimmerJobDetails />
       )}
+      <ToastContainer />
     </div>
   );
 }

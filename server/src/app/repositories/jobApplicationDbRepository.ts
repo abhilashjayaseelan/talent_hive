@@ -9,8 +9,14 @@ export const jobApplicationDbRepository = (
         return newApplication;
     }
 
+    const alreadyApplied = async (jobId: string, userId: string) => {
+        const existingApplication = await repository.alreadyApplied(jobId, userId);
+        return existingApplication;
+    }
+
     return {
-        applyForJob
+        applyForJob,
+        alreadyApplied
     }
 }
 

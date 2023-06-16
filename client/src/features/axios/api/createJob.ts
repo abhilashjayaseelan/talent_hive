@@ -1,9 +1,9 @@
 import { AxiosRequestConfig } from "axios";
-import setupAxiosInterceptors from "../interceptors/axiosInterceptor";
 import apiConfig from "../../../utils/apiConfig";
 import { JobCreationPayload } from "../../../types/PayloadInterface";
+import setupAxiosInterceptorsEmployer from "../interceptors/axiosInterceptorEmployer";
 
-const api = setupAxiosInterceptors();
+const api = setupAxiosInterceptorsEmployer();
 
 const createNewJob = async (
   payload: JobCreationPayload,

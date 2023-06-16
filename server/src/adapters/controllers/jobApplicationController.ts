@@ -5,7 +5,10 @@ import { JobApplicationRepositoryMongoDB } from "../../frameworks/database/mongo
 import { HttpStatus } from "../../types/httpStatus";
 import { Request, Response } from "express";
 import { CustomRequest } from "../../types/expressRequest";
-import { applyForJob } from "../../app/useCases/jobApplication/jobApplication";
+import {
+  applyForJob,
+  existingApplication,
+} from "../../app/useCases/jobApplication/jobApplication";
 import { Types } from "mongoose";
 import AppError from "../../utils/appError";
 import expressAsyncHandler from "express-async-handler";
@@ -54,9 +57,37 @@ const jobApplicationController = (
     }
   );
 
+  const existingApplicant = expressAsyncHandler(
+    async (req: CustomRequest, res: Response) => {
+      let jobId = Array.isArray(req.query.jobId)
+        ? req.query.jobId[0]
+        : req.query.jobId;
+      const userId = new Types.ObjectId(req.payload);
+      const jobID =  new Types.ObjectId(String(jobId))
+
+      const alreadyApplied = await existingApplication(
+        jobID,
+        userId,
+        dbRepositoryJobApplication
+      );
+      if(alreadyApplied) {
+        res.json({
+          status: 'Applied',
+          message: 'already applied'
+        })
+      } else {
+        res.json( {
+          status: 'Apply Now',
+          message: 'not applied'
+        })
+      }
+    }
+  );
+
   return {
-    applyNewJob
-  }
+    applyNewJob,
+    existingApplicant
+  };
 };
 
-export default jobApplicationController; 
+export default jobApplicationController;
