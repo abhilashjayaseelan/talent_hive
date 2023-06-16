@@ -1,4 +1,4 @@
-import { Schema, Model, model } from "mongoose";
+import { Schema, model } from "mongoose";
 
 const jobSchema = new Schema({
     title: {
@@ -37,9 +37,6 @@ const jobSchema = new Schema({
         type: Schema.Types.ObjectId,
         ref: 'Employer',
         required: [true, 'please add employerId']
-    },
-    appliedUsers: {
-        type: Array,
     },
     createdAt: {
         type: Date,
