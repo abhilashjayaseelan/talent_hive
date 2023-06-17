@@ -3,9 +3,10 @@ import { JobsInterface } from "../../../types/JobInterface";
 import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import ConfirmDelete from "../Jobs/ConfirmDelete";
-import deleteJob from "../../../features/axios/api/deleteJob";
+import deleteJob from "../../../features/axios/api/employer/deleteJob";
 import { useDispatch } from "react-redux";
 import { setEmployerJobId } from "../../../features/redux/slices/employerJobDetailsSlice";
+import { ToastContainer } from "react-toastify";
 import {
   BriefcaseIcon,
   CalendarIcon,
@@ -180,6 +181,7 @@ const JobsByEmployer: React.FC<AllJobsProps> = ({ jobs }) => {
           onConfirm={() => deleteJob(selectedJobId)}
         />
       )}
+      <ToastContainer/>
     </div>
   );
 };

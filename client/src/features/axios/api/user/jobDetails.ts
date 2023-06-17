@@ -1,10 +1,10 @@
 import { AxiosRequestConfig } from "axios";
-import apiConfig from "../../../utils/apiConfig";
-import setupAxiosInterceptorsEmployer from "../interceptors/axiosInterceptorEmployer";
+import setupAxiosInterceptors from "../../interceptors/axiosInterceptor";
+import apiConfig from "../../../../utils/apiConfig";
 
-const api = setupAxiosInterceptorsEmployer();
+const api = setupAxiosInterceptors();
 
-export const jobDetailsEmployer = async(jobId: string): Promise<any> => {
+export const jobDetails = async(jobId: string): Promise<any> => {
     try {
         const config : AxiosRequestConfig = {
             url: `${apiConfig.jobData}/${jobId}`,
@@ -17,7 +17,7 @@ export const jobDetailsEmployer = async(jobId: string): Promise<any> => {
     }
 }
 
-export const allJobsEmployer = async (): Promise<any> => {
+export const allJobs = async (): Promise<any> => {
     try {
         const config : AxiosRequestConfig = {
             url: apiConfig.allJobs,

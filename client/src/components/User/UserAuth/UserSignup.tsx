@@ -2,7 +2,7 @@ import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { userRegisterValidationSchema } from "../../../utils/validation";
 import { SignupPayload } from "../../../types/PayloadInterface";
-import { registerUser } from "../../../features/axios/api/userAuthentication";
+import { registerUser } from "../../../features/axios/api/user/userAuthentication";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { Link, useNavigate } from "react-router-dom";

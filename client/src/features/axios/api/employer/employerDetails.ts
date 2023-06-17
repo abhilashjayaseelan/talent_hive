@@ -1,6 +1,6 @@
 import { AxiosRequestConfig } from "axios";
-import apiConfig from "../../../utils/apiConfig";
-import setupAxiosInterceptorsEmployer from "../interceptors/axiosInterceptorEmployer";
+import apiConfig from "../../../../utils/apiConfig";
+import setupAxiosInterceptorsEmployer from "../../interceptors/axiosInterceptorEmployer";
 
 const api = setupAxiosInterceptorsEmployer();
 

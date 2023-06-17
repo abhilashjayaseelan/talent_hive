@@ -3,6 +3,7 @@ import { JobApplicationEntity } from "../../../../entities/JobApplicationEntity"
 import { JobApplicationModel } from "../models/jobApplicationModel";
 import AppError from "../../../../utils/appError";
 import { HttpStatus } from "../../../../types/httpStatus";
+import { Types } from "mongoose";
 
 export const JobApplicationRepositoryMongoDB = (model: JobApplicationModel) => {
     const jobApplicationEntity = new JobApplicationEntity(model)
@@ -20,9 +21,27 @@ export const JobApplicationRepositoryMongoDB = (model: JobApplicationModel) => {
         return alreadyExists;
     }
 
+    const jobApplicationForEmployer = async (employerId: string) => {
+        const jobApplications = await jobApplicationEntity.getAllApplicationsForEmployer(employerId);
+        return jobApplications;
+    }
+
+    const jobApplicationDetails = async (jobId: Types.ObjectId) => {
+        const applicationDetails = await jobApplicationEntity.getApplicationDetails(jobId);
+        return applicationDetails;
+    }
+
+    const changeApplicationStatus = async (jobId: Types.ObjectId, status: string) => {
+        const updatedApplication = await jobApplicationEntity.changeStatusOfApplication(jobId, status);
+        return jobApplicationDetails;
+    }
+
     return {
         applyForJob,
-        alreadyApplied
+        alreadyApplied,
+        jobApplicationForEmployer,
+        jobApplicationDetails,
+        changeApplicationStatus
     }
 }
 

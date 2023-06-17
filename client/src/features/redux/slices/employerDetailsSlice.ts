@@ -1,5 +1,5 @@
 import { createSlice, createAsyncThunk, PayloadAction } from "@reduxjs/toolkit";
-import { employerData } from "../../axios/api/employerDetails";
+import { employerData } from "../../axios/api/employer/employerDetails";
 
 export const fetchEmployer = createAsyncThunk(
   "employer/fetchEmployer",

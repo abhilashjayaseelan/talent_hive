@@ -15,6 +15,9 @@ const jobApplicationRouter = () => {
 
     route.post('/create-application', controller.applyNewJob);
     route.get('/is-applied', controller.existingApplicant);
+    route.get('/all-applications', controller.jobApplicationForEmployer);
+    route.get('/applicant-details/:id', controller.jobApplicationDetails);
+    route.patch('/change-status/:id', controller.changeTheApplicationStatus);
 
     return route;
 }

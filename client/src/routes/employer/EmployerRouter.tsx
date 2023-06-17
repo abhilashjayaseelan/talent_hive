@@ -7,7 +7,7 @@ const EmployerRouter = () => {
     return (
         <div>
             <Routes>
-                <Route path="/home" element ={<EmployerHomePage/>}/>
+                <Route path="/*" element ={<EmployerHomePage/>}/>
                 <Route path="/login" element={<EmployerLoginPage/>}/>
                 <Route path="/register" element={<EmployerRegisterPage/>}/>
             </Routes>

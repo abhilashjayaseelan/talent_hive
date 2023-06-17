@@ -1,12 +1,13 @@
 import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { clearEmployerJobs, setEmployerJobs } from "../../../features/redux/slices/employerJobsSlice";
-import { employerJobs } from "../../../features/axios/api/jobsByEmployer";
+import { employerJobs } from "../../../features/axios/api/employer/jobsByEmployer";
 import JobsByEmployer from "../Sections/JobsByEmployer";
 import { JobsInterface } from "../../../types/JobInterface";
 import { PlusIcon } from "@heroicons/react/24/outline";
 import { Link } from "react-router-dom";
 import { RootState } from "../../../features/redux/reducers/Reducer";
+import { ToastContainer } from "react-toastify";
 
 function AllJobsEmployer() {
   const dispatch = useDispatch();
@@ -49,6 +50,7 @@ function AllJobsEmployer() {
             <JobsByEmployer key={job._id} jobs={job} />
           ))}
       </div>
+      <ToastContainer/>
     </div>
   );
 }

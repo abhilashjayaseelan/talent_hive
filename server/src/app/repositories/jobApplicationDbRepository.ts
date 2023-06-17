@@ -1,3 +1,4 @@
+import { Types } from "mongoose";
 import { JobApplicationRepositoryMongoDB } from "../../frameworks/database/mongoDb/repositories/jobApplicationRepositoryMongoDB";
 import { JobApplicationInterface } from "../../types/jobApplicationInterface";
 
@@ -14,9 +15,27 @@ export const jobApplicationDbRepository = (
         return existingApplication;
     }
 
+    const jobApplicationsForEmployer = async (employerId: string) => {
+        const applications = await repository.jobApplicationForEmployer(employerId);
+        return applications;
+    }
+
+    const jobApplicationDetails = async (jobId: Types.ObjectId) => {
+        const details = await repository.jobApplicationDetails(jobId);
+        return details;
+    }
+
+    const changeApplicationStatus = async (jobId: Types.ObjectId, status: string) => {
+        const updatedApplication = await repository.changeApplicationStatus(jobId, status);
+        return updatedApplication;
+    }
+
     return {
         applyForJob,
-        alreadyApplied
+        alreadyApplied,
+        jobApplicationsForEmployer,
+        jobApplicationDetails,
+        changeApplicationStatus
     }
 }
 
