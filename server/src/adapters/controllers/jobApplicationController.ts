@@ -3,15 +3,16 @@ import { JobApplicationModel } from "../../frameworks/database/mongoDb/models/jo
 import { JobApplicationDbInterface } from "../../app/repositories/jobApplicationDbRepository";
 import { JobApplicationRepositoryMongoDB } from "../../frameworks/database/mongoDb/repositories/jobApplicationRepositoryMongoDB";
 import { HttpStatus } from "../../types/httpStatus";
-import { Request, Response } from "express";
+import { Request, Response, application } from "express";
 import { CustomRequest } from "../../types/expressRequest";
-import {
-  applyForJob,
-  existingApplication,
-} from "../../app/useCases/jobApplication/jobApplication";
 import { Types } from "mongoose";
 import AppError from "../../utils/appError";
 import expressAsyncHandler from "express-async-handler";
+import {
+  applyForJob,
+  existingApplication,
+  allApplications
+} from "../../app/useCases/jobApplication/jobApplication";
 
 const jobApplicationController = (
   jobApplicationDbRepository: JobApplicationDbInterface,
@@ -84,9 +85,22 @@ const jobApplicationController = (
     }
   );
 
+  const jobApplicationForEmployer = expressAsyncHandler(
+    async(req: CustomRequest, res: Response) => {
+      const employerId = req.payload;
+
+      const jobApplications = await allApplications(employerId ?? '', dbRepositoryJobApplication);
+      res.json({
+        status: 'success',
+        applications: jobApplications
+      })
+    }
+  )
+
   return {
     applyNewJob,
-    existingApplicant
+    existingApplicant,
+    jobApplicationForEmployer
   };
 };
 

@@ -35,7 +35,7 @@ function EmployerLogin() {
         setTimeout(() => {
           const token = response.token;
           dispatch(setEmployerToken(token));
-          navigate('/employer/home');
+          navigate('/employer/dashboard');
         }, 2000);
       })
       .catch((error: any) => {

@@ -14,9 +14,15 @@ export const jobApplicationDbRepository = (
         return existingApplication;
     }
 
+    const jobApplicationsForEmployer = async (employerId: string) => {
+        const applications = await repository.jobApplicationForEmployer(employerId);
+        return applications;
+    }
+
     return {
         applyForJob,
-        alreadyApplied
+        alreadyApplied,
+        jobApplicationsForEmployer
     }
 }
 

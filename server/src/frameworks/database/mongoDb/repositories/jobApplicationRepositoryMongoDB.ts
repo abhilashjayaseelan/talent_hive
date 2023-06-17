@@ -20,9 +20,15 @@ export const JobApplicationRepositoryMongoDB = (model: JobApplicationModel) => {
         return alreadyExists;
     }
 
+    const jobApplicationForEmployer = async (employerId: string) => {
+        const jobApplications = await jobApplicationEntity.getAllApplicationsForEmployer(employerId);
+        return jobApplications;
+    }
+
     return {
         applyForJob,
-        alreadyApplied
+        alreadyApplied,
+        jobApplicationForEmployer
     }
 }
 
