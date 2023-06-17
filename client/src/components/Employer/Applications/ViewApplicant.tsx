@@ -1,9 +1,12 @@
 import React, { useEffect, useState } from "react";
 import { PaperClipIcon } from "@heroicons/react/20/solid";
 import ApplicationDetails from "../../../types/ApplicationsInterface";
-import { applicationDetails } from "../../../features/axios/api/applicatons/applicationDetails";
+import { applicationDetails } from "../../../features/axios/api/applications/applicationDetails";
 import { useParams } from "react-router-dom";
 import { Chip, Button } from "@material-tailwind/react";
+import { changeApplicationStatus } from "../../../features/axios/api/applications/changeApplication";
+import "react-toastify/dist/ReactToastify.css";
+import { ToastContainer, toast } from "react-toastify";
 import {
   Menu,
   MenuHandler,
@@ -13,21 +16,32 @@ import {
 
 function ViewApplicant() {
   const [applicationData, setApplicationData] = useState<ApplicationDetails>();
+  const [status, setStatus] = useState(true);
   const { id } = useParams();
-
-  console.log(applicationData);
 
   useEffect(() => {
     const applications = async () => {
       const data = await applicationDetails(id ?? "");
       setApplicationData(data.applicationData);
+      setStatus(!status);
     };
     applications();
-  }, [id]);
+  }, [id, status]);
 
-  const handleStatusChange = (status: string) => {
-    // Logic to update the application status
-    console.log("New status:", status);
+  const notify = (msg: string, type: string) => {
+    type === "error"
+      ? toast.error(msg, { position: toast.POSITION.TOP_RIGHT })
+      : toast.success(msg, { position: toast.POSITION.TOP_RIGHT });
+  };
+
+  const handleStatusChange = async (status: string, applicationId: string) => {
+    await changeApplicationStatus(applicationId, status)
+      .then((response) => {
+        notify("Status updated successfully", "success");
+      })
+      .catch((err: any) => {
+        notify(err.message, "error");
+      });
   };
 
   return (
@@ -49,10 +63,18 @@ function ViewApplicant() {
               </Button>
             </MenuHandler>
             <MenuList>
-              <MenuItem onClick={() => handleStatusChange("Rejected")}>
+              <MenuItem
+                onClick={() =>
+                  handleStatusChange("Rejected", applicationData?._id ?? "")
+                }
+              >
                 Reject
               </MenuItem>
-              <MenuItem onClick={() => handleStatusChange("Shortlisted")}>
+              <MenuItem
+                onClick={() =>
+                  handleStatusChange("Shortlisted", applicationData?._id ?? "")
+                }
+              >
                 Shortlist
               </MenuItem>
             </MenuList>
@@ -168,6 +190,7 @@ function ViewApplicant() {
           </dl>
         </div>
       </div>
+      <ToastContainer />
     </div>
   );
 }

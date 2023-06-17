@@ -31,11 +31,17 @@ export const JobApplicationRepositoryMongoDB = (model: JobApplicationModel) => {
         return applicationDetails;
     }
 
+    const changeApplicationStatus = async (jobId: Types.ObjectId, status: string) => {
+        const updatedApplication = await jobApplicationEntity.changeStatusOfApplication(jobId, status);
+        return jobApplicationDetails;
+    }
+
     return {
         applyForJob,
         alreadyApplied,
         jobApplicationForEmployer,
-        jobApplicationDetails
+        jobApplicationDetails,
+        changeApplicationStatus
     }
 }
 

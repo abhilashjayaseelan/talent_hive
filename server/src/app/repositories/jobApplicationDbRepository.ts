@@ -25,11 +25,17 @@ export const jobApplicationDbRepository = (
         return details;
     }
 
+    const changeApplicationStatus = async (jobId: Types.ObjectId, status: string) => {
+        const updatedApplication = await repository.changeApplicationStatus(jobId, status);
+        return updatedApplication;
+    }
+
     return {
         applyForJob,
         alreadyApplied,
         jobApplicationsForEmployer,
-        jobApplicationDetails
+        jobApplicationDetails,
+        changeApplicationStatus
     }
 }
 

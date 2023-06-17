@@ -56,3 +56,15 @@ export const getApplicationDetails = (
   }
 };
 
+export const changeApplicationStatus = (
+  jobId: Types.ObjectId,
+  status: string,
+  jobApplicationDbRepository: ReturnType<JobApplicationDbInterface>
+) => {
+  try {
+    const updatedApplication = jobApplicationDbRepository.changeApplicationStatus(jobId, status);
+    return updatedApplication;
+  } catch (error: any) {
+    throw new Error(`failed to change the application status ${error.message}`);
+  }
+}

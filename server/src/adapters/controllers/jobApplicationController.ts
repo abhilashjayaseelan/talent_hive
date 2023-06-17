@@ -12,7 +12,8 @@ import {
   applyForJob,
   existingApplication,
   allApplications,
-  getApplicationDetails
+  getApplicationDetails,
+  changeApplicationStatus,
 } from "../../app/useCases/jobApplication/jobApplication";
 
 const jobApplicationController = (
@@ -65,58 +66,92 @@ const jobApplicationController = (
         ? req.query.jobId[0]
         : req.query.jobId;
       const userId = new Types.ObjectId(req.payload);
-      const jobID =  new Types.ObjectId(String(jobId))
+      const jobID = new Types.ObjectId(String(jobId));
 
       const alreadyApplied = await existingApplication(
         jobID,
         userId,
         dbRepositoryJobApplication
       );
-      if(alreadyApplied) {
+      if (alreadyApplied) {
         res.json({
-          status: 'Applied',
-          message: 'already applied'
-        })
+          status: "Applied",
+          message: "already applied",
+        });
       } else {
-        res.json( {
-          status: 'Apply Now',
-          message: 'not applied'
-        })
+        res.json({
+          status: "Apply Now",
+          message: "not applied",
+        });
       }
     }
   );
 
   const jobApplicationForEmployer = expressAsyncHandler(
-    async(req: CustomRequest, res: Response) => {
+    async (req: CustomRequest, res: Response) => {
       const employerId = req.payload;
-      const jobApplications = await allApplications(employerId ?? '', dbRepositoryJobApplication);
+      const jobApplications = await allApplications(
+        employerId ?? "",
+        dbRepositoryJobApplication
+      );
       res.json({
-        status: 'success',
-        applications: jobApplications
-      })
+        status: "success",
+        applications: jobApplications,
+      });
     }
-  )
+  );
 
   const jobApplicationDetails = expressAsyncHandler(
-    async(req: Request, res: Response) => {
-      const jobId = new Types.ObjectId(req.params.id);
-      const applicationDetails = await getApplicationDetails(jobId ?? '', dbRepositoryJobApplication );
+    async (req: Request, res: Response) => {
+      const applicationId = new Types.ObjectId(req.params.id);
+      const applicationDetails = await getApplicationDetails(
+        applicationId ?? "",
+        dbRepositoryJobApplication
+      );
 
-      if(!applicationDetails) {
-        throw new AppError('application details not found', HttpStatus.INTERNAL_SERVER_ERROR)
+      if (!applicationDetails) {
+        throw new AppError(
+          "application details not found",
+          HttpStatus.INTERNAL_SERVER_ERROR
+        );
       }
       res.json({
+        status: "success",
+        applicationData: applicationDetails,
+      });
+    }
+  );
+
+  const changeTheApplicationStatus = expressAsyncHandler(
+    async (req: Request, res: Response) => {
+      const applicationId = new Types.ObjectId(req.params.id);
+      const status = req.body.status ?? "";
+      console.log(status, 'status')
+      const updatedApplication = await changeApplicationStatus(
+        applicationId,
+        status,
+        dbRepositoryJobApplication
+      );
+
+      console.log(updatedApplication)
+
+      if(!updatedApplication) {
+        throw new AppError('error while updating the status', HttpStatus.INTERNAL_SERVER_ERROR);
+      }
+
+      res.json({
         status: 'success',
-        applicationData: applicationDetails
+        updatedData: updatedApplication
       })
     }
-  )
+  );
 
   return {
     applyNewJob,
     existingApplicant,
     jobApplicationForEmployer,
-    jobApplicationDetails
+    jobApplicationDetails,
+    changeTheApplicationStatus 
   };
 };
 

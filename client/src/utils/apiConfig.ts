@@ -17,6 +17,7 @@ const apiConfig = {
     isApplied: `${configKeys.API_URL}job-application/is-applied`,
     allApplication: `${configKeys.API_URL}job-application/all-applications`,
     applicationDetails: `${configKeys.API_URL}job-application/applicant-details`,
+    changeStatus: `${configKeys.API_URL}job-application/change-status`
 }
 
 export default apiConfig;

@@ -17,7 +17,7 @@ import {
   Tooltip,
 } from "@material-tailwind/react";
 import { useEffect, useState } from "react";
-import { allApplications } from "../../../features/axios/api/applicatons/allApplicationEmployer";
+import { allApplications } from "../../../features/axios/api/applications/allApplicationEmployer";
 import { jobDetails } from "../../../features/axios/api/user/jobDetails";
 import { useNavigate } from "react-router-dom";
 import ApplicationDetails from "../../../types/ApplicationsInterface";
