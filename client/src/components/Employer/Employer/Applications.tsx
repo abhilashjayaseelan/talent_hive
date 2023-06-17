@@ -5,10 +5,10 @@ import {
   CardHeader,
   Input,
   Typography,
-  Button,
+  // Button,
   CardBody,
   Chip,
-  CardFooter,
+  // CardFooter,
   Tabs,
   TabsHeader,
   Tab,
@@ -17,9 +17,10 @@ import {
   Tooltip,
 } from "@material-tailwind/react";
 import { useEffect, useState } from "react";
-import { allApplications } from "../../../features/axios/api/allApplicationEmployer";
+import { allApplications } from "../../../features/axios/api/applicatons/allApplicationEmployer";
+import { jobDetails } from "../../../features/axios/api/user/jobDetails";
+import { useNavigate } from "react-router-dom";
 import ApplicationDetails from "../../../types/ApplicationsInterface";
-import { jobDetails } from "../../../features/axios/api/jobDetails";
  
 const TABS = [
   {
@@ -27,12 +28,12 @@ const TABS = [
     value: "all",
   },
   {
-    label: "Monitored",
-    value: "monitored",
+    label: "Applied",
+    value: "Applied",
   },
   {
-    label: "Unmonitored",
-    value: "unmonitored",
+    label: "Shortlisted",
+    value: "Shortlisted",
   },
 ];
  
@@ -40,7 +41,8 @@ const TABLE_HEAD = ["Candidate", "Applied For", "Application Status", "Applied o
  
 export default function Applications() {
   const [applicationData, setApplicationData] = useState<ApplicationDetails[]>([])
-  console.log(applicationData)
+  const navigate = useNavigate();
+
   useEffect(() => {
     const applications = async() => {
       const data = await allApplications();
@@ -48,6 +50,10 @@ export default function Applications() {
     }
     applications();
   }, [])
+
+  const handleViewApplicant = (applicatonId: string)=> {
+    navigate(`/application/view-applicant/${applicatonId}`)
+  }
 
   return (
     <Card className="h-full w-full">
@@ -137,8 +143,8 @@ export default function Applications() {
                       <Chip
                         variant="ghost"
                         size="sm"
-                        value={data.applicationStatus ? "Applied" : "offline"}
-                        color={data.applicationStatus ? "green" : "blue-gray"}
+                        value={data.applicationStatus === 'Applied' ? "Applied" : data.applicationStatus === 'Rejected' ? "Rejected" : "Shortlisted"}
+                        color={data.applicationStatus === 'Applied' ? "green" : data.applicationStatus === 'Rejected' ? 'red' : 'orange'}
                       />
                     </div>
                   </td>
@@ -149,11 +155,12 @@ export default function Applications() {
                   </td>
                   <td className={classes}>
                     <Tooltip content="View Application">
-                      <IconButton variant="text" color="blue-gray">
+                      <IconButton variant="text" color="blue-gray"
+                      onClick={()=> handleViewApplicant(data._id)}>
                         <EyeIcon className="h-4 w-4" />
                       </IconButton>
                     </Tooltip>
-                  </td>
+                  </td> 
                 </tr>
               );
             })}

@@ -5,7 +5,7 @@ import "react-toastify/dist/ReactToastify.css";
 import { ToastContainer, toast } from "react-toastify";
 import { jobCreationValidationSchema } from "../../../utils/validation";
 import { JobCreationPayload } from "../../../types/PayloadInterface";
-import createNewJob from "../../../features/axios/api/createJob";
+import createNewJob from "../../../features/axios/api/employer/createJob";
 import { useNavigate } from "react-router-dom";
 
 function PostJob() {
@@ -29,7 +29,7 @@ function PostJob() {
       .then((response) => {
         notify("Job created successfully", "success");
         setTimeout(() => {
-          navigate("/employer/home");
+          navigate("/employer/all-jobs");
         }, 2000);
       })
       .catch((error: any) => {

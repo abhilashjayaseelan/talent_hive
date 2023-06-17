@@ -1,5 +1,5 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
-import { allJobs } from "../../axios/api/jobDetails";
+import { allJobs } from "../../axios/api/user/jobDetails";
 
 export const fetchAllJobs = createAsyncThunk("jobs/fetchAll", async () => {
   try {

@@ -1,6 +1,7 @@
 import { error } from "console";
 import { JobApplicationInterface } from "../../../types/jobApplicationInterface";
 import { JobApplicationDbInterface } from "../../repositories/jobApplicationDbRepository";
+import { Types } from "mongoose";
 
 export const applyForJob = (
   application: JobApplicationInterface,
@@ -34,10 +35,24 @@ export const allApplications = (
   employerId: string,
   jobApplicationDbRepository: ReturnType<JobApplicationDbInterface>
 ) => {
-    try {
-        const applications = jobApplicationDbRepository.jobApplicationsForEmployer(employerId);
-        return applications;
-    } catch (error: any) {
-        throw new Error(`failed to get applications ${error.message}`);
-    }
+  try {
+    const applications =
+      jobApplicationDbRepository.jobApplicationsForEmployer(employerId);
+    return applications;
+  } catch (error: any) {
+    throw new Error(`failed to get applications ${error.message}`);
+  }
 };
+
+export const getApplicationDetails = (
+  jobId: Types.ObjectId,
+  jobApplicationDbRepository: ReturnType<JobApplicationDbInterface>
+) => {
+  try {
+    const details = jobApplicationDbRepository.jobApplicationDetails(jobId);
+    return details;
+  } catch (error: any) {
+    throw new Error(`failed to get application details ${error.message}`);
+  }
+};
+

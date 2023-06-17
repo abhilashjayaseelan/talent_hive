@@ -1,3 +1,4 @@
+import { Types } from "mongoose";
 import { JobApplicationRepositoryMongoDB } from "../../frameworks/database/mongoDb/repositories/jobApplicationRepositoryMongoDB";
 import { JobApplicationInterface } from "../../types/jobApplicationInterface";
 
@@ -19,10 +20,16 @@ export const jobApplicationDbRepository = (
         return applications;
     }
 
+    const jobApplicationDetails = async (jobId: Types.ObjectId) => {
+        const details = await repository.jobApplicationDetails(jobId);
+        return details;
+    }
+
     return {
         applyForJob,
         alreadyApplied,
-        jobApplicationsForEmployer
+        jobApplicationsForEmployer,
+        jobApplicationDetails
     }
 }
 

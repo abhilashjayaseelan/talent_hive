@@ -5,7 +5,7 @@ import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { Link, useNavigate } from "react-router-dom";
 import { employerRegisterValidationSchema } from "../../../utils/validation";
-import { registerEmployer } from "../../../features/axios/api/employerAuthentication";
+import { registerEmployer } from "../../../features/axios/api/employer/employerAuthentication";
 import { EmployerRegisterPayload } from "../../../types/PayloadInterface";
 
 function EmployerRegister() {

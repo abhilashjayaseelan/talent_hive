@@ -1,6 +1,6 @@
 import React from "react";
 import { useEffect } from "react";
-import { userData } from "../../features/axios/api/userDetails";
+import { userData } from "../../features/axios/api/user/userDetails";
 
 function UserHome() {
   useEffect(() => {

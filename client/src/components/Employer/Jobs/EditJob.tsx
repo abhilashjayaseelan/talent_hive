@@ -6,8 +6,8 @@ import { ToastContainer, toast } from "react-toastify";
 import { jobUpdateValidationSchema } from "../../../utils/validation";
 import { JobCreationPayload } from "../../../types/PayloadInterface";
 import { useNavigate, useParams } from "react-router-dom";
-import updateJob from "../../../features/axios/api/updateJob";
-import { jobDetailsEmployer } from "../../../features/axios/api/jobDetailsEmployer";
+import updateJob from "../../../features/axios/api/employer/updateJob";
+import { jobDetailsEmployer } from "../../../features/axios/api/employer/jobDetailsEmployer";
 import { JobsInterface } from "../../../types/JobInterface";
 
 function EditJob() {

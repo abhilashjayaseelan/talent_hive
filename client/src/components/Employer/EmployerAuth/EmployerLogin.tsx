@@ -5,7 +5,7 @@ import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { Link, useNavigate } from "react-router-dom";
 import { userLoginValidationSchema } from "../../../utils/validation";
-import { employerLogin } from "../../../features/axios/api/employerAuthentication";
+import { employerLogin } from "../../../features/axios/api/employer/employerAuthentication";
 import { LoginPayload } from "../../../types/PayloadInterface";
 import { setEmployerToken } from "../../../features/redux/slices/employerTokenSlice";
 import { useDispatch } from "react-redux";

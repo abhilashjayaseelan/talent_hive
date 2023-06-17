@@ -11,7 +11,8 @@ import expressAsyncHandler from "express-async-handler";
 import {
   applyForJob,
   existingApplication,
-  allApplications
+  allApplications,
+  getApplicationDetails
 } from "../../app/useCases/jobApplication/jobApplication";
 
 const jobApplicationController = (
@@ -88,7 +89,6 @@ const jobApplicationController = (
   const jobApplicationForEmployer = expressAsyncHandler(
     async(req: CustomRequest, res: Response) => {
       const employerId = req.payload;
-
       const jobApplications = await allApplications(employerId ?? '', dbRepositoryJobApplication);
       res.json({
         status: 'success',
@@ -97,10 +97,26 @@ const jobApplicationController = (
     }
   )
 
+  const jobApplicationDetails = expressAsyncHandler(
+    async(req: Request, res: Response) => {
+      const jobId = new Types.ObjectId(req.params.id);
+      const applicationDetails = await getApplicationDetails(jobId ?? '', dbRepositoryJobApplication );
+
+      if(!applicationDetails) {
+        throw new AppError('application details not found', HttpStatus.INTERNAL_SERVER_ERROR)
+      }
+      res.json({
+        status: 'success',
+        applicationData: applicationDetails
+      })
+    }
+  )
+
   return {
     applyNewJob,
     existingApplicant,
-    jobApplicationForEmployer
+    jobApplicationForEmployer,
+    jobApplicationDetails
   };
 };
 

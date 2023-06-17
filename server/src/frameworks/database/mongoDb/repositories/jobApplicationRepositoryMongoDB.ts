@@ -3,6 +3,7 @@ import { JobApplicationEntity } from "../../../../entities/JobApplicationEntity"
 import { JobApplicationModel } from "../models/jobApplicationModel";
 import AppError from "../../../../utils/appError";
 import { HttpStatus } from "../../../../types/httpStatus";
+import { Types } from "mongoose";
 
 export const JobApplicationRepositoryMongoDB = (model: JobApplicationModel) => {
     const jobApplicationEntity = new JobApplicationEntity(model)
@@ -25,10 +26,16 @@ export const JobApplicationRepositoryMongoDB = (model: JobApplicationModel) => {
         return jobApplications;
     }
 
+    const jobApplicationDetails = async (jobId: Types.ObjectId) => {
+        const applicationDetails = await jobApplicationEntity.getApplicationDetails(jobId);
+        return applicationDetails;
+    }
+
     return {
         applyForJob,
         alreadyApplied,
-        jobApplicationForEmployer
+        jobApplicationForEmployer,
+        jobApplicationDetails
     }
 }
 
