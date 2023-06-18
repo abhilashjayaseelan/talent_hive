@@ -1,5 +1,8 @@
 import axios, { AxiosRequestConfig } from "axios";
-import { LoginPayload, SignupPayload } from "../../../../types/PayloadInterface";
+import {
+  LoginPayload,
+  SignupPayload,
+} from "../../../../types/PayloadInterface";
 import apiConfig from "../../../../utils/apiConfig";
 
 export const registerUser = async (payload: SignupPayload): Promise<any> => {
@@ -35,5 +38,19 @@ export const userLogin = async (payload: LoginPayload): Promise<any> => {
     } else {
       throw new Error("Login failed, try again");
     }
+  }
+};
+
+export const googleLogin = async (payload: string): Promise<any> => {
+  try {
+    const config: AxiosRequestConfig = {
+      url: `${apiConfig.googleSignIN}`,
+      method: "post",
+      data: {credential: payload},
+    };
+    const response = await axios(config);
+    return response.data;
+  } catch (error: any) {
+    throw new Error('Login failed, try again');
   }
 };

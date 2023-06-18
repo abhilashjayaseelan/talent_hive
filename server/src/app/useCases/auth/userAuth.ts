@@ -3,6 +3,8 @@ import { CreateUserInterface } from "../../../types/userInterface";
 import AppError from "../../../utils/appError";
 import { UserDbInterface } from "../../repositories/userDbRepository";
 import { AuthServiceInterface } from "../../services/authServiceInterface";
+import { GoogleAuthService } from "../../../frameworks/services/googleAuthService";
+import { GoogleAuthServiceInterface } from "../../services/googleAuthServiceInterface";
 
 // creating a new user
 export const registerUser = async (
@@ -31,6 +33,9 @@ export const userLogin = async (
   if (!user) {
     throw new AppError("this user does not exist", HttpStatus.UNAUTHORIZED);
   }
+  if (user.isGoogleUser) {
+    throw new AppError("this user is unauthorized", HttpStatus.UNAUTHORIZED);
+  }
   const isPasswordCorrect = await authService.comparePassword(
     password,
     user.password ?? ""
@@ -40,4 +45,25 @@ export const userLogin = async (
   }
   const token = authService.generateToken(user._id.toString());
   return token;
+};
+
+// login with google
+export const signInWithGoogle = async (
+  credential: string,
+  googleAuthService: ReturnType<GoogleAuthServiceInterface>,
+  userRepository: ReturnType<UserDbInterface>,
+  authService: ReturnType<AuthServiceInterface>
+) => {
+  const user = await googleAuthService.verify(credential);
+  const isUserExist = await userRepository.getUserByEmail(user.email);
+  if (isUserExist) {
+    const payload = isUserExist._id.toString();
+    const token = authService.generateToken(payload);
+    return token;
+  } else {
+    const { _id: userId} = await userRepository.createUser(user);
+    const payload = userId.toString();
+    const token = authService.generateToken(payload);
+    return token;
+  }
 };

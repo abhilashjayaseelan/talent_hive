@@ -4,19 +4,24 @@ import { AuthService } from "../../frameworks/services/authService";
 import { AuthServiceInterface } from "../../app/services/authServiceInterface";
 import { UserDbInterface } from "../../app/repositories/userDbRepository";
 import { UserRepositoryMongoDB } from "../../frameworks/database/mongoDb/repositories/userRepositoryMongoDB";
-import { userLogin, registerUser } from "../../app/useCases/auth/userAuth";
+import { userLogin, registerUser, signInWithGoogle } from "../../app/useCases/auth/userAuth";
 import { UserInterface } from "../../types/userInterface";
 import { UserModel } from "../../frameworks/database/mongoDb/models/userModel";
+import { GoogleAuthService } from "../../frameworks/services/googleAuthService";
+import { GoogleAuthServiceInterface } from "../../app/services/googleAuthServiceInterface";
 
 const authController = (
   authServiceInterface: AuthServiceInterface,
   authServiceImpl: AuthService,
   userDbRepository: UserDbInterface,
   userDbRepositoryImpl: UserRepositoryMongoDB,
-  userModel: UserModel
+  userModel: UserModel,
+  googleAuthServiceInterface: GoogleAuthServiceInterface,
+  googleAuthServiceImpl: GoogleAuthService
 ) => {
   const dbRepositoryUser = userDbRepository(userDbRepositoryImpl(userModel));
   const authService = authServiceInterface(authServiceImpl());
+  const googleAuthService = googleAuthServiceInterface(googleAuthServiceImpl());
 
   const userRegister = expressAsyncHandler(
     async (req: Request, res: Response) => {
@@ -44,9 +49,20 @@ const authController = (
     });
   });
 
+  const signWithGoogle = expressAsyncHandler(async (req: Request, res: Response) => {
+    const {credential} : {credential: string} = req.body;
+    const token = await signInWithGoogle(credential, googleAuthService, dbRepositoryUser, authService);
+    res.json({
+      status: "success",
+      message: "user verified",
+      token
+    })
+  }) 
+
   return {
     loginUser,
     userRegister,
+    signWithGoogle
   };
 };
 
