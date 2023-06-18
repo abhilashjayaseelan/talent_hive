@@ -1,4 +1,6 @@
+import { HttpStatus } from "../../../types/httpStatus";
 import { JobInterface } from "../../../types/jobInterface";
+import AppError from "../../../utils/appError";
 import { JobDbInterface } from "../../repositories/jobDbRepository";
 
 export const createJob = async (
@@ -70,5 +72,17 @@ export const findJobById = async (
     return jobData;
   } catch (error: any) {
     throw new Error('failed to get the job data')
+  }
+}
+
+export const distinctTitleLocationSalary = async (
+  title: string,
+  jobRepository: ReturnType<JobDbInterface>
+) => {
+  try {
+    const distinct = await jobRepository.titleLocationSalary(title);
+    return distinct;
+  } catch (error) {
+    throw new AppError('could not find any values', HttpStatus.SERVICE_UNAVAILABLE);
   }
 }

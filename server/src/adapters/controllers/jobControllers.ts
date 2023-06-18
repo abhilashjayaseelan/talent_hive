@@ -14,7 +14,8 @@ import {
   deleteJob,
   findJobByEmployer,
   getAllJobs,
-  findJobById
+  findJobById,
+  distinctTitleLocationSalary
 } from "../../app/useCases/job/jobCrud";
 
 const jobController = (
@@ -114,13 +115,25 @@ const jobController = (
     }
   )
 
+  const titleLocationSalary = expressAsyncHandler(
+    async(req: Request, res: Response) => {
+      const field = req.params.field ?? '';
+      const distinct = await distinctTitleLocationSalary(field, dbRepositoryJob);
+      res.json({
+        status: 'success',
+        distinct
+      });
+    }
+  )
+
   return {
     createNewJob,
     updateTheJob,
     deleteTheJob,
     getJobsByEmployer,
     findAllJobs,
-    jobDataById
+    jobDataById,
+    titleLocationSalary
   };
 };
 

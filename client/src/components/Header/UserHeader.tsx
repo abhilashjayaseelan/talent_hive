@@ -2,7 +2,6 @@ import React from "react";
 import { Fragment } from "react";
 import { Disclosure, Menu, Transition } from "@headlessui/react";
 import { Bars3Icon, XMarkIcon } from "@heroicons/react/24/outline";
-import { Link } from "react-router-dom";
 
 const navigation = [
   { name: "Jobs", href: "/job/all-jobs", current: false },
@@ -81,7 +80,7 @@ function UserHeader() {
                       <span className="sr-only">Open user menu</span>
                       <img
                         className="h-8 w-8 rounded-full"
-                        src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80"
+                        src="https://lh3.googleusercontent.com/a/AAcHTtex2VG5JjBM4NYzIhDH_VzWciMORA1SD6EALcQ5jQ=s96-c"
                         alt=""
                       />
                     </Menu.Button>

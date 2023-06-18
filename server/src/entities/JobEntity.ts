@@ -44,4 +44,9 @@ export class JobEntity {
         const jobData = await this.model.findById(Id).populate('employer', 'companyName email').exec();
         return jobData;
     }
+
+    public async titleLocationSalary (field: string): Promise<any> {
+        const distinctValues = await this.model.distinct(field);
+        return distinctValues;
+    }
 }

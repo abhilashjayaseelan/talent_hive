@@ -12,7 +12,7 @@ const routes = (app: Application) => {
     app.use('/api/employer',authenticationMiddleware, employerRouter());
     app.use('/api/user-auth', userAuthRouter());
     app.use('/api/employer-auth', employerAuthRouter());
-    app.use('/api/job', jobRouter());
+    app.use('/api/job', authenticationMiddleware, jobRouter());
     app.use('/api/job-application',authenticationMiddleware, jobApplicationRouter());
 }
 
