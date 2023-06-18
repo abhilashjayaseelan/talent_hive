@@ -85,7 +85,7 @@ export default function UserLogin() {
                 </p>
               )}
             </div>
-            <button
+            <button 
               type="submit"
               className="w-24 py-2 text-sm bg-purple-600 text-white rounded hover:bg-purple-700 flex justify-center items-center mx-auto"
             >
