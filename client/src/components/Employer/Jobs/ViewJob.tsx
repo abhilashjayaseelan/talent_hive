@@ -64,7 +64,7 @@ function EmployerViewJob() {
           <a href="#" className="opacity-60">
             <span>Jobs</span>
           </a>
-          <a href="#">Create new job</a>
+          <a href="#">View job details</a>
         </Breadcrumbs>
       </div>
       <div className="max-w-md mx-auto">

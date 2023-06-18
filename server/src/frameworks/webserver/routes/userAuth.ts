@@ -5,6 +5,8 @@ import { UserRepositoryMongoDB } from "../../database/mongoDb/repositories/userR
 import { authService } from "../../services/authService";
 import { authServiceInterface } from "../../../app/services/authServiceInterface";
 import { User } from "../../database/mongoDb/models/userModel";
+import {googleAuthService } from "../../services/googleAuthService";
+import { googleAuthServiceInterface } from "../../../app/services/googleAuthServiceInterface";
 
 const userAuthRouter = () => {
   const route = express.Router();
@@ -14,11 +16,14 @@ const userAuthRouter = () => {
     authService,
     userDbRepository,
     UserRepositoryMongoDB,
-    User
+    User,
+    googleAuthServiceInterface,
+    googleAuthService,
   );
 
   route.post("/register", controller.userRegister);
   route.post("/login", controller.loginUser);
+  route.post("/sign-in-with-google", controller.signWithGoogle);
 
   return route;
 };
