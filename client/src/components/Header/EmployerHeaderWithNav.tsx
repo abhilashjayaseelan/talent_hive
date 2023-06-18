@@ -1,5 +1,4 @@
 import React, { useState } from "react";
-// import { Navbar } from "@material-tailwind/react";
 import {
   Navbar,
   Typography,
@@ -13,9 +12,7 @@ import {
 import {
   UserCircleIcon,
   ChevronDownIcon,
-  // Cog6ToothIcon,
   InboxArrowDownIcon,
-  // LifebuoyIcon,
   PowerIcon,
 } from "@heroicons/react/24/outline";
 
@@ -29,18 +26,10 @@ const profileMenuItems: ProfileMenuItem[] = [
     label: "My Profile",
     icon: UserCircleIcon,
   },
-  // {
-  //   label: "Edit Profile",
-  //   icon: Cog6ToothIcon,
-  // },
   {
     label: "Inbox",
     icon: InboxArrowDownIcon,
   },
-  // {
-  //   label: "Help",
-  //   icon: LifebuoyIcon,
-  // },
   {
     label: "Sign Out",
     icon: PowerIcon,
@@ -108,23 +97,12 @@ function ProfileMenu() {
   );
 }
 
-function EmployerHeader() {
+export default function EmployerHeaderWithNav() {
   return (
-    <Navbar className="mx-auto max-w-screen-xl p-2 lg:pl-6 bg-foundItBg">
+    <Navbar className="mx-auto max-w-screen-xl p-2 lg:pl-6">
       <div className="relative mx-auto flex items-center text-blue-gray-900">
-        <nav className="flex items-center justify-between bg-foundItBg text-black p-4">
-          <div className="flex items-center">
-            <img
-              src="https://res.cloudinary.com/dgjwhf8i3/image/upload/v1685793152/Screenshot_2023-06-03_172145_pfhklc.jpg"
-              alt="Logo"
-              className="w-auto h-6 mr-2"
-            />
-          </div>
-        </nav>
         <ProfileMenu />
       </div>
     </Navbar>
   );
 }
-
-export default EmployerHeader;

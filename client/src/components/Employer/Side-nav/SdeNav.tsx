@@ -29,7 +29,7 @@ interface NavbarProps {
 export function Sidenav({ routes }:NavbarProps) { 
 //   const [controller, dispatch] = useMaterialTailwindController();
   const [selected,setSelected] = useState(true)
-  const [openSidenav, setOpenSidenav] = useState(true)
+  const [openSidenav, setOpenSidenav] = useState(false)
   const sidenavType = 'white'
   const sidenavTypes = {
     dark: "bg-gradient-to-br from-blue-gray-800 to-blue-gray-900",

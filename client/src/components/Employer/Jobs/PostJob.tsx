@@ -7,6 +7,7 @@ import { jobCreationValidationSchema } from "../../../utils/validation";
 import { JobCreationPayload } from "../../../types/PayloadInterface";
 import createNewJob from "../../../features/axios/api/employer/createJob";
 import { useNavigate } from "react-router-dom";
+import { Breadcrumbs } from "@material-tailwind/react";
 
 function PostJob() {
   const navigate = useNavigate();
@@ -14,7 +15,7 @@ function PostJob() {
     register,
     handleSubmit,
     formState: { errors },
-  } = useForm<JobCreationPayload>({ 
+  } = useForm<JobCreationPayload>({
     resolver: yupResolver(jobCreationValidationSchema),
   });
 
@@ -39,6 +40,24 @@ function PostJob() {
 
   return (
     <>
+      <div className="pl-40 pt-2">
+        <Breadcrumbs className="bg-foundItBg">
+          <a href="#" className="opacity-60">
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              className="h-4 w-4"
+              viewBox="0 0 20 20"
+              fill="currentColor"
+            >
+              <path d="M10.707 2.293a1 1 0 00-1.414 0l-7 7a1 1 0 001.414 1.414L4 10.414V17a1 1 0 001 1h2a1 1 0 001-1v-2a1 1 0 011-1h2a1 1 0 011 1v2a1 1 0 001 1h2a1 1 0 001-1v-6.586l.293.293a1 1 0 001.414-1.414l-7-7z" />
+            </svg>
+          </a>
+          <a href="#" className="opacity-60">
+            <span>Jobs</span>
+          </a>
+          <a href="#">Create new job</a>
+        </Breadcrumbs>
+      </div>
       <div className="max-w-lg mx-auto">
         <h1 className="text-2xl font-bold mb-4">Create New Job</h1>
         <div className="rounded border bg-white border-gray-300 p-4">
