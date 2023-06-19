@@ -39,6 +39,11 @@ export const JobRepositoryMongoDB = (model: JobModel) => {
         return distinct;
     }
 
+    const filterJobs = async (role: string, location: string, salary: any) => {
+        const jobs = await jobEntity.filterJob(role, location, salary);
+        return jobs;
+    }
+
     return {
         createJob,
         updateJob,
@@ -47,6 +52,7 @@ export const JobRepositoryMongoDB = (model: JobModel) => {
         findAllJobs,
         findJobById,
         titlePlaceSalary,
+        filterJobs
     }
 }
 

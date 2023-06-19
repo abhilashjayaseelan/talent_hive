@@ -42,3 +42,21 @@ export const distinctTitleLocationSalary = async(field: string, setter: any): Pr
         throw new Error('error while getting the distinct values');
     }
 } 
+
+export const filterJobs = async(role: string, location: string, salary: any): Promise<any> => {
+    try {
+        const config : AxiosRequestConfig = {
+            url: `${apiConfig.filterJobs}`,
+            method: 'post',
+            data: {
+                role,
+                location,
+                salary
+            }
+        }
+        const response = await api(config);
+        return response.data.jobs;
+    } catch (error) {
+       throw new Error('error while getting jobs'); 
+    }
+}

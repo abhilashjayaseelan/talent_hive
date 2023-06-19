@@ -38,6 +38,11 @@ export const jobDbRepository = (
         return distinct;
     }
 
+    const filterJob = async (role: string, location: string, salary: any) => {
+        const jobs = await repository.filterJobs(role, location, salary);
+        return jobs;
+    }
+
     return {
         createJob,
         updateJob,
@@ -46,6 +51,7 @@ export const jobDbRepository = (
         findAllJobs,
         getJobById,
         titleLocationSalary,
+        filterJob
     }
 }
 

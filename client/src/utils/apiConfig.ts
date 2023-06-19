@@ -19,7 +19,8 @@ const apiConfig = {
     allApplication: `${configKeys.API_URL}job-application/all-applications`,
     applicationDetails: `${configKeys.API_URL}job-application/applicant-details`,
     changeStatus: `${configKeys.API_URL}job-application/change-status`,
-    titleLocationSalary: `${configKeys.API_URL}job/distinct`
+    titleLocationSalary: `${configKeys.API_URL}job/distinct`,
+    filterJobs: `${configKeys.API_URL}job/filter-jobs`
 }
 
 export default apiConfig;

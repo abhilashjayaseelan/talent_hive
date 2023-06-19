@@ -2,51 +2,76 @@ import { JobInterface } from "../types/jobInterface";
 import { JobModel } from "../frameworks/database/mongoDb/models/jobModel";
 
 export class JobEntity {
-    private model: JobModel;
+  private model: JobModel;
 
-    constructor(model: JobModel) {
-        this.model = model;
+  constructor(model: JobModel) {
+    this.model = model;
+  }
+
+  public async createJob(job: JobInterface): Promise<JobInterface> {
+    const newJob = await this.model.create(job);
+    return newJob;
+  }
+
+  public async updateJob(
+    jobId: string,
+    updates: Partial<JobInterface>
+  ): Promise<JobInterface | null> {
+    const existingJob = await this.model.findById(jobId);
+    if (!existingJob) {
+      return null;
     }
+    // updating the job according to the changes
+    Object.assign(existingJob, updates);
+    const updatedJob = await existingJob.save();
+    return updatedJob;
+  }
 
-    public async createJob(job: JobInterface) : Promise<JobInterface> {
-        const newJob = await this.model.create(job);
-        return newJob;
-    }
+  public async deleteJob(jobId: string): Promise<void> {
+    const job = await this.model.findById(jobId);
+    if (!job) throw new Error("job not found");
+    await this.model.findByIdAndDelete(jobId);
+  }
 
-    public async updateJob(jobId: string, updates: Partial<JobInterface>): Promise<JobInterface | null> {
-        const existingJob = await this.model.findById(jobId);
-        if (!existingJob) {
-            return null;
-        }
-        // updating the job according to the changes
-        Object.assign(existingJob, updates); 
-        const updatedJob = await existingJob.save();
-        return updatedJob;
-    }                      
+  public async getJobByEmployer(employerId: string): Promise<JobInterface[]> {
+    const jobs = await this.model.find({ employer: employerId });
+    return jobs;
+  }
 
-    public async deleteJob(jobId: string) : Promise<void> {
-        const job = await this.model.findById(jobId);
-        if (!job) throw new Error('job not found')
-        await this.model.findByIdAndDelete(jobId);
-    }
+  public async getAllJobs(): Promise<JobInterface[]> {
+    const allJobs = await this.model.find();
+    return allJobs;
+  }
+
+  public async getJobById(Id: string): Promise<JobInterface | null> {
+    const jobData = await this.model
+      .findById(Id)
+      .populate("employer", "companyName email")
+      .exec();
+    return jobData;
+  }
+
+  public async titleLocationSalary(field: string): Promise<any> {
+    const distinctValues = await this.model.distinct(field);
+    return distinctValues;
+  }
+
+  public async filterJob(title: string, location: string, salary: any): Promise<any> { 
     
-    public async getJobByEmployer (employerId : string) : Promise<JobInterface[]> {
-        const jobs = await this.model.find({employer: employerId});
-        return jobs;
+    const filter: any = {};
+
+    if (title) {
+      filter.title = { $regex: new RegExp(title, "i") };
     }
 
-    public async getAllJobs () : Promise<JobInterface[]> {
-        const allJobs = await this.model.find();
-        return allJobs;
+    if (location) {
+      filter.location = { $regex: new RegExp(location, "i") };
     }
 
-    public async getJobById (Id : string) : Promise<JobInterface | null> {
-        const jobData = await this.model.findById(Id).populate('employer', 'companyName email').exec();
-        return jobData;
+    if (salary) {
+      filter.salary = salary
     }
-
-    public async titleLocationSalary (field: string): Promise<any> {
-        const distinctValues = await this.model.distinct(field);
-        return distinctValues;
-    }
+    const jobs = await this.model.find(filter);
+    return jobs;
+  }
 }

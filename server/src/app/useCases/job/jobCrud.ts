@@ -86,3 +86,17 @@ export const distinctTitleLocationSalary = async (
     throw new AppError('could not find any values', HttpStatus.SERVICE_UNAVAILABLE);
   }
 }
+
+export const filterTheJobs = async (
+  role: string,
+  location: string,
+  salary: any,
+  jobRepository: ReturnType<JobDbInterface>
+) => {
+  try {
+    const jobs = await jobRepository.filterJob(role, location, salary);
+    return jobs;
+  } catch (error) {
+    throw new AppError('could not find any results', HttpStatus.NOT_FOUND);
+  }
+}

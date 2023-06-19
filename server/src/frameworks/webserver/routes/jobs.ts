@@ -21,6 +21,7 @@ const jobRouter = () => {
     route.get('/all-jobs', controller.findAllJobs);
     route.get('/job-data/:id', controller.jobDataById);
     route.get('/distinct/:field', controller.titleLocationSalary);
+    route.post('/filter-jobs', controller.filterJobs);
 
     return route;
 }
