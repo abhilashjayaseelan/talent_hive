@@ -32,13 +32,26 @@ export const jobDbRepository = (
         const jobData = await repository.findJobById(id);
         return jobData;
     }
+
+    const titleLocationSalary = async (title: string) => {
+        const distinct = await repository.titlePlaceSalary(title);
+        return distinct;
+    }
+
+    const filterJob = async (role: string, location: string, salary: any) => {
+        const jobs = await repository.filterJobs(role, location, salary);
+        return jobs;
+    }
+
     return {
         createJob,
         updateJob,
         deleteJob,
         findJobByEmployer,
         findAllJobs,
-        getJobById
+        getJobById,
+        titleLocationSalary,
+        filterJob
     }
 }
 

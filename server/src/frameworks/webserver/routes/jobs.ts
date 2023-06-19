@@ -3,7 +3,6 @@ import jobController from "../../../adapters/controllers/jobControllers";
 import { jobDbRepository } from "../../../app/repositories/jobDbRepository";
 import { JobRepositoryMongoDB } from "../../database/mongoDb/repositories/jobRepositoryMongoDB";
 import { Job } from "../../database/mongoDb/models/jobModel";
-import authenticationMiddleware from "../middleware/authenticationMiddleware";
 
 
 const jobRouter = () => {
@@ -15,12 +14,14 @@ const jobRouter = () => {
         Job
     );
 
-    route.get('/employer-jobs', authenticationMiddleware, controller.getJobsByEmployer);
-    route.post('/create-job', authenticationMiddleware, controller.createNewJob);
-    route.put('/update-job/:id', authenticationMiddleware, controller.updateTheJob);
-    route.delete('/delete-job/:id', authenticationMiddleware, controller.deleteTheJob);
-    route.get('/all-jobs', authenticationMiddleware, controller.findAllJobs);
-    route.get('/job-data/:id', authenticationMiddleware, controller.jobDataById);
+    route.get('/employer-jobs', controller.getJobsByEmployer);
+    route.post('/create-job', controller.createNewJob);
+    route.put('/update-job/:id', controller.updateTheJob);
+    route.delete('/delete-job/:id', controller.deleteTheJob);
+    route.get('/all-jobs', controller.findAllJobs);
+    route.get('/job-data/:id', controller.jobDataById);
+    route.get('/distinct/:field', controller.titleLocationSalary);
+    route.post('/filter-jobs', controller.filterJobs);
 
     return route;
 }
