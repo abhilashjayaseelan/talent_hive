@@ -10,6 +10,7 @@ import {
   filterJobs,
 } from "../../../features/axios/api/user/jobDetails";
 import { Navbar, Button, Input } from "@material-tailwind/react";
+import UserSideJobListingShimmer from "../../shimmer/UserSideJobListingShimmer";
 
 function DisplayJobs(this: any) {
   const dispatch = useDispatch();
@@ -59,13 +60,13 @@ function DisplayJobs(this: any) {
   };
   console.log(jobs)
 
-  if (status === "loading") {
-    return <div>Loading...</div>;
+  if (status !== "loading") {
+    return <div className="p-20"><UserSideJobListingShimmer/></div>;
   }
 
-  if (status === "failed") {
-    return <div>Error: {error}</div>;
-  }
+  // if (status === "failed") {
+  //   return <div>Error: {error}</div>;
+  // }
 
   return (
     <>

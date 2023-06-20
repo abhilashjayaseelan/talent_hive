@@ -1,12 +1,12 @@
 import { createSlice, createAsyncThunk, PayloadAction } from "@reduxjs/toolkit";
-import { jobDetails } from "../../axios/api/user/jobDetails";
 import { JobsInterface } from "../../../types/JobInterface";
+import { jobDetailsEmployer } from "../../axios/api/employer/jobDetailsEmployer";
 
 export const fetchEmployerJobDetails = createAsyncThunk(
   "employerJob/fetchJob",
   async (id: string) => {
     if (id) {
-      const response = await jobDetails(id);
+      const response = await jobDetailsEmployer(id);
       return response;
     }
   }

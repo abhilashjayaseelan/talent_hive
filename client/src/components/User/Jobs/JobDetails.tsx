@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../../../features/redux/reducers/Reducer";
-import ShimmerJobDetails from "../../../constants/shimmer/ShimmerJobDetails";
+import ShimmerJobDetails from "../../shimmer/ShimmerJobDetails";
 import { applyForJob } from "../../../features/axios/api/user/applyForJob";
 import { isApplied } from "../../../features/axios/api/user/applyForJob";
 import { userData } from "../../../features/axios/api/user/userDetails";

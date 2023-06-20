@@ -1,7 +1,7 @@
 import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../../../features/redux/reducers/Reducer";
-import ShimmerJobDetails from "../../../constants/shimmer/ShimmerJobDetails";
+import ShimmerJobDetails from "../../shimmer/ShimmerJobDetails";
 import {
   fetchEmployerJobDetails,
   clearEmployerJobDetails,

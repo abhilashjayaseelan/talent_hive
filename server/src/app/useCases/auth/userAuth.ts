@@ -3,7 +3,6 @@ import { CreateUserInterface } from "../../../types/userInterface";
 import AppError from "../../../utils/appError";
 import { UserDbInterface } from "../../repositories/userDbRepository";
 import { AuthServiceInterface } from "../../services/authServiceInterface";
-import { GoogleAuthService } from "../../../frameworks/services/googleAuthService";
 import { GoogleAuthServiceInterface } from "../../services/googleAuthServiceInterface";
 
 // creating a new user

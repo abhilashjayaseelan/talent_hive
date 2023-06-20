@@ -1,7 +1,7 @@
 import { Route, Routes } from "react-router-dom";
 import AddNewJob from "../../pages/employer/AddNewJob";
 import EditJobPage from "../../pages/employer/EditJobPage";
-import DisplayJobPage from "../../pages/jobs/DisplayJobPage";
+import DisplayJobPage from "../../pages/jobs/UserSideDisplayJobPage";
 import ViewJobPage from "../../pages/employer/ViewJobPage";
 
 const JobRouter = () => {
