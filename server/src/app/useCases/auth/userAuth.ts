@@ -1,9 +1,10 @@
 import { HttpStatus } from "../../../types/httpStatus";
 import { CreateUserInterface } from "../../../types/userInterface";
-import AppError from "../../../utils/appError";
 import { UserDbInterface } from "../../repositories/userDbRepository";
 import { AuthServiceInterface } from "../../services/authServiceInterface";
 import { GoogleAuthServiceInterface } from "../../services/googleAuthServiceInterface";
+import AppError from "../../../utils/appError";
+import { UserEntity } from "../../../entities/UserEntity";
 
 // creating a new user
 export const registerUser = async (

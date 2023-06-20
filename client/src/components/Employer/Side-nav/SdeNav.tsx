@@ -87,7 +87,7 @@ export function Sidenav({ routes }:NavbarProps) {
             {pages.map(({ icon, name, path }:Route) => (
               <li key={name}>
                 <NavLink to={path}  >
-                  {({ isActive}) => (
+                  {({ isActive }) => (
                     <Button
                     variant={isActive ? "gradient" : "text"}
                     color={isActive ? 'purple' : 'gray'}

@@ -3,14 +3,14 @@ import { useDispatch, useSelector } from "react-redux";
 import { fetchAllJobs } from "../../../features/redux/slices/getAllJobsSlice";
 import { RootState } from "../../../features/redux/reducers/Reducer";
 import { JobsInterface } from "../../../types/JobInterface";
+import { Navbar, Button, Input } from "@material-tailwind/react";
 import JobList from "./JobList";
 import JobDetails from "./JobDetails";
+import UserSideJobListingShimmer from "../../shimmer/UserSideJobListingShimmer";
 import {
   distinctTitleLocationSalary,
   filterJobs,
 } from "../../../features/axios/api/user/jobDetails";
-import { Navbar, Button, Input } from "@material-tailwind/react";
-import UserSideJobListingShimmer from "../../shimmer/UserSideJobListingShimmer";
 
 function DisplayJobs(this: any) {
   const dispatch = useDispatch();
@@ -28,14 +28,33 @@ function DisplayJobs(this: any) {
   const [selectedTitle, setSelectedTitle] = useState("");
   const [selectedLocation, setSelectedLocation] = useState("");
   const [selectedSalary, setSelectedSalary] = useState("");
-  
+
   const [filtered, setFiltered] = useState([]);
   const [isFiltered, setIsFiltered] = useState(false);
+
+  // for the scroll behavior of nav
+  const [prevScrollPos, setPrevScrollPos] = useState(0);
+  const [visible, setVisible] = useState(true);
+
+  useEffect(() => {
+    const handleScroll = () => {
+      const currentScrollPos = window.pageYOffset;
+
+      setVisible(prevScrollPos > currentScrollPos);
+
+      setPrevScrollPos(currentScrollPos);
+    };
+
+    window.addEventListener("scroll", handleScroll);
+
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, [prevScrollPos]);
 
   useEffect(() => {
     dispatch(fetchAllJobs());
   }, [dispatch]);
 
+  
   useEffect(() => {
     distinctTitleLocationSalary("location", setLocations);
     distinctTitleLocationSalary("title", setTitles);
@@ -55,22 +74,29 @@ function DisplayJobs(this: any) {
       selectedLocation,
       selectedSalary
     );
-    setFiltered(filteredJobs)
+    setFiltered(filteredJobs);
     setIsFiltered(true);
   };
-  console.log(jobs)
 
-  if (status !== "loading") {
-    return <div className="p-20"><UserSideJobListingShimmer/></div>;
+  if (status === "loading") {
+    return (
+      <div className="p-20">
+        <UserSideJobListingShimmer />
+      </div>
+    );
   }
 
-  // if (status === "failed") {
-  //   return <div>Error: {error}</div>;
-  // }
+  if (status === "failed") {
+    return <div>Error: {error}</div>;
+  }
 
   return (
     <>
-      <div className="pt-16 fixed w-full">
+      <div
+        className={`fixed top-0 left-0 w-full pt-16 z-30 transition-opacity duration-300 ${
+          visible ? "opacity-100" : "opacity-0"
+        }`}
+      >
         <Navbar className="mx-auto max-w-screen-2xl px-4 py-3">
           <div className="flex flex-wrap items-center justify-between gap-y-4 text-blue-gray-900">
             <div className="relative flex w-full gap-2 md:w-max">
@@ -140,31 +166,30 @@ function DisplayJobs(this: any) {
           </div>
         </Navbar>
       </div>
-      <div className="pt-28 px-4 sm:px-8 md:px-16 lg:px-32 flex flex-wrap min-h-screen">
+
+      <div className="p-28 px-4 sm:px-8 md:px-16 lg:px-32 flex flex-wrap min-h-screen">
         <div className="w-full sm:w-2/4 p-4 sm:p-6">
           <div
             className="overflow-y-auto p-6"
             style={{ maxHeight: "calc(100vh - 80px)" }}
           >
-            {isFiltered ? (
-              filtered.map((job: JobsInterface) => (
-                <JobList
-                  key={job._id}
-                  jobs={job}
-                  selected={selected}
-                  setSelected={setSelected}
-                />
-              ))
-            ) : (
-              filterJob?.map((job: JobsInterface) => (
-                <JobList
-                  key={job._id}
-                  jobs={job}
-                  selected={selected}
-                  setSelected={setSelected}
-                />
-              ))
-            )}
+            {isFiltered
+              ? filtered.map((job: JobsInterface) => (
+                  <JobList
+                    key={job._id}
+                    jobs={job}
+                    selected={selected}
+                    setSelected={setSelected}
+                  />
+                ))
+              : filterJob?.map((job: JobsInterface) => (
+                  <JobList
+                    key={job._id}
+                    jobs={job}
+                    selected={selected}
+                    setSelected={setSelected}
+                  />
+                ))}
           </div>
         </div>
         <div className="w-full sm:w-2/4 p-4 sm:p-6 bg-white">

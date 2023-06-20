@@ -5,6 +5,7 @@ import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import { setToken } from "../../../features/redux/slices/tokenSlice";
 import { googleLogin } from "../../../features/axios/api/user/userAuthentication";
+import { loginSuccess } from "../../../features/redux/slices/userLoginAuthSlice";
 
 function GoogleAuthComponent(): JSX.Element {
   const dispatch = useDispatch();
@@ -22,6 +23,8 @@ function GoogleAuthComponent(): JSX.Element {
           position: toast.POSITION.BOTTOM_RIGHT,
         });
         dispatch(setToken(response.token));
+        dispatch(loginSuccess());
+
         setTimeout(() => {
             navigate("/user/home");
         }, 1000);   
@@ -47,7 +50,6 @@ function GoogleAuthComponent(): JSX.Element {
         ux_mode="popup"
           onSuccess={(response) => {
             if (response) {
-                console.log(response)
               handleSignInWithGoogle(response.credential ?? "empty response");
             }
           }}

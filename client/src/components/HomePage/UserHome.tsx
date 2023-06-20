@@ -1,16 +1,6 @@
 import React from "react";
-import { useEffect } from "react";
-import { userData } from "../../features/axios/api/user/userDetails";
 
 function UserHome() {
-  useEffect(() => {
-    async function userInfo() {
-      const data = await userData();
-      console.log(data);
-    }
-    userInfo();
-  }, []);
-
   return (
     <div className="pt-20">
       <header className="bg-white shadow">

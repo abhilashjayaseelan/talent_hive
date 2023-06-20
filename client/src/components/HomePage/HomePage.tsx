@@ -1,6 +1,25 @@
 import React from "react";
+import { useEffect } from "react";
+import { useSelector, useDispatch } from "react-redux";
+import { useNavigate } from "react-router-dom";
+import { RootState } from "../../features/redux/reducers/Reducer";
+import { loginSuccess } from "../../features/redux/slices/userLoginAuthSlice";
 
 function HomePage() {
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
+  const isLoggedIn = useSelector((state: RootState)=> state.userAuth.isLoggedIn);
+
+  useEffect(() => {
+    const token = localStorage.getItem('token');
+    if (token) {
+      dispatch(loginSuccess());
+    }
+    // if (isLoggedIn === true) {
+    //   navigate("/user/home");
+    // }
+  }, [isLoggedIn]);
+
   return (
     <div className="bg-slate-100">
       <header className="bg-white shadow">

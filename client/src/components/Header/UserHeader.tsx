@@ -13,7 +13,7 @@ function classNames(...classes: string[]) {
 
 function UserHeader() {
   return (
-    <div className="fixed top-0 w-full bg-foundItBg">
+    <div className="fixed top-0 w-full bg-foundItBg z-50">
     <Disclosure as="nav" className="bg-foundItBg">
       {({ open }) => (
         <div className="">
@@ -74,6 +74,7 @@ function UserHeader() {
                 </button> */}
 
                 {/* Profile dropdown */}
+
                 <Menu as="div" className="relative ml-3">
                   <div>
                     <Menu.Button className="flex rounded-full bg-gray-800 text-sm focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-800">

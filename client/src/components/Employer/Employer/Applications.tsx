@@ -51,8 +51,8 @@ export default function Applications() {
     applications();
   }, [])
 
-  const handleViewApplicant = (applicatonId: string)=> {
-    navigate(`/application/view-applicant/${applicatonId}`)
+  const handleViewApplicant = (applicationId: string)=> {
+    navigate(`/application/view-applicant/${applicationId}`)
   }
 
   return (

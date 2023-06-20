@@ -1,18 +1,23 @@
+import { useEffect } from "react";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { useForm } from "react-hook-form";
 import { LoginPayload } from "../../../types/PayloadInterface";
 import { userLoginValidationSchema } from "../../../utils/validation";
 import { userLogin } from "../../../features/axios/api/user/userAuthentication";
-import { ToastContainer, toast } from "react-toastify";
-import "react-toastify/dist/ReactToastify.css";
 import { Link, useNavigate } from "react-router-dom";
 import { setToken } from "../../../features/redux/slices/tokenSlice";
-import { useDispatch } from "react-redux/es/exports";
+import { useSelector, useDispatch } from "react-redux/es/exports";
+import { RootState } from "../../../features/redux/reducers/Reducer";
+import { loginSuccess } from "../../../features/redux/slices/userLoginAuthSlice";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 import GoogleAuthComponent from "./GoogleAuthComponent";
 
 export default function UserLogin() {
   const dispatch = useDispatch();
   const navigate = useNavigate();
+  const isLoggedIn = useSelector((state:RootState) => state.userAuth.isLoggedIn);
+  const token = localStorage.getItem('token');
 
   const {
     register,
@@ -27,11 +32,22 @@ export default function UserLogin() {
       ? toast.error(msg, { position: toast.POSITION.TOP_RIGHT })
       : toast.success(msg, { position: toast.POSITION.TOP_RIGHT });
 
+  useEffect(()=>{
+    if(token) {
+      dispatch(loginSuccess());
+    }
+    if(isLoggedIn === true) {
+      navigate('/user/home');
+    }
+  },[navigate]);
+
   const submitHandler = async (formData: LoginPayload) => {
     userLogin(formData)
       .then((response) => {
         const token = response.token;
         dispatch(setToken(token));
+        dispatch(loginSuccess());
+
         notify("Login success", "success");
         setTimeout(() => {
           navigate('/user/home');
