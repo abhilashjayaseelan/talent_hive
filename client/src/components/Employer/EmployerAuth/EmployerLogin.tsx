@@ -1,18 +1,22 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { useForm } from "react-hook-form";
-import { ToastContainer, toast } from "react-toastify";
-import "react-toastify/dist/ReactToastify.css";
 import { Link, useNavigate } from "react-router-dom";
 import { userLoginValidationSchema } from "../../../utils/validation";
 import { employerLogin } from "../../../features/axios/api/employer/employerAuthentication";
 import { LoginPayload } from "../../../types/PayloadInterface";
 import { setEmployerToken } from "../../../features/redux/slices/employerTokenSlice";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import { ToastContainer, toast } from "react-toastify";
+import { employerLoginSuccess } from "../../../features/redux/slices/employerDetailsSlice";
+import "react-toastify/dist/ReactToastify.css";
+import { RootState } from "../../../features/redux/reducers/Reducer";
 
 function EmployerLogin() {
   const navigate = useNavigate();
   const dispatch = useDispatch();
+  const employerToken = localStorage.getItem('EmployerToken');
+  const isLoggedIn = useSelector((state: RootState)=> state.employerDetails.isLoggedIn);
 
   const {
     register,
@@ -28,13 +32,24 @@ function EmployerLogin() {
       : toast.success(msg, { position: toast.POSITION.TOP_RIGHT });
   };
 
+  useEffect(() => {
+    if(employerToken) {
+      dispatch(employerLoginSuccess());
+    }
+    if (isLoggedIn === true) {
+      navigate('/employer/dashboard');
+    }
+  })
+
   const submitHandler = async (formData: LoginPayload) => {
     employerLogin(formData)
       .then((response) => {
+        const token = response.token;
+        dispatch(setEmployerToken(token));
+        dispatch(employerLoginSuccess());
+
         notify("Login success", "success");
         setTimeout(() => {
-          const token = response.token;
-          dispatch(setEmployerToken(token));
           navigate('/employer/dashboard');
         }, 2000);
       })

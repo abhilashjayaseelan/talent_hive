@@ -13,12 +13,14 @@ interface EmployerDetailsState {
   employerDetails: any;
   error: string | null;
   status: string;
+  isLoggedIn: boolean;
 }
 
 const initialState: EmployerDetailsState = {
   employerDetails: null,
   error: null,
   status: "idle",
+  isLoggedIn: false,
 };
 
 const employerDetailsSlice = createSlice({
@@ -30,6 +32,12 @@ const employerDetailsSlice = createSlice({
     },
     setError: (state, action: PayloadAction<string>) => {
       state.error = action.payload;
+    },
+    employerLoginSuccess: (state) => {
+      state.isLoggedIn = true;
+    },
+    employerLogout: (state) => {
+      state.isLoggedIn = false;
     },
   },
   extraReducers: (builder) => {
@@ -48,6 +56,11 @@ const employerDetailsSlice = createSlice({
   },
 });
 
-export const { clearEmployerDetails, setError } = employerDetailsSlice.actions;
+export const {
+  clearEmployerDetails,
+  setError,
+  employerLoginSuccess,
+  employerLogout,
+} = employerDetailsSlice.actions;
 
 export default employerDetailsSlice.reducer;
