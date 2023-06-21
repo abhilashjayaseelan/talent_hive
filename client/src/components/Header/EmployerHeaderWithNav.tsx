@@ -1,4 +1,6 @@
 import React, { useState } from "react";
+import { clearEmployerToken } from "../../features/redux/slices/employerTokenSlice";
+import { employerLogout } from "../../features/redux/slices/employerDetailsSlice";
 import {
   Navbar,
   Typography,
@@ -15,6 +17,8 @@ import {
   InboxArrowDownIcon,
   PowerIcon,
 } from "@heroicons/react/24/outline";
+import { useDispatch } from "react-redux";
+import { useNavigate } from "react-router-dom";
 
 interface ProfileMenuItem {
   label: string;
@@ -37,9 +41,16 @@ const profileMenuItems: ProfileMenuItem[] = [
 ];
 
 function ProfileMenu() {
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
   const [isMenuOpen, setIsMenuOpen] = useState(false);
 
   const closeMenu = () => setIsMenuOpen(false);
+  const handleLogout = () => {
+    dispatch(employerLogout());
+    dispatch(clearEmployerToken());
+    navigate('/');
+  }
 
   return (
     <Menu open={isMenuOpen} handler={setIsMenuOpen} placement="bottom-end">
@@ -70,7 +81,7 @@ function ProfileMenu() {
           return (
             <MenuItem
               key={label}
-              onClick={closeMenu}
+              onClick={label === 'Sign Out' ? () => {handleLogout()} : closeMenu}
               className={`flex items-center gap-2 rounded ${
                 isLastItem
                   ? "hover:bg-red-500/10 focus:bg-red-500/10 active:bg-red-500/10"
