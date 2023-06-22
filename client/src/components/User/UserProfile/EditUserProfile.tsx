@@ -12,6 +12,7 @@ import { Avatar } from "@material-tailwind/react";
 function EditUserProfile() {
   const navigate = useNavigate();
   const [userDetails, setUserDetails] = useState<UserInterface | undefined>();
+  const [selectedImg, setSelectedImg] = useState<string | null>(null);
 
   useEffect(() => {
     async function getUserData() {
@@ -39,8 +40,17 @@ function EditUserProfile() {
       : toast.success(msg, { position: toast.POSITION.TOP_RIGHT });
   };
 
+  const handleImageChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const file = event.target.files?.[0];
+    if (file) {
+      setSelectedImg(URL.createObjectURL(file));
+    }
+  };
+
   const submitHandler = async (formData: UserInterface) => {
-    updateUser(formData)
+    const imageFile = formData.image[0];
+    const updatedFormData = {...formData, image: imageFile}
+    updateUser(updatedFormData)
       .then((response) => {
         notify("Data updated successfully", "success");
         setTimeout(() => {
@@ -94,17 +104,18 @@ function EditUserProfile() {
                   </label>
                   <div className="mt-2 flex items-center gap-x-3">
                     <Avatar
-                      src={userDetails?.image}
-                      alt="img"
+                      src={selectedImg || userDetails?.image}
+                      alt="image"
                       size="lg"
                       className="rounded-lg shadow-lg shadow-blue-gray-500/40"
                     />
-                    <button
-                      type="button"
-                      className="rounded-md bg-white px-2.5 py-1.5 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50"
-                    >
-                      Change
-                    </button>
+                    <input 
+                    type="file"
+                    id="user-profile"
+                    accept=".jpg, .jpeg, .png"
+                    {...register("image")}
+                    onChange={handleImageChange}
+                    />
                   </div>
                 </div>
                 <div className="col-span-full">

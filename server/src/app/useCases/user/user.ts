@@ -46,6 +46,7 @@ export const updateUser = async (
     }
     return updatedUser;
   } catch (error) {
+    console.log(error)
     throw new Error("failed to update the user");
   }
 };

@@ -17,7 +17,6 @@ function UserProfile() {
   useEffect(() => {
     const userInfo = async () => {
       const data = await userData();
-      console.log(data);
       setUserDetails(data);
     };
     userInfo();

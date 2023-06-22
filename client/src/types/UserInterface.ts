@@ -3,7 +3,7 @@ export interface UserInterface {
   name?: string;
   email?: string;
   phone?: string;
-  image?: string;
+  image?: any;
   resume?: string;
   about?: string;
   profession?: string;

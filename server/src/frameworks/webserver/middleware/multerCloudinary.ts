@@ -36,6 +36,6 @@ const storageOptions: CloudinaryStorageOptions = {
 };
 
 const storage = new CloudinaryStorage(storageOptions);
-const upload: RequestHandler = multer({ storage: storage }).single('user-profile');
+const upload: RequestHandler = multer({ storage: storage }).single('image');
 
 export { upload };
