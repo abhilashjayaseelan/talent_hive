@@ -46,7 +46,9 @@ const userController = (
         throw new AppError('Unauthorized request.. invalid token', HttpStatus.UNAUTHORIZED);
       }
       const update:UserInterface = req.body;
-      update.image = req?.file?.path;
+      if(req?.file?.path) {
+        update.image = req?.file?.path;
+      }
 
       const updateUserProfile = await updateUser(id, update, dbRepositoryUser);
 

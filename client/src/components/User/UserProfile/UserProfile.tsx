@@ -9,6 +9,8 @@ import {
 } from "@material-tailwind/react";
 import { PencilIcon, PaperClipIcon } from "@heroicons/react/24/solid";
 import { UserInterface } from "../../../types/UserInterface";
+import { Link } from "react-router-dom";
+
 function UserProfile() {
   const [userDetails, setUserDetails] = useState<UserInterface>({});
 
@@ -53,9 +55,11 @@ function UserProfile() {
             <Typography variant="h6" color="blue-gray" className="mb-3">
               <div className="flex gap-x-3">
                 Profile Information
-                <Tooltip content="Edit Profile">
-                  <PencilIcon className="h-4 w-4 cursor-pointer text-blue-gray-500" />
-                </Tooltip>
+                <Link to={'/user/edit-profile'}>
+                  <Tooltip content="Edit Profile">
+                    <PencilIcon className="h-4 w-4 cursor-pointer text-blue-gray-500" />
+                  </Tooltip>
+                </Link>
               </div>
             </Typography>
             <hr className="my-1 border-blue-gray-50" />
@@ -138,7 +142,7 @@ function UserProfile() {
                     >
                       Resume:
                     </Typography>
-                    
+
                     <Typography
                       variant="small"
                       className="font-normal text-blue-gray-500"
@@ -147,7 +151,7 @@ function UserProfile() {
                         className="h-5 w-5 flex-shrink-0 text-gray-400"
                         aria-hidden="true"
                       />
-                      {userDetails?.resume ?? ""}
+                      {userDetails?.resume && "Your resume.pdf"}
                     </Typography>
                   </li>
                 </ul>

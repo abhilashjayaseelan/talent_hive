@@ -3,10 +3,11 @@ import configKeys from "./config";
 const apiConfig = {
     userRegister : `${configKeys.API_URL}user-auth/register`,
     userLogin: `${configKeys.API_URL}user-auth/login`,
+    userData: `${configKeys.API_URL}user/user-data`,
+    updateUser: `${configKeys.API_URL}user/update-user`,
     googleSignIN: `${configKeys.API_URL}user-auth/sign-in-with-google`,
     employerRegister: `${configKeys.API_URL}employer-auth/register`,
     employerLogin: `${configKeys.API_URL}employer-auth/login`,
-    userData: `${configKeys.API_URL}user/user-data`,
     employerJObs: `${configKeys.API_URL}job/employer-jobs`,
     createNewJob: `${configKeys.API_URL}job/create-job`,
     updateJob: `${configKeys.API_URL}job/update-job`,
@@ -20,7 +21,7 @@ const apiConfig = {
     applicationDetails: `${configKeys.API_URL}job-application/applicant-details`,
     changeStatus: `${configKeys.API_URL}job-application/change-status`,
     titleLocationSalary: `${configKeys.API_URL}job/distinct`,
-    filterJobs: `${configKeys.API_URL}job/filter-jobs`
+    filterJobs: `${configKeys.API_URL}job/filter-jobs`,
 }
 
 export default apiConfig;
