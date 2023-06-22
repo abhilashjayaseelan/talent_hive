@@ -44,7 +44,24 @@ export const updateUser = async (
     if(!updatedUser) {
       throw new AppError('not found', HttpStatus.BAD_GATEWAY);
     }
+    return updatedUser;
   } catch (error) {
     throw new Error("failed to update the user");
   }
 };
+
+export const updateResume = async (
+  userId: string,
+  updates: Partial<UserDbInterface>,
+  dbRepositoryUser: ReturnType<UserDbInterface> 
+) => {
+  try {
+    const updateResume = await dbRepositoryUser.updateUser(userId, updates);
+    if(!updateResume) {
+      throw new AppError('not found', HttpStatus.BAD_GATEWAY);
+    }
+    return updateResume;
+  } catch (error) {
+    throw new Error("failed to update resume");
+  }
+}

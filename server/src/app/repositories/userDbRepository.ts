@@ -21,7 +21,7 @@ export const userDbRepository = (
 
   const updateUser = async (userId: string, updates: Partial<UserInterface>)=> {
     const updatedUser = await repository.updateUser(userId, updates);
-    return updateUser;
+    return updatedUser;
   }
 
   return {
