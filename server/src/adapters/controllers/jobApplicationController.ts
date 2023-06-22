@@ -26,7 +26,8 @@ const jobApplicationController = (
   );
 
   const applyNewJob = expressAsyncHandler(
-    async (req: CustomRequest, res: Response) => {
+    async (req: Request, res: Response) => {
+      const customReq = req as CustomRequest;
       const jobId = Array.isArray(req.query.jobId)
         ? req.query.jobId[0]
         : req.query.jobId;
@@ -36,7 +37,7 @@ const jobApplicationController = (
 
       let application: JobApplicationInterface = {};
 
-      const userId = new Types.ObjectId(req.payload);
+      const userId = new Types.ObjectId(customReq.payload);
       application.jobId = new Types.ObjectId(String(jobId));
       application.employerId = new Types.ObjectId(String(employerId));
       application.userId = userId;
@@ -61,11 +62,12 @@ const jobApplicationController = (
   );
 
   const existingApplicant = expressAsyncHandler(
-    async (req: CustomRequest, res: Response) => {
+    async (req: Request, res: Response) => {
+      const customReq = req as CustomRequest;
       let jobId = Array.isArray(req.query.jobId)
         ? req.query.jobId[0]
         : req.query.jobId;
-      const userId = new Types.ObjectId(req.payload);
+      const userId = new Types.ObjectId(customReq.payload);
       const jobID = new Types.ObjectId(String(jobId));
 
       const alreadyApplied = await existingApplication(
@@ -88,8 +90,9 @@ const jobApplicationController = (
   );
 
   const jobApplicationForEmployer = expressAsyncHandler(
-    async (req: CustomRequest, res: Response) => {
-      const employerId = req.payload;
+    async (req: Request, res: Response) => {
+      const customReq = req as CustomRequest;
+      const employerId = customReq.payload;
       const jobApplications = await allApplications(
         employerId ?? "",
         dbRepositoryJobApplication

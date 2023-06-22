@@ -27,9 +27,10 @@ const jobController = (
   const dbRepositoryJob = jobDbRepository(jobDbRepositoryImpl(jobModel));
 
   const createNewJob = expressAsyncHandler(
-    async (req: CustomRequest, res: Response) => {
+    async (req: Request, res: Response) => {
+      const customReq = req as CustomRequest;
       const job: JobInterface = req.body;
-      const employerId = new Types.ObjectId(req.payload);
+      const employerId = new Types.ObjectId(customReq.payload);
       job.employer = employerId;
       const createdJob = await createJob(job, dbRepositoryJob);
 
@@ -48,7 +49,7 @@ const jobController = (
   );
 
   const updateTheJob = expressAsyncHandler(
-    async (req: CustomRequest, res: Response) => {
+    async (req: Request, res: Response) => {
       const jobId = req.params.id;
       const update = req.body;
 
@@ -88,8 +89,9 @@ const jobController = (
   );
 
   const getJobsByEmployer = expressAsyncHandler(
-    async (req: CustomRequest, res: Response) => {
-      const employerId = req.payload ?? "";
+    async (req: Request, res: Response) => {
+      const customReq = req as CustomRequest
+      const employerId = customReq.payload ?? "";
       const jobs = await findJobByEmployer(employerId, dbRepositoryJob);
       res.json({status: 'success', jobs});
     }
@@ -106,7 +108,7 @@ const jobController = (
   );
 
   const jobDataById = expressAsyncHandler(
-    async (req: CustomRequest, res: Response) => {
+    async (req: Request, res: Response) => {
       const jobId = req.params.id;
       const jobData = await findJobById(jobId, dbRepositoryJob);
       res.json({
