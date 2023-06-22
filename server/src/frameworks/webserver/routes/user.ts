@@ -14,6 +14,7 @@ const userRouter = ()=> {
     );
 
     route.get('/user-data', controller.getUserDataById);
+    route.put('/update-user', controller.updateTheUser);
 
     return route;
 }

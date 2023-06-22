@@ -21,7 +21,6 @@ export class JobEntity {
     if (!existingJob) {
       return null;
     }
-    // updating the job according to the changes
     Object.assign(existingJob, updates);
     const updatedJob = await existingJob.save();
     return updatedJob;

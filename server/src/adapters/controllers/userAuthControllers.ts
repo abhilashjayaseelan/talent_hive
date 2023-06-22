@@ -5,7 +5,7 @@ import { AuthServiceInterface } from "../../app/services/authServiceInterface";
 import { UserDbInterface } from "../../app/repositories/userDbRepository";
 import { UserRepositoryMongoDB } from "../../frameworks/database/mongoDb/repositories/userRepositoryMongoDB";
 import { userLogin, registerUser, signInWithGoogle } from "../../app/useCases/auth/userAuth";
-import { UserInterface } from "../../types/userInterface";
+import { CreateUserInterface, UserInterface } from "../../types/userInterface";
 import { UserModel } from "../../frameworks/database/mongoDb/models/userModel";
 import { GoogleAuthService } from "../../frameworks/services/googleAuthService";
 import { GoogleAuthServiceInterface } from "../../app/services/googleAuthServiceInterface";
@@ -25,7 +25,7 @@ const authController = (
 
   const userRegister = expressAsyncHandler(
     async (req: Request, res: Response) => {
-      const user: UserInterface = req.body;
+      const user: CreateUserInterface = req?.body;
       await registerUser(user, dbRepositoryUser, authService);
       res.json({
         status: "success",
