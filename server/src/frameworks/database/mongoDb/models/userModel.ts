@@ -40,6 +40,18 @@ const userSchema = new Schema({
     },
     image: {
         type: String,
+    },
+    about: {
+        type: String,
+    },
+    profession: {
+        type: String,
+    },
+    resume: {
+        type: String,
+    }, 
+    location: {
+        type: String
     }
 })
 
