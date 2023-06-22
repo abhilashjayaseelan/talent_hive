@@ -56,7 +56,7 @@ function EditJob() {
       .then((response) => {
         notify("Job updated successfully", "success");
         setTimeout(() => {
-          navigate("/employer/home");
+          navigate("/employer/all-jobs");
         }, 2000);
       })
       .catch((error: any) => {

@@ -5,7 +5,7 @@ import { Bars3Icon, XMarkIcon } from "@heroicons/react/24/outline";
 import { logout } from "../../features/redux/slices/userLoginAuthSlice";
 import { clearToken } from "../../features/redux/slices/tokenSlice";
 import { useDispatch } from "react-redux";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 const navigation = [{ name: "Jobs", href: "/job/all-jobs", current: false }];
 
@@ -16,12 +16,11 @@ function classNames(...classes: string[]) {
 function UserHeader() {
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  ;
   const handleLogout = () => {
     dispatch(logout());
     dispatch(clearToken());
-    navigate('/');
-  }
+    navigate("/");
+  };
 
   return (
     <div className="fixed top-0 w-full bg-foundItBg z-50">
@@ -108,52 +107,49 @@ function UserHeader() {
                     >
                       <Menu.Items className="absolute right-0 z-10 mt-2 w-48 origin-top-right rounded-md bg-purple-500 py-1 shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none">
                         <Menu.Item>
-                          {({ active }) => (
-                            <a
-                              href="d"
+                          <Link to={"/user/profile"}>
+                            <button
                               className={classNames(
                                 "block px-4 py-2 text-sm text-white"
                               )}
                             >
                               Profile
-                            </a>
-                          )}
+                            </button>
+                          </Link>
                         </Menu.Item>
                         <Menu.Item>
-                          {({ active }) => (
-                            <a
-                              href="d"
+                          <Link to={"/job/all-jobs"}>
+                            <button
                               className={classNames(
                                 "block px-4 py-2 text-sm text-white"
                               )}
                             >
                               Jobs
-                            </a>
-                          )}
+                            </button>
+                          </Link>
                         </Menu.Item>
                         <Menu.Item>
-                          {({ active }) => (
-                            <a
-                              href="/employer/login"
+                          <Link to={"/employer/login"}>
+                            <button
                               className={classNames(
                                 "block px-4 py-2 text-sm text-white"
                               )}
                             >
                               Employer login
-                            </a>
-                          )}
+                            </button>
+                          </Link>
                         </Menu.Item>
                         <Menu.Item>
-                          {({ active }) => (
-                            <button
-                              className={classNames(
-                                "block px-4 py-2 text-sm text-white"
-                              )}
-                              onClick={()=> {handleLogout()}}
-                            >
-                              Logout
-                            </button>
-                          )}
+                          <button
+                            className={classNames(
+                              "block px-4 py-2 text-sm text-white"
+                            )}
+                            onClick={() => {
+                              handleLogout();
+                            }}
+                          >
+                            Logout
+                          </button>
                         </Menu.Item>
                       </Menu.Items>
                     </Transition>
