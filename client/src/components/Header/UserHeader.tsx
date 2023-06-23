@@ -62,7 +62,7 @@ function UserHeader() {
                       src="https://res.cloudinary.com/dgjwhf8i3/image/upload/v1685793152/Screenshot_2023-06-03_172145_pfhklc.jpg"
                       alt="Your Company"
                     />
-                    <Link to={'/user '}>
+                    <Link to={'/user/home'}>
                       <img
                         className="hidden h-8 w-auto lg:block"
                         src="https://res.cloudinary.com/dgjwhf8i3/image/upload/v1685793152/Screenshot_2023-06-03_172145_pfhklc.jpg"
@@ -80,7 +80,7 @@ function UserHeader() {
                           href={item.href}
                           className={classNames(
                             item.current
-                              ? "bg-purple-600 text-white"
+                              ? "bg-white text-purple-700"
                               : "text-black hover:bg-purple-500 hover:text-white",
                             "rounded-md px-3 py-2 text-sm font-medium"
                           )}
@@ -122,12 +122,12 @@ function UserHeader() {
                       leaveFrom="transform opacity-100 scale-100"
                       leaveTo="transform opacity-0 scale-95"
                     >
-                      <Menu.Items className="absolute right-0 z-10 mt-2 w-48 origin-top-right rounded-md bg-purple-500 py-1 shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none">
+                      <Menu.Items className="absolute right-0 z-10 mt-2 w-48 origin-top-right rounded-md bg-white py-1 shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none">
                         <Menu.Item>
                           <Link to={"/user/profile"}>
                             <button
                               className={classNames(
-                                "block px-4 py-2 text-sm text-white"
+                                "block px-4 py-2 text-sm text-purple-700"
                               )}
                             >
                               Profile
@@ -138,7 +138,7 @@ function UserHeader() {
                           <Link to={"/job/all-jobs"}>
                             <button
                               className={classNames(
-                                "block px-4 py-2 text-sm text-white"
+                                "block px-4 py-2 text-sm text-purple-700"
                               )}
                             >
                               Jobs
@@ -149,7 +149,7 @@ function UserHeader() {
                           <Link to={"/employer/login"}>
                             <button
                               className={classNames(
-                                "block px-4 py-2 text-sm text-white"
+                                "block px-4 py-2 text-sm text-purple-700"
                               )}
                             >
                               Employer login
@@ -159,7 +159,7 @@ function UserHeader() {
                         <Menu.Item>
                           <button
                             className={classNames(
-                              "block px-4 py-2 text-sm text-white"
+                              "block px-4 py-2 text-sm text-purple-700"
                             )}
                             onClick={() => {
                               handleLogout();
