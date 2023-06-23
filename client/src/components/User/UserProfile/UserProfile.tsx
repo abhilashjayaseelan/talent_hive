@@ -2,15 +2,17 @@ import React, { useEffect, useState } from "react";
 import { userData } from "../../../features/axios/api/user/userDetails";
 import { UserInterface } from "../../../types/UserInterface";
 import { Link } from "react-router-dom";
-import ConfirmResumeDelete from "./ConfirmResumeDelete";
 import { ToastContainer } from "react-toastify";
 import { deleteResume } from "../../../features/axios/api/user/userDetails";
+import ConfirmResumeDelete from "./ConfirmResumeDelete";
+import AddResume from "./AddResumeModal";
 import {
   Card,
   CardBody,
   Avatar,
   Typography,
   Tooltip,
+  Button,
 } from "@material-tailwind/react";
 import {
   PencilIcon,
@@ -22,6 +24,9 @@ function UserProfile() {
   const [userDetails, setUserDetails] = useState<UserInterface>({});
   const [showDeleteConfirmation, setShowDeleteConfirmation] = useState(false);
   const [resumeDeleted, setResumeDeleted] = useState(false);
+  const [isUploaded, setIsUploaded] = useState(false);
+  const [showResumeUpload, setResumeUpload] = useState(false);
+
 
   useEffect(() => {
     const userInfo = async () => {
@@ -29,7 +34,11 @@ function UserProfile() {
       setUserDetails(data);
     };
     userInfo();
-  }, [resumeDeleted]);
+  }, [resumeDeleted, isUploaded]);
+
+  const resumeUploadButtonHandle = () => {
+    setResumeUpload(true);
+  };
 
   const deleteButtonHandle = () => {
     setShowDeleteConfirmation(true);
@@ -167,10 +176,12 @@ function UserProfile() {
                           />
                           "Your resume.pdf"
                           <Tooltip content={"Update Resume"}>
-                            <PencilIcon
-                              className="ml-20 h-5 w-5 flex-shrink-0 text-blue-400"
-                              aria-hidden="true"
-                            />
+                            <button onClick={() => resumeUploadButtonHandle()}>
+                              <PencilIcon
+                                className="ml-20 h-5 w-5 flex-shrink-0 text-blue-400"
+                                aria-hidden="true"
+                              />
+                            </button>
                           </Tooltip>
                           <Tooltip content="Delete Resume">
                             <button onClick={() => deleteButtonHandle()}>
@@ -188,10 +199,12 @@ function UserProfile() {
                         className="font-normal text-blue-gray-500 flex gap-x-2"
                       >
                         <Tooltip content={"Add resume"}>
-                          <PencilIcon
-                            className="ml-20 h-5 w-5 flex-shrink-0 text-blue-400"
-                            aria-hidden="true"
-                          />
+                          <Button
+                            variant="text"
+                            onClick={() => resumeUploadButtonHandle()}
+                          >
+                            Add
+                          </Button>
                         </Tooltip>
                       </Typography>
                     )}
@@ -208,10 +221,19 @@ function UserProfile() {
           isOpen={showDeleteConfirmation}
           onClose={() => setShowDeleteConfirmation(false)}
           onConfirm={() => deleteResume()}
-          isDeleted={() => setResumeDeleted(true)}
+          isDeleted={() => setResumeDeleted(!resumeDeleted)}
         />
       )}
-      <ToastContainer />
+      <div className="z-10">
+        {showResumeUpload && (
+          <AddResume
+            isOpen={showResumeUpload}
+            onClose={() => setResumeUpload(false)}
+            setIsUploaded={()=> setIsUploaded(!isUploaded)}
+          />
+        )}
+      </div>
+      <ToastContainer className="z-50"/>
     </div>
   );
 }

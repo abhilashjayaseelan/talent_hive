@@ -35,14 +35,35 @@ export const updateUser = async (payload: UserInterface): Promise<any> => {
   }
 };
 
-export const deleteResume = async () : Promise<any> => {
+export const uploadResume = async (file: File): Promise<any> => {
   try {
-    const config: AxiosRequestConfig  = {
+    const payload = new FormData();
+    payload.append("image", file);
+
+    const config: AxiosRequestConfig = {
+      url: apiConfig.uploadResume,
+      method: "put",
+      data: payload,
+      headers: {
+        "Content-Type": "multipart/form-data",
+      },
+    };
+
+    const response = await api(config);
+    return response;
+  } catch (error) {
+    throw new Error("Error while uploading resume");
+  }
+};
+
+export const deleteResume = async (): Promise<any> => {
+  try {
+    const config: AxiosRequestConfig = {
       url: apiConfig.deleteResume,
-      method: 'delete'
-    }
+      method: "delete",
+    };
     await api(config);
   } catch (error) {
-    throw new Error('error while deleting resume');
+    throw new Error("error while deleting resume");
   }
-}
+};
