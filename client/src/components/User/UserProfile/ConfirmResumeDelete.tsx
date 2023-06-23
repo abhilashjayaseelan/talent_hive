@@ -3,8 +3,6 @@ import { Dialog, Transition } from "@headlessui/react";
 import { ExclamationTriangleIcon } from "@heroicons/react/24/outline";
 import "react-toastify/dist/ReactToastify.css";
 import { toast } from "react-toastify";
-import { useDispatch } from "react-redux";
-import { deleted } from "../../../features/redux/slices/employerJobsSlice";
 
 interface DeleteConfirmationDialogProps {
   isOpen: boolean;
@@ -12,30 +10,17 @@ interface DeleteConfirmationDialogProps {
   onConfirm: () => void;
 }
 
-function ConfirmDelete({
+function ConfirmResumeDelete({
   isOpen,
   onClose,
   onConfirm,
 }: DeleteConfirmationDialogProps) {
-  const [isLoading, setIsLoading] = useState(false);
-  const dispatch = useDispatch();
+    const [isLoading, setIsLoading] = useState(false);
 
-  const handleConfirm = async () => {
-    setIsLoading(true);
-    try {
-      onConfirm();
-      setTimeout(() => {
-        dispatch(deleted())
-        toast.success("Job deleted successfully");
-      }, 1500);
-      setTimeout(() => {
-        onClose();
-        setIsLoading(false);  
-      }, 3000);
-    } catch (error) {
-      toast.error("Failed to delete the job");
-    } 
-  };
+    const handleConfirm = async () => {
+        setIsLoading(true);
+
+    }
   return (
     <Transition.Root show={isOpen} as={Fragment}>
       <Dialog
@@ -85,11 +70,11 @@ function ConfirmDelete({
                     as="h3"
                     className="text-lg leading-6 font-medium text-gray-900"
                   >
-                    Delete Job
+                    Delete Resume
                   </Dialog.Title>
                   <div className="mt-2">
                     <p className="text-sm text-gray-500">
-                      Are you sure you want to delete the job ? All of the data
+                      Are you sure you want to delete the Resume ? All of the data
                       will be permanently removed. This action cannot be undone.
                     </p>
                   </div>
@@ -118,7 +103,7 @@ function ConfirmDelete({
         </div>
       </Dialog>
     </Transition.Root>
-  );
+  )
 }
 
-export default ConfirmDelete;
+export default ConfirmResumeDelete;

@@ -30,7 +30,7 @@ function EditUserProfile() {
       setValue("email", userDetails?.email);
       setValue("location", userDetails?.location);
       setValue("about", userDetails?.about);
-      setValue("profession", userDetails?.profession);  
+      setValue("profession", userDetails?.profession);
     }
   }, [userDetails]);
 
@@ -41,7 +41,7 @@ function EditUserProfile() {
   };
 
   const handleImageChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    const file = event.target.files?.[0];
+    const file = event?.target?.files?.[0];
     if (file) {
       setSelectedImg(URL.createObjectURL(file));
     }
@@ -49,7 +49,7 @@ function EditUserProfile() {
 
   const submitHandler = async (formData: UserInterface) => {
     const imageFile = formData.image[0];
-    const updatedFormData = {...formData, image: imageFile}
+    const updatedFormData = { ...formData, image: imageFile };
     updateUser(updatedFormData)
       .then((response) => {
         notify("Data updated successfully", "success");
@@ -109,13 +109,17 @@ function EditUserProfile() {
                       size="lg"
                       className="rounded-lg shadow-lg shadow-blue-gray-500/40"
                     />
-                    <input 
-                    type="file"
-                    id="user-profile"
-                    accept=".jpg, .jpeg, .png"
-                    {...register("image")}
-                    onChange={handleImageChange}
-                    />
+                    <label className="relative cursor-pointer bg-purple-200 hover:bg-purple-300 py-2 px-4 rounded-md shadow-sm">
+                      <span className="text-black">Choose File</span>
+                      <input
+                        type="file"
+                        id="user-profile"
+                        accept=".jpg, .jpeg, .png"
+                        {...register("image")}
+                        className="absolute inset-0 w-full h-full opacity-0 cursor-pointer"
+                        onChange={handleImageChange}
+                      />
+                    </label>
                   </div>
                 </div>
                 <div className="col-span-full">
@@ -220,8 +224,8 @@ function EditUserProfile() {
             </button>
           </div>
         </form>
+        <ToastContainer />
       </div>
-      <ToastContainer />
     </>
   );
 }

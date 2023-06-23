@@ -1,5 +1,10 @@
 import React, { useEffect, useState } from "react";
 import { userData } from "../../../features/axios/api/user/userDetails";
+import { UserInterface } from "../../../types/UserInterface";
+import { Link } from "react-router-dom";
+import ConfirmResumeDelete from "./ConfirmResumeDelete";
+import "react-toastify/dist/ReactToastify.css";
+import { ToastContainer, toast } from "react-toastify";
 import {
   Card,
   CardBody,
@@ -7,12 +12,15 @@ import {
   Typography,
   Tooltip,
 } from "@material-tailwind/react";
-import { PencilIcon, PaperClipIcon } from "@heroicons/react/24/solid";
-import { UserInterface } from "../../../types/UserInterface";
-import { Link } from "react-router-dom";
+import {
+  PencilIcon,
+  PaperClipIcon,
+  TrashIcon,
+} from "@heroicons/react/24/solid";
 
 function UserProfile() {
   const [userDetails, setUserDetails] = useState<UserInterface>({});
+  const [showDeleteConfirmation, setShowDeleteConfirmation] = useState(false);
 
   useEffect(() => {
     const userInfo = async () => {
@@ -21,6 +29,10 @@ function UserProfile() {
     };
     userInfo();
   }, []);
+
+  const deleteButtonHandle = () => {
+    setShowDeleteConfirmation(true);
+  };
 
   return (
     <div className="pl-16 pr-16 pt-10">
@@ -54,9 +66,9 @@ function UserProfile() {
             <Typography variant="h6" color="blue-gray" className="mb-3">
               <div className="flex gap-x-3">
                 Profile Information
-                <Link to={'/user/edit-profile'}>
+                <Link to={"/user/edit-profile"}>
                   <Tooltip content="Edit Profile">
-                    <PencilIcon className="h-4 w-4 cursor-pointer text-blue-gray-500" />
+                    <PencilIcon className="h-4 w-4 cursor-pointer text-blue-500" />
                   </Tooltip>
                 </Link>
               </div>
@@ -142,16 +154,35 @@ function UserProfile() {
                       Resume:
                     </Typography>
 
-                    <Typography
-                      variant="small"
-                      className="font-normal text-blue-gray-500"
-                    >
-                      <PaperClipIcon
-                        className="h-5 w-5 flex-shrink-0 text-gray-400"
-                        aria-hidden="true"
-                      />
-                      {userDetails?.resume && "Your resume.pdf"}
-                    </Typography>
+                    <div className="rounded-md border border-gray-300 p-1 lg:w-72">
+                      <Typography
+                        variant="small"
+                        className="font-normal text-blue-gray-500 flex gap-x-2"
+                      >
+                        <PaperClipIcon
+                          className="h-5 w-5 flex-shrink-0 text-gray-400"
+                          aria-hidden="true"
+                        />
+                        {userDetails?.resume && "Your resume.pdf"}
+                        <Tooltip content="Update Resume">
+                          <PencilIcon
+                            className="ml-20 h-5 w-5 flex-shrink-0 text-blue-400"
+                            aria-hidden="true"
+                          />
+                        </Tooltip>
+
+                        <Tooltip content="Delete Resume">
+                          <button
+                           onClick={()=> deleteButtonHandle()}
+                          >
+                            <TrashIcon
+                              className="ml-2 h-5 w-5 flex-shrink-0 text-red-400"
+                              aria-hidden="true"
+                            />
+                          </button>
+                        </Tooltip>
+                      </Typography>
+                    </div>
                   </li>
                 </ul>
               </CardBody>
@@ -159,6 +190,15 @@ function UserProfile() {
           </div>
         </CardBody>
       </Card>
+
+      {showDeleteConfirmation && (
+        <ConfirmResumeDelete
+          isOpen={showDeleteConfirmation}
+          onClose={() => setShowDeleteConfirmation(false)}
+          onConfirm={() => deleteButtonHandle} //!change this its not what we need here
+        />
+      )}
+      <ToastContainer />
     </div>
   );
 }
