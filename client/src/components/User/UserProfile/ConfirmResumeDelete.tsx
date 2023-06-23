@@ -2,39 +2,39 @@ import { Fragment, useState } from "react";
 import { Dialog, Transition } from "@headlessui/react";
 import { ExclamationTriangleIcon } from "@heroicons/react/24/outline";
 import "react-toastify/dist/ReactToastify.css";
+import { Spinner } from "@material-tailwind/react";
 import { toast } from "react-toastify";
-import { useDispatch } from "react-redux";
-import { deleted } from "../../../features/redux/slices/employerJobsSlice";
 
 interface DeleteConfirmationDialogProps {
   isOpen: boolean;
   onClose: () => void;
   onConfirm: () => void;
+  isDeleted: () => void;
 }
 
-function ConfirmDelete({
+function ConfirmResumeDelete({
   isOpen,
   onClose,
   onConfirm,
+  isDeleted
 }: DeleteConfirmationDialogProps) {
   const [isLoading, setIsLoading] = useState(false);
-  const dispatch = useDispatch();
 
   const handleConfirm = async () => {
     setIsLoading(true);
     try {
       onConfirm();
       setTimeout(() => {
-        dispatch(deleted())
-        toast.success("Job deleted successfully");
-      }, 1500);
+        isDeleted();
+        toast.success("Resume deleted successfully");
+      }, 2000);
       setTimeout(() => {
         onClose();
         setIsLoading(false);  
       }, 3000);
     } catch (error) {
-      toast.error("Failed to delete the job");
-    } 
+      toast.error("Failed to delete the resume");
+    }
   };
   return (
     <Transition.Root show={isOpen} as={Fragment}>
@@ -85,12 +85,13 @@ function ConfirmDelete({
                     as="h3"
                     className="text-lg leading-6 font-medium text-gray-900"
                   >
-                    Delete Job
+                    Delete Resume
                   </Dialog.Title>
                   <div className="mt-2">
                     <p className="text-sm text-gray-500">
-                      Are you sure you want to delete the job ? All of the data
-                      will be permanently removed. This action cannot be undone.
+                      Are you sure you want to delete the Resume ? All of the
+                      data will be permanently removed. This action cannot be
+                      undone.
                     </p>
                   </div>
                 </div>
@@ -103,7 +104,7 @@ function ConfirmDelete({
                   onClick={handleConfirm}
                   disabled={isLoading}
                 >
-                  {isLoading ? "Deleting..." : "Delete"}
+                  {isLoading ?  <Spinner color="red" /> : "Delete"}
                 </button>
                 <button
                   type="button"
@@ -121,4 +122,4 @@ function ConfirmDelete({
   );
 }
 
-export default ConfirmDelete;
+export default ConfirmResumeDelete;

@@ -1,4 +1,4 @@
-import { CreateUserInterface } from "../../../../types/userInterface";
+import { CreateUserInterface, UserInterface } from "../../../../types/userInterface";
 import { UserEntity } from "../../../../entities/UserEntity";
 import {UserModel} from "../models/userModel";
 
@@ -22,10 +22,21 @@ export const UserRepositoryMongoDB = (model: UserModel) => {
     return userData;
   }
 
+  const updateUser = async (userId: string, updates: Partial<UserInterface>) => {
+    const updatedUser = await userEntity.updateUser(userId, updates);
+    return updatedUser;
+  }
+
+  const deleteResume = async (userId: string) => {
+    await userEntity.resumeDelete(userId);
+  }
+
   return {
     getUserByEmail,
     createUser,
-    getUserDataById
+    getUserDataById,
+    updateUser,
+    deleteResume
   };
 };
 

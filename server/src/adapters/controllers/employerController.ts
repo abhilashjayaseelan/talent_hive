@@ -1,4 +1,4 @@
-import { Response } from "express";
+import {Request, Response } from "express";
 import { CustomRequest } from "../../types/expressRequest";
 import { EmployerDbInterface } from "../../app/repositories/employerDbRepository";
 import { EmployerRepositoryMongoDB } from "../../frameworks/database/mongoDb/repositories/employerRepositoryMongoDB";
@@ -13,8 +13,9 @@ const employerController = (
   const dbRepositoryEmployer = employerDbRepository(employerDbRepositoryImpl(employerModel));
 
   const getEmployerById = expressAsyncHandler(
-    async (req: CustomRequest, res: Response) => {
-        const id = req.payload ?? '' ; 
+    async (req: Request, res: Response) => {
+        const customReq = req as CustomRequest
+        const id = customReq.payload ?? '' ; 
         const employerData = await dbRepositoryEmployer.findEmployerById(id);
         res.json({status: 'success', employerData});
     }

@@ -22,4 +22,15 @@ export class UserEntity {
         const userData: any = await this.model.findById(id);
         return userData;
     }
+
+    public async updateUser (id: string, updates: Partial<UserInterface>) : Promise <any> {
+        const currentDetails = await this.model.findById(id);
+        Object.assign(currentDetails ?? {}, updates);
+        const updatedUser = await currentDetails?.save();
+        return updatedUser;
+    }
+
+    public async resumeDelete (id: string) :Promise <any> {
+        await this.model.updateOne({_id: id}, {$unset: {resume: ''}});
+    }
 }

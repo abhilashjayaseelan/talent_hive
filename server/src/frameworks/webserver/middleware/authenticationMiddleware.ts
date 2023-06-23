@@ -1,24 +1,25 @@
-import { Response, NextFunction } from "express";
+import { Response, Request, NextFunction } from "express";
 import { CustomRequest } from "../../../types/expressRequest";
 import { authService } from "../../services/authService";
 import AppError from "../../../utils/appError";
 import { HttpStatus } from "../../../types/httpStatus";
 
 const authenticationMiddleware = (
-  req: CustomRequest,
+  req: Request,
   res: Response, 
   next: NextFunction
 ) => {
+  const customReq = req as CustomRequest
   let token: string | null = "";
-  if ( req.headers.authorization && req.headers.authorization.startsWith("Bearer")) {
-    token = req.headers.authorization.split(" ")[1];
+  if ( customReq.headers.authorization && customReq.headers.authorization.startsWith("Bearer")) {
+    token = customReq.headers.authorization.split(" ")[1];
   }
   if (!token) {
     throw new AppError('Token not found', HttpStatus.UNAUTHORIZED);
   }
   try {
     const {payload}: any = authService().verifyToken(token);
-    req.payload = payload;
+    customReq.payload = payload;
     next()
   } catch (error) {
     throw new AppError('UnAuthorized user', HttpStatus.UNAUTHORIZED);

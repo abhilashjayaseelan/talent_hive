@@ -17,6 +17,6 @@ export default withMT({
         scrollbarThumbHover: "var(--scrollbar-thumb-color-hover)",
       },
     },
-    plugins: [require("tailwind-scrollbar")],
+    plugins: [require("tailwind-scrollbar"), require("@tailwindcss/forms")],
   },
 });

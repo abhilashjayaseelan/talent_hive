@@ -43,7 +43,7 @@ export const userLogin = async (
   if (!isPasswordCorrect) {
     throw new AppError("Sorry, incorrect password", HttpStatus.UNAUTHORIZED);
   }
-  const token = authService.generateToken(user._id.toString());
+  const token = authService.generateToken(user?._id?.toString() ?? '');
   return token;
 };
 
@@ -57,13 +57,13 @@ export const signInWithGoogle = async (
   const user = await googleAuthService.verify(credential);
   const isUserExist = await userRepository.getUserByEmail(user.email);
   if (isUserExist) {
-    const payload = isUserExist._id.toString();
-    const token = authService.generateToken(payload);
+    const payload = isUserExist?._id?.toString();
+    const token = authService.generateToken(payload ?? '');
     return token;
   } else {
     const { _id: userId} = await userRepository.createUser(user);
-    const payload = userId.toString();
-    const token = authService.generateToken(payload);
+    const payload = userId?.toString();
+    const token = authService.generateToken(payload ?? '');
     return token;
   }
 };

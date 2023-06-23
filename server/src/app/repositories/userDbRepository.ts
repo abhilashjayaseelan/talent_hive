@@ -1,5 +1,5 @@
 import { UserRepositoryMongoDB } from "../../frameworks/database/mongoDb/repositories/userRepositoryMongoDB";
-import { CreateUserInterface } from "../../types/userInterface";
+import { CreateUserInterface, UserInterface } from "../../types/userInterface";
 
 export const userDbRepository = (
   repository: ReturnType<UserRepositoryMongoDB>
@@ -19,10 +19,21 @@ export const userDbRepository = (
     return userData;
   }
 
+  const updateUser = async (userId: string, updates: Partial<UserInterface>)=> {
+    const updatedUser = await repository.updateUser(userId, updates);
+    return updatedUser;
+  }
+
+  const deleteResume = async (userId: string) => {
+    await repository.deleteResume(userId);
+  }
+
   return {
     getUserByEmail,
     createUser,
-    getUserDataById
+    getUserDataById,
+    updateUser,
+    deleteResume
   };
 };
 
