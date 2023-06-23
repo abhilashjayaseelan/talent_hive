@@ -7,6 +7,7 @@ import jobDetailReducer from '../slices/jobDetailsSlice';
 import employerJobDetailReducer from '../slices/employerJobDetailsSlice';
 import employerTokenReducer from '../slices/employerTokenSlice';
 import userLoginAuthReducer from '../slices/userLoginAuthSlice';
+import userDetailsReducer from '../slices/userDetailsSlice';
 
 const rootReducer = combineReducers({
   token: tokenReducer,
@@ -16,7 +17,8 @@ const rootReducer = combineReducers({
   allJobs: allJobReducer,
   jobDetails: jobDetailReducer,
   employerJobDetails: employerJobDetailReducer,
-  userAuth: userLoginAuthReducer
+  userAuth: userLoginAuthReducer,
+  userDetails: userDetailsReducer,
 });
 
 export type RootState = ReturnType<typeof rootReducer>;

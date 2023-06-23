@@ -1,11 +1,16 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { Fragment } from "react";
 import { Disclosure, Menu, Transition } from "@headlessui/react";
 import { Bars3Icon, XMarkIcon } from "@heroicons/react/24/outline";
 import { logout } from "../../features/redux/slices/userLoginAuthSlice";
 import { clearToken } from "../../features/redux/slices/tokenSlice";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
+import { RootState } from "../../features/redux/reducers/Reducer";
+import {
+  fetchUser,
+  clearUserDetails,
+} from "../../features/redux/slices/userDetailsSlice";
 
 const navigation = [{ name: "Jobs", href: "/job/all-jobs", current: false }];
 
@@ -16,6 +21,16 @@ function classNames(...classes: string[]) {
 function UserHeader() {
   const dispatch = useDispatch();
   const navigate = useNavigate();
+  const user = useSelector((state: RootState) => state.userDetails.userDetails);
+
+  useEffect(() => {
+    dispatch(fetchUser());
+
+    return () => {
+      dispatch(clearUserDetails());
+    };
+  }, [dispatch]);
+
   const handleLogout = () => {
     dispatch(logout());
     dispatch(clearToken());
@@ -47,11 +62,13 @@ function UserHeader() {
                       src="https://res.cloudinary.com/dgjwhf8i3/image/upload/v1685793152/Screenshot_2023-06-03_172145_pfhklc.jpg"
                       alt="Your Company"
                     />
-                    <img
-                      className="hidden h-8 w-auto lg:block"
-                      src="https://res.cloudinary.com/dgjwhf8i3/image/upload/v1685793152/Screenshot_2023-06-03_172145_pfhklc.jpg"
-                      alt="Your Company"
-                    />
+                    <Link to={'/user '}>
+                      <img
+                        className="hidden h-8 w-auto lg:block"
+                        src="https://res.cloudinary.com/dgjwhf8i3/image/upload/v1685793152/Screenshot_2023-06-03_172145_pfhklc.jpg"
+                        alt="Your Company"
+                      />
+                    </Link>
                   </div>
                 </div>
                 <div className="absolute inset-y-0 right-0 flex items-center pr-2 sm:static sm:inset-auto sm:ml-6 sm:pr-0">
@@ -91,8 +108,8 @@ function UserHeader() {
                         <span className="sr-only">Open user menu</span>
                         <img
                           className="h-8 w-8 rounded-full"
-                          src="https://lh3.googleusercontent.com/a/AAcHTtex2VG5JjBM4NYzIhDH_VzWciMORA1SD6EALcQ5jQ=s96-c"
-                          alt=""
+                          src={user?.image}
+                          alt="user"
                         />
                       </Menu.Button>
                     </div>

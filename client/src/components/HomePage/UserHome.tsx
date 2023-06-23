@@ -1,6 +1,11 @@
-import React from "react";
+import React, { useEffect } from "react";
+import { useSelector } from "react-redux";
+import { RootState } from "../../features/redux/reducers/Reducer";
 
 function UserHome() {
+  
+  const user = useSelector((state: RootState) => state.userDetails.userDetails);
+
   return (
     <div className="pt-20">
       <header className="bg-white shadow">
