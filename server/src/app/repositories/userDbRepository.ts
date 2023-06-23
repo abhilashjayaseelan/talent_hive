@@ -24,11 +24,16 @@ export const userDbRepository = (
     return updatedUser;
   }
 
+  const deleteResume = async (userId: string) => {
+    await repository.deleteResume(userId);
+  }
+
   return {
     getUserByEmail,
     createUser,
     getUserDataById,
     updateUser,
+    deleteResume
   };
 };
 

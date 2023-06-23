@@ -27,11 +27,16 @@ export const UserRepositoryMongoDB = (model: UserModel) => {
     return updatedUser;
   }
 
+  const deleteResume = async (userId: string) => {
+    await userEntity.resumeDelete(userId);
+  }
+
   return {
     getUserByEmail,
     createUser,
     getUserDataById,
     updateUser,
+    deleteResume
   };
 };
 

@@ -17,6 +17,7 @@ const userRouter = ()=> {
     route.get('/user-data', controller.getUserDataById);
     route.put('/update-user', upload, controller.updateTheUser);
     route.put('/update-resume', upload, controller.updateTheResume);
+    route.delete('/delete-resume' , controller.userDeleteResume);
 
     return route;
 }

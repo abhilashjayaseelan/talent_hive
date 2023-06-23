@@ -34,3 +34,15 @@ export const updateUser = async (payload: UserInterface): Promise<any> => {
     throw new Error("error while updating user");
   }
 };
+
+export const deleteResume = async () : Promise<any> => {
+  try {
+    const config: AxiosRequestConfig  = {
+      url: apiConfig.deleteResume,
+      method: 'delete'
+    }
+    await api(config);
+  } catch (error) {
+    throw new Error('error while deleting resume');
+  }
+}

@@ -12,6 +12,7 @@ import {
   findUserDataById,
   updateUser,
   updateResume,
+  deleteResume
 } from "../../app/useCases/user/user";
 
 const userController = (
@@ -78,11 +79,27 @@ const userController = (
     }
   )
 
+  const userDeleteResume = expressAsyncHandler(
+    async(req: Request, res: Response) => {
+      const customReq = req as CustomRequest;
+      const id = customReq.payload ?? '' ;
+      if (!id) {
+        throw new AppError('Unauthorized reques invalid token', HttpStatus.UNAUTHORIZED);
+      }
+      await deleteResume(id, dbRepositoryUser);
+      res.json({
+        status: 'success',
+        message: 'resume deleted successfully'
+      })
+    }
+  )
+
   return {
     getUserByEmail,
     getUserDataById,
     updateTheUser,
-    updateTheResume
+    updateTheResume,
+    userDeleteResume
   };
 };
 

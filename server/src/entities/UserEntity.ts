@@ -29,4 +29,8 @@ export class UserEntity {
         const updatedUser = await currentDetails?.save();
         return updatedUser;
     }
+
+    public async resumeDelete (id: string) :Promise <any> {
+        await this.model.updateOne({_id: id}, {$unset: {resume: ''}});
+    }
 }
