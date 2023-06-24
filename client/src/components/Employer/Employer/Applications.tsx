@@ -1,17 +1,17 @@
-import { MagnifyingGlassIcon, ChevronUpDownIcon } from "@heroicons/react/24/outline";
-import { EyeIcon} from "@heroicons/react/24/solid";
+import {
+  MagnifyingGlassIcon,
+  ChevronUpDownIcon,
+} from "@heroicons/react/24/outline";
+import { EyeIcon } from "@heroicons/react/24/solid";
 import {
   Card,
   CardHeader,
   Input,
   Typography,
-  // Button,
+  Button,
   CardBody,
   Chip,
-  // CardFooter,
-  Tabs,
-  TabsHeader,
-  Tab,
+  CardFooter,
   Avatar,
   IconButton,
   Tooltip,
@@ -21,39 +21,67 @@ import { allApplications } from "../../../features/axios/api/applications/allApp
 import { jobDetails } from "../../../features/axios/api/user/jobDetails";
 import { useNavigate } from "react-router-dom";
 import ApplicationDetails from "../../../types/ApplicationsInterface";
- 
-const TABS = [
-  {
-    label: "All",
-    value: "all",
-  },
-  {
-    label: "Applied",
-    value: "Applied",
-  },
-  {
-    label: "Shortlisted",
-    value: "Shortlisted",
-  },
+
+const TABLE_HEAD = [
+  "Candidate",
+  "Applied For",
+  "Application Status",
+  "Applied on",
+  "",
 ];
- 
-const TABLE_HEAD = ["Candidate", "Applied For", "Application Status", "Applied on", ""];
- 
+const ITEMS_PER_PAGE = 4;
+
 export default function Applications() {
-  const [applicationData, setApplicationData] = useState<ApplicationDetails[]>([])
+  const [applicationData, setApplicationData] = useState<ApplicationDetails[]>([]);
+  const [searchQuery, setSearchQuery] = useState("");
+  const [debouncedSearchQuery, setDebouncedSearchQuery] = useState("");
+  const [currentPage, setCurrentPage] = useState(1);
   const navigate = useNavigate();
 
   useEffect(() => {
-    const applications = async() => {
+    const applications = async () => {
       const data = await allApplications();
       setApplicationData(data.applications);
-    }
+    };
     applications();
-  }, [])
+  }, []);
 
-  const handleViewApplicant = (applicationId: string)=> {
-    navigate(`/application/view-applicant/${applicationId}`)
-  }
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      setDebouncedSearchQuery(searchQuery);
+    }, 400);
+
+    return () => {
+      clearTimeout(timer);
+    };
+  }, [searchQuery]);
+
+  const handleViewApplicant = (applicationId: string) => {
+    navigate(`/application/view-applicant/${applicationId}`);
+  };
+
+  const filterApplication = applicationData?.filter(
+    (application: ApplicationDetails) =>
+      application?.userId?.name
+        ?.toLocaleLowerCase()
+        .includes(debouncedSearchQuery?.toLocaleLowerCase()) ||
+      application?.jobId?.title
+        ?.toLocaleLowerCase()
+        .includes(debouncedSearchQuery?.toLocaleLowerCase()) ||
+      application?.applicationStatus
+        ?.toLocaleLowerCase()
+        .includes(debouncedSearchQuery?.toLocaleLowerCase())
+  );
+
+  const getPaginatedData = () => {
+    const startIndex = (currentPage - 1) * ITEMS_PER_PAGE;
+    const endIndex = startIndex + ITEMS_PER_PAGE;
+    return filterApplication.slice(startIndex, endIndex);
+  };
+
+  const changePage = (pageNumber: number) => {
+    setCurrentPage(pageNumber);
+  };
 
   return (
     <Card className="h-full w-full">
@@ -67,20 +95,16 @@ export default function Applications() {
               See information about all applicants
             </Typography>
           </div>
-         
         </div>
         <div className="flex flex-col items-center justify-between gap-4 md:flex-row">
-          <Tabs value="all" className="w-full md:w-max">
-            <TabsHeader>
-              {TABS.map(({ label, value }) => (
-                <Tab key={value} value={value}>
-                  &nbsp;&nbsp;{label}&nbsp;&nbsp;
-                </Tab>
-              ))}
-            </TabsHeader>
-          </Tabs>
           <div className="w-full md:w-72">
-            <Input label="Search" icon={<MagnifyingGlassIcon className="h-5 w-5" />} />
+            <Input
+              label="Search"
+              color="purple"
+              icon={<MagnifyingGlassIcon className="h-5 w-5" />}
+              value={searchQuery}
+              onChange={(e) => setSearchQuery(e.target.value)}
+            />
           </div>
         </div>
       </CardHeader>
@@ -108,17 +132,23 @@ export default function Applications() {
             </tr>
           </thead>
           <tbody>
-            {applicationData.map((data, index) => {
+            {getPaginatedData()?.map((data, index) => {
               const isLast = index === jobDetails.length - 1;
-              const classes = isLast ? "p-4" : "p-4 border-b border-blue-gray-50";
- 
+              const classes = isLast
+                ? "p-4"
+                : "p-4 border-b border-blue-gray-50";
+
               return (
                 <tr key={index}>
                   <td className={classes}>
                     <div className="flex items-center gap-3">
-                      <Avatar src={data?.userId?.image} alt={'img'} size="sm" />
+                      <Avatar src={data?.userId?.image} alt={"img"} size="sm" />
                       <div className="flex flex-col">
-                        <Typography variant="small" color="blue-gray" className="font-normal">
+                        <Typography
+                          variant="small"
+                          color="blue-gray"
+                          className="font-normal"
+                        >
                           {data?.userId?.name}
                         </Typography>
                         <Typography
@@ -133,7 +163,11 @@ export default function Applications() {
                   </td>
                   <td className={classes}>
                     <div className="flex flex-col">
-                      <Typography variant="small" color="blue-gray" className="font-normal">
+                      <Typography
+                        variant="small"
+                        color="blue-gray"
+                        className="font-normal"
+                      >
                         {data?.jobId?.title}
                       </Typography>
                     </div>
@@ -143,43 +177,78 @@ export default function Applications() {
                       <Chip
                         variant="ghost"
                         size="sm"
-                        value={data.applicationStatus === 'Applied' ? "Applied" : data.applicationStatus === 'Rejected' ? "Rejected" : "Shortlisted"}
-                        color={data.applicationStatus === 'Applied' ? "green" : data.applicationStatus === 'Rejected' ? 'red' : 'orange'}
+                        value={
+                          data.applicationStatus === "Applied"
+                            ? "Applied"
+                            : data.applicationStatus === "Rejected"
+                            ? "Rejected"
+                            : "Shortlisted"
+                        }
+                        color={
+                          data.applicationStatus === "Applied"
+                            ? "green"
+                            : data.applicationStatus === "Rejected"
+                            ? "red"
+                            : "orange"
+                        }
                       />
                     </div>
                   </td>
                   <td className={classes}>
-                    <Typography variant="small" color="blue-gray" className="font-normal">
+                    <Typography
+                      variant="small"
+                      color="blue-gray"
+                      className="font-normal"
+                    >
                       {new Date(data.createdAt).toLocaleDateString()}
                     </Typography>
                   </td>
                   <td className={classes}>
                     <Tooltip content="View Application">
-                      <IconButton variant="text" color="blue-gray"
-                      onClick={()=> handleViewApplicant(data._id)}>
+                      <IconButton
+                        variant="text"
+                        color="blue-gray"
+                        onClick={() => handleViewApplicant(data._id)}
+                      >
                         <EyeIcon className="h-4 w-4" />
                       </IconButton>
                     </Tooltip>
-                  </td> 
+                  </td>
                 </tr>
               );
             })}
           </tbody>
         </table>
       </CardBody>
-      {/* <CardFooter className="flex items-center justify-between border-t border-blue-gray-50 p-4">
+      <CardFooter className="flex items-center justify-between border-t border-blue-gray-50 p-4">
         <Typography variant="small" color="blue-gray" className="font-normal">
-          Page 1 of 10
+          Page {currentPage} of{" "}
+          {Math.ceil(filterApplication.length / ITEMS_PER_PAGE)}
         </Typography>
         <div className="flex gap-2">
-          <Button variant="outlined" color="blue-gray" size="sm">
+          <Button
+            variant="outlined"
+            color="purple"
+            size="sm"
+            onClick={() => changePage(currentPage - 1)}
+            disabled={currentPage === 1}
+          >
             Previous
           </Button>
-          <Button variant="outlined" color="blue-gray" size="sm">
+          <Button
+            variant="outlined"
+            color="purple"
+            size="sm"
+            onClick={() => changePage(currentPage + 1)}
+            disabled={
+              currentPage ===
+              Math.ceil(filterApplication.length / ITEMS_PER_PAGE)
+            }
+          >
             Next
           </Button>
         </div>
-      </CardFooter> */}
+      </CardFooter>
     </Card>
   );
 }
