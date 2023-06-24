@@ -5,6 +5,8 @@ export default interface ApplicationDetails {
       name: string;
       email: string;
       phone?: number;
+      about?: string;
+      image?: string;
     };
     employerId: string;
     applicationStatus: string;

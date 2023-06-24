@@ -116,7 +116,7 @@ export default function Applications() {
                 <tr key={index}>
                   <td className={classes}>
                     <div className="flex items-center gap-3">
-                      <Avatar src={'https://lh3.googleusercontent.com/a/AAcHTtex2VG5JjBM4NYzIhDH_VzWciMORA1SD6EALcQ5jQ=s96-c'} alt={'img'} size="sm" />
+                      <Avatar src={data?.userId?.image} alt={'img'} size="sm" />
                       <div className="flex flex-col">
                         <Typography variant="small" color="blue-gray" className="font-normal">
                           {data?.userId?.name}
