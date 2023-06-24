@@ -223,7 +223,7 @@ export default function Applications() {
       <CardFooter className="flex items-center justify-between border-t border-blue-gray-50 p-4">
         <Typography variant="small" color="blue-gray" className="font-normal">
           Page {currentPage} of{" "}
-          {Math.ceil(filterApplication.length / ITEMS_PER_PAGE)}
+          {Math.ceil(filterApplication?.length / ITEMS_PER_PAGE)}
         </Typography>
         <div className="flex gap-2">
           <Button
@@ -242,7 +242,7 @@ export default function Applications() {
             onClick={() => changePage(currentPage + 1)}
             disabled={
               currentPage ===
-              Math.ceil(filterApplication.length / ITEMS_PER_PAGE)
+              Math.ceil(filterApplication?.length / ITEMS_PER_PAGE)
             }
           >
             Next
