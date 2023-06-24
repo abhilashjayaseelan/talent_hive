@@ -39,7 +39,7 @@ export class JobApplicationEntity {
   public async getAllApplicationsForEmployer(employerId: string): Promise<any> {
     const applications = await this.model
       .find({ employerId })
-      .populate({ path: "userId", select: "name email", model: User })
+      .populate({ path: "userId", select: "name email image", model: User })
       .populate({ path: "jobId", select: "title", model: Job });
 
     return applications;
@@ -48,7 +48,7 @@ export class JobApplicationEntity {
   public async getApplicationDetails(jobId: Types.ObjectId): Promise<any> {
     const details = await this.model
       .findOne({ _id: jobId })
-      .populate({ path: "userId", select: "name email phone", model: User })
+      .populate({ path: "userId", select: "name email phone about image", model: User })
       .populate({ path: "jobId", select: "title", model: Job });
 
     return details;
