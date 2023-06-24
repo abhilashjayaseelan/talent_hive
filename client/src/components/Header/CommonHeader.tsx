@@ -4,9 +4,9 @@ import { Disclosure} from "@headlessui/react";
 import { Bars3Icon, XMarkIcon } from "@heroicons/react/24/outline";
 
 const navigation = [
-  { name: "Login", href: "user/login", current: true },
-  { name: "Register", href: "user/register", current: false },
   { name: "Employer Login", href: "employer/login", current: false },
+  { name: "Register", href: "user/register", current: false },
+  { name: "Login", href: "user/login", current: true },
 ];
 
 function classNames(...classes: string[]) {
