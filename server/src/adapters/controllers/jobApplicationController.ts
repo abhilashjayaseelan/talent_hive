@@ -14,6 +14,7 @@ import {
   allApplications,
   getApplicationDetails,
   changeApplicationStatus,
+  userJobApplications
 } from "../../app/useCases/jobApplication/jobApplication";
 
 const jobApplicationController = (
@@ -129,14 +130,11 @@ const jobApplicationController = (
     async (req: Request, res: Response) => {
       const applicationId = new Types.ObjectId(req.params.id);
       const status = req.body.status ?? "";
-      console.log(status, 'status')
       const updatedApplication = await changeApplicationStatus(
         applicationId,
         status,
         dbRepositoryJobApplication
       );
-
-      console.log(updatedApplication)
 
       if(!updatedApplication) {
         throw new AppError('error while updating the status', HttpStatus.INTERNAL_SERVER_ERROR);
@@ -149,12 +147,31 @@ const jobApplicationController = (
     }
   );
 
+  const userApplications = expressAsyncHandler(
+    async (req: Request, res: Response) => {
+      const customReq = req as CustomRequest;
+      const userId = new Types.ObjectId(customReq.payload);
+      const jobApplications = await userJobApplications(userId, dbRepositoryJobApplication);
+
+      if (!jobApplications) {
+        throw new Error('user job applications not found');
+      }
+
+      res.json({
+        status: 'success',
+        jobApplications
+      })
+
+    }
+  )
+
   return {
     applyNewJob,
     existingApplicant,
     jobApplicationForEmployer,
     jobApplicationDetails,
-    changeTheApplicationStatus 
+    changeTheApplicationStatus,
+    userApplications 
   };
 };
 

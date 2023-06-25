@@ -30,12 +30,18 @@ export const jobApplicationDbRepository = (
         return updatedApplication;
     }
 
+    const userApplications = async (userId: Types.ObjectId) => {
+        const jobApplications = await repository.userApplications(userId);
+        return jobApplications;
+    }
+
     return {
         applyForJob,
         alreadyApplied,
         jobApplicationsForEmployer,
         jobApplicationDetails,
-        changeApplicationStatus
+        changeApplicationStatus,
+        userApplications
     }
 }
 

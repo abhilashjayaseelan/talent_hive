@@ -2,6 +2,7 @@ import { JobApplicationInterface } from "../types/jobApplicationInterface";
 import { JobApplicationModel } from "../frameworks/database/mongoDb/models/jobApplicationModel";
 import { User } from "../frameworks/database/mongoDb/models/userModel";
 import { Job } from "../frameworks/database/mongoDb/models/jobModel";
+import { Employer } from "../frameworks/database/mongoDb/models/employerModel";
 import { Types } from "mongoose";
 
 export class JobApplicationEntity {
@@ -48,7 +49,11 @@ export class JobApplicationEntity {
   public async getApplicationDetails(jobId: Types.ObjectId): Promise<any> {
     const details = await this.model
       .findOne({ _id: jobId })
-      .populate({ path: "userId", select: "name email phone about image", model: User })
+      .populate({
+        path: "userId",
+        select: "name email phone about image",
+        model: User,
+      })
       .populate({ path: "jobId", select: "title", model: Job });
 
     return details;
@@ -65,5 +70,22 @@ export class JobApplicationEntity {
     );
 
     return updatedApplication;
+  }
+
+  public async getAllApplicationByUser(userId: Types.ObjectId): Promise<any> {
+    const userApplications = await this.model
+      .find({ userId })
+      .populate({
+        path: "jobId",
+        select: "title location",
+        model: Job,
+      })
+      .populate({
+        path: "employerId",
+        select: "companyName",
+        model: Employer,
+      })
+    
+    return userApplications;
   }
 }
