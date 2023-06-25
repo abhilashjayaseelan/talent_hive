@@ -4,7 +4,7 @@ import { ExclamationTriangleIcon } from "@heroicons/react/24/outline";
 import "react-toastify/dist/ReactToastify.css";
 import { toast } from "react-toastify";
 import { useDispatch } from "react-redux";
-import { deleted } from "../../../features/redux/slices/employerJobsSlice";
+import { deleted } from "../../../features/redux/slices/employer/employerJobsSlice";
 
 interface DeleteConfirmationDialogProps {
   isOpen: boolean;

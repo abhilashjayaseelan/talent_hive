@@ -6,7 +6,7 @@ import {
   fetchEmployerJobDetails,
   clearEmployerJobDetails,
   clearEmployerJobId,
-} from "../../../features/redux/slices/employerJobDetailsSlice";
+} from "../../../features/redux/slices/employer/employerJobDetailsSlice";
 import {
   BriefcaseIcon,
   CalendarIcon,

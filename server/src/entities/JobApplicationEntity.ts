@@ -54,8 +54,8 @@ export class JobApplicationEntity {
         select: "name email phone about image",
         model: User,
       })
-      .populate({ path: "jobId", select: "title", model: Job });
-
+      .populate({ path: "jobId", select: "title location", model: Job })
+      .populate({ path: "employerId", select: "companyName", model: Employer})
     return details;
   }
 

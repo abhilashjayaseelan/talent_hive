@@ -5,7 +5,7 @@ import { RootState } from "../../features/redux/reducers/Reducer";
 import {
   fetchEmployer,
   clearEmployerDetails,
-} from "../../features/redux/slices/employerDetailsSlice";
+} from "../../features/redux/slices/employer/employerDetailsSlice";
 
 function EmployerHome() {
   const dispatch = useDispatch();

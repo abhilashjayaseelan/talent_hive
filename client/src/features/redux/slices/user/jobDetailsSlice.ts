@@ -1,6 +1,6 @@
 import { createSlice, createAsyncThunk, PayloadAction } from "@reduxjs/toolkit";
-import { jobDetails } from "../../axios/api/user/jobDetails";
-import { JobsInterface } from "../../../types/JobInterface";
+import { jobDetails } from "../../../axios/api/user/jobDetails";
+import { JobsInterface } from "../../../../types/JobInterface";
 
 export const fetchJobDetails = createAsyncThunk(
   "job/fetchJob",

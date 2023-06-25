@@ -1,6 +1,6 @@
 import axios, { AxiosError, AxiosInstance, AxiosResponse } from "axios";
 import store from "../../redux/app/Store";
-import { clearEmployerToken } from "../../redux/slices/employerTokenSlice";
+import { clearEmployerToken } from "../../redux/slices/employer/employerTokenSlice";
 import configKeys from "../../../utils/config";
 
 const setupAxiosInterceptorsEmployer = (): AxiosInstance => {
