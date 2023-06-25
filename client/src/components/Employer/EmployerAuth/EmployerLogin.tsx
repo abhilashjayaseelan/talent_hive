@@ -5,10 +5,10 @@ import { Link, useNavigate } from "react-router-dom";
 import { userLoginValidationSchema } from "../../../utils/validation";
 import { employerLogin } from "../../../features/axios/api/employer/employerAuthentication";
 import { LoginPayload } from "../../../types/PayloadInterface";
-import { setEmployerToken } from "../../../features/redux/slices/employerTokenSlice";
+import { setEmployerToken } from "../../../features/redux/slices/employer/employerTokenSlice";
 import { useDispatch, useSelector } from "react-redux";
 import { ToastContainer, toast } from "react-toastify";
-import { employerLoginSuccess } from "../../../features/redux/slices/employerDetailsSlice";
+import { employerLoginSuccess } from "../../../features/redux/slices/employer/employerDetailsSlice";
 import "react-toastify/dist/ReactToastify.css";
 import { RootState } from "../../../features/redux/reducers/Reducer";
 
@@ -45,11 +45,11 @@ function EmployerLogin() {
     employerLogin(formData)
       .then((response) => {
         const token = response.token;
-        dispatch(setEmployerToken(token));
-        dispatch(employerLoginSuccess());
-
+        
         notify("Login success", "success");
         setTimeout(() => {
+          dispatch(setEmployerToken(token));
+          dispatch(employerLoginSuccess());
           navigate('/employer/dashboard');
         }, 2000);
       })

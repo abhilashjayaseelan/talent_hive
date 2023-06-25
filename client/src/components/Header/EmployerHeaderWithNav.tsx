@@ -1,6 +1,6 @@
 import React, { useState } from "react";
-import { clearEmployerToken } from "../../features/redux/slices/employerTokenSlice";
-import { employerLogout } from "../../features/redux/slices/employerDetailsSlice";
+import { clearEmployerToken } from "../../features/redux/slices/employer/employerTokenSlice";
+import { employerLogout } from "../../features/redux/slices/employer/employerDetailsSlice";
 import {
   Navbar,
   Typography,

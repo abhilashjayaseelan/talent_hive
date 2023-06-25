@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import {
   clearEmployerJobs,
   setEmployerJobs,
-} from "../../../features/redux/slices/employerJobsSlice";
+} from "../../../features/redux/slices/employer/employerJobsSlice";
 import { employerJobs } from "../../../features/axios/api/employer/jobsByEmployer";
 import JobsByEmployer from "../Sections/JobsByEmployer";
 import { JobsInterface } from "../../../types/JobInterface";

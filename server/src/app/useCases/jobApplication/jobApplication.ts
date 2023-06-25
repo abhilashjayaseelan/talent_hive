@@ -62,9 +62,22 @@ export const changeApplicationStatus = (
   jobApplicationDbRepository: ReturnType<JobApplicationDbInterface>
 ) => {
   try {
-    const updatedApplication = jobApplicationDbRepository.changeApplicationStatus(jobId, status);
+    const updatedApplication =
+      jobApplicationDbRepository.changeApplicationStatus(jobId, status);
     return updatedApplication;
   } catch (error: any) {
     throw new Error(`failed to change the application status ${error.message}`);
   }
-}
+};
+
+export const userJobApplications = (
+  userId: Types.ObjectId,
+  jobApplicationDbRepository: ReturnType<JobApplicationDbInterface>
+) => {
+  try {
+    const userApplications =jobApplicationDbRepository.userApplications(userId);
+    return userApplications;
+  } catch (error: any) {
+    throw new Error(`failed to get the user applications ${error.message}`);
+  }
+};

@@ -3,7 +3,7 @@ import { useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 // import { useNavigate } from "react-router-dom";
 import { RootState } from "../../features/redux/reducers/Reducer";
-import { loginSuccess } from "../../features/redux/slices/userLoginAuthSlice";
+import { loginSuccess } from "../../features/redux/slices/user/userLoginAuthSlice";
 
 const links = [
   { name: "Easy apply", href: "#" },

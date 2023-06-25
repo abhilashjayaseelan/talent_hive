@@ -3,9 +3,9 @@ import { GoogleLogin } from "@react-oauth/google";
 import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
-import { setToken } from "../../../features/redux/slices/tokenSlice";
+import { setToken } from "../../../features/redux/slices/user/tokenSlice";
 import { googleLogin } from "../../../features/axios/api/user/userAuthentication";
-import { loginSuccess } from "../../../features/redux/slices/userLoginAuthSlice";
+import { loginSuccess } from "../../../features/redux/slices/user/userLoginAuthSlice";
 
 function GoogleAuthComponent(): JSX.Element {
   const dispatch = useDispatch();

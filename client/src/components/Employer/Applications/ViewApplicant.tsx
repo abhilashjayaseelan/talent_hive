@@ -24,7 +24,6 @@ function ViewApplicant() {
     const applications = async () => {
       const data = await applicationDetails(id ?? "");
       setApplicationData(data.applicationData);
-      setStatus(!status);
     };
     applications();
   }, [id, status]);
@@ -37,7 +36,8 @@ function ViewApplicant() {
 
   const handleStatusChange = async (status: string, applicationId: string) => {
     await changeApplicationStatus(applicationId, status)
-      .then((response) => {
+      .then(() => {
+        setStatus(!status);
         notify("Status updated successfully", "success");
       })
       .catch((err: any) => {

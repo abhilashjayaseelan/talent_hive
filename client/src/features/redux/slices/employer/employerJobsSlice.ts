@@ -1,5 +1,5 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { JobsInterface } from '../../../types/JobInterface';
+import { JobsInterface } from '../../../../types/JobInterface';
 
 interface EmployerJobsState {
   employerJobs: JobsInterface[]; 

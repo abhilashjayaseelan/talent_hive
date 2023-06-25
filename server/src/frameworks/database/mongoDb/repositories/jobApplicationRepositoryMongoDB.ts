@@ -36,12 +36,18 @@ export const JobApplicationRepositoryMongoDB = (model: JobApplicationModel) => {
         return jobApplicationDetails;
     }
 
+    const userApplications = async (userId: Types.ObjectId) => {
+        const jobApplications = await jobApplicationEntity.getAllApplicationByUser(userId);
+        return jobApplications;
+    }
+
     return {
         applyForJob,
         alreadyApplied,
         jobApplicationForEmployer,
         jobApplicationDetails,
-        changeApplicationStatus
+        changeApplicationStatus,
+        userApplications
     }
 }
 

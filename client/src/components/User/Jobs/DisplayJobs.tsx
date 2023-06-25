@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { fetchAllJobs } from "../../../features/redux/slices/getAllJobsSlice";
+import { fetchAllJobs } from "../../../features/redux/slices/user/getAllJobsSlice";
 import { RootState } from "../../../features/redux/reducers/Reducer";
 import { JobsInterface } from "../../../types/JobInterface";
 import { Navbar, Button, Input } from "@material-tailwind/react";

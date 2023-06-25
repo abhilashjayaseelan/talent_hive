@@ -2,15 +2,15 @@ import React, { useEffect } from "react";
 import { Fragment } from "react";
 import { Disclosure, Menu, Transition } from "@headlessui/react";
 import { Bars3Icon, XMarkIcon } from "@heroicons/react/24/outline";
-import { logout } from "../../features/redux/slices/userLoginAuthSlice";
-import { clearToken } from "../../features/redux/slices/tokenSlice";
+import { logout } from "../../features/redux/slices/user/userLoginAuthSlice";
+import { clearToken } from "../../features/redux/slices/user/tokenSlice";
 import { useDispatch, useSelector } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
 import { RootState } from "../../features/redux/reducers/Reducer";
 import {
   fetchUser,
   clearUserDetails,
-} from "../../features/redux/slices/userDetailsSlice";
+} from "../../features/redux/slices/user/userDetailsSlice";
 
 const navigation = [{ name: "Jobs", href: "/job/all-jobs", current: false }];
 
