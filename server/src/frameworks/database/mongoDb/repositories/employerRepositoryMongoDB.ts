@@ -1,4 +1,4 @@
-import { CreateEmployerInterface } from "../../../../types/employerInterface";
+import { CreateEmployerInterface, EmployerInterface } from "../../../../types/employerInterface";
 import {EmployerModel} from "../models/employerModel";
 import { EmployerEntity } from "../../../../entities/EmployerEntity";
 
@@ -20,10 +20,16 @@ export const EmployerRepositoryMongoDB = (model: EmployerModel) =>{
         return employer;
     }
 
+    const updateEmployer = async (employerId: string, updates: Partial<EmployerInterface>) => {
+        const employer = employerEntity.updateEmployer(employerId, updates);
+        return employer;
+    }
+
     return {
         getEmployerByEmail,
         createEmployer,
-        getEmployerById
+        getEmployerById,
+        updateEmployer,
     }
 }
 

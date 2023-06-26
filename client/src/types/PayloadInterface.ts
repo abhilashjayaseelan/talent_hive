@@ -14,6 +14,8 @@ export interface EmployerRegisterPayload extends LoginPayload {
   industry: string;
   confirmPassword: string;
   location: string;
+  image: string;
+  about: string;
 }
 
 export interface UserDataPayload {
