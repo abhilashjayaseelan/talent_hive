@@ -3,7 +3,7 @@ import UserHeader from "../../components/Header/UserHeader"
 import DisplayApplications from "../../components/User/Applications/DisplayApplications"
 
 
-function UserJobApplications() {
+function UserJobApplicationsPage() {
   return (
     <div>
       <UserHeader/>
@@ -13,4 +13,4 @@ function UserJobApplications() {
   )
 }
 
-export default UserJobApplications
+export default UserJobApplicationsPage;
