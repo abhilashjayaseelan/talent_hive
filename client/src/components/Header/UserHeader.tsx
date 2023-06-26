@@ -62,7 +62,7 @@ function UserHeader() {
                       src="https://res.cloudinary.com/dgjwhf8i3/image/upload/v1685793152/Screenshot_2023-06-03_172145_pfhklc.jpg"
                       alt="Your Company"
                     />
-                    <Link to={'/user/home'}>
+                    <Link to={"/user/home"}>
                       <img
                         className="hidden h-8 w-auto lg:block"
                         src="https://res.cloudinary.com/dgjwhf8i3/image/upload/v1685793152/Screenshot_2023-06-03_172145_pfhklc.jpg"
@@ -142,6 +142,17 @@ function UserHeader() {
                               )}
                             >
                               Jobs
+                            </button>
+                          </Link>
+                        </Menu.Item>
+                        <Menu.Item>
+                          <Link to={"/user/all-applications"}>
+                            <button
+                              className={classNames(
+                                "block px-4 py-2 text-sm text-purple-700"
+                              )}
+                            >
+                              Applied Jobs
                             </button>
                           </Link>
                         </Menu.Item>

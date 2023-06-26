@@ -41,10 +41,10 @@ function DisplayApplications() {
             ))}
           </div>
         </div>
-        <div className="p-28 px-4 sm:px-8 md:px-16 lg:px-32 flex flex-wrap min-h-screen">
-          <div className="w-full lg:w-2/5 sm:p-6">
+        <div className="px-4 sm:px-8 md:px-16 flex flex-wrap min-h-screen">
+          <div className="w-full sm:p-6">
             <div
-              className="overflow-y-auto p-6"
+              className="overflow-y-auto p-6 "
               style={{ maxHeight: "calc(100vh - 80px)" }}
             >
               <ApplicationStatus />
