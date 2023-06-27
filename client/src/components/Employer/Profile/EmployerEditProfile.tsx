@@ -1,38 +1,39 @@
 import React, { useEffect, useState } from "react";
-import { Breadcrumbs } from "@material-tailwind/react";
+import { Breadcrumbs, Avatar } from "@material-tailwind/react";
 import { useForm } from "react-hook-form";
 import "react-toastify/dist/ReactToastify.css";
 import { ToastContainer, toast } from "react-toastify";
 import { useNavigate } from "react-router-dom";
-import { UserInterface } from "../../../types/UserInterface";
-import { userData } from "../../../features/axios/api/user/userDetails";
-import { updateUser } from "../../../features/axios/api/user/userDetails";
-import { Avatar } from "@material-tailwind/react";
+import { EmployerRegisterPayload } from "../../../types/PayloadInterface";
+import { employerData } from "../../../features/axios/api/employer/employerDetails";
+import { updateEmployer } from "../../../features/axios/api/employer/employerDetails";
 
-function EditUserProfile() {
+function EmployerEditProfile() {
   const navigate = useNavigate();
-  const [userDetails, setUserDetails] = useState<UserInterface | undefined>();
+  const [employerDetails, setEmployerDetails] = useState<EmployerRegisterPayload | undefined>();
   const [selectedImg, setSelectedImg] = useState<string | null>(null);
 
+  console.log(employerDetails)
   useEffect(() => {
-    async function getUserData() {
-      const data = await userData();
-      setUserDetails(data);
+    async function getEmployerDetails() {
+      const data = await employerData();
+      setEmployerDetails(data?.employerData);
     }
-    getUserData();
+    getEmployerDetails();
   }, []);
 
-  const { register, handleSubmit, setValue } = useForm<UserInterface>({});
+  const { register, handleSubmit, setValue } = useForm<EmployerRegisterPayload>(
+    {}
+  );
 
   useEffect(() => {
-    if (userDetails) {
-      setValue("name", userDetails?.name);
-      setValue("email", userDetails?.email);
-      setValue("location", userDetails?.location);
-      setValue("about", userDetails?.about);
-      setValue("profession", userDetails?.profession);
+    if (employerDetails) {
+      setValue("companyName", employerDetails?.companyName);
+      setValue("email", employerDetails?.email);
+      setValue("location", employerDetails?.location);
+      setValue("industry", employerDetails?.industry);
     }
-  }, [userDetails]);
+  }, [employerDetails]);
 
   const notify = (msg: string, type: string) => {
     type === "error"
@@ -47,24 +48,23 @@ function EditUserProfile() {
     }
   };
 
-  const submitHandler = async (formData: UserInterface) => {
-    const imageFile = formData.image[0];
-    const updatedFormData = { ...formData, image: imageFile };
-    updateUser(updatedFormData)
-      .then(() => {
+  const submitHandler = async (FormData: EmployerRegisterPayload) => {
+    const imageFile = FormData.image[0];
+    const updatedFormData = { ...FormData, image: imageFile };
+    updateEmployer(updatedFormData)
+    .then(()=> {
         notify("Data updated successfully", "success");
         setTimeout(() => {
-          navigate("/user/profile");
+          navigate("/employer/profile");
         }, 2000);
-      })
-      .catch((error: any) => {
+    })
+    .catch((error: any) => {
         notify(error.message, "error");
-      });
-  };
-
+    });
+  }
   return (
-    <>
-      <div className="pt-16 pl-40">
+    <div>
+      <div className="pl-1">
         <Breadcrumbs className="bg-white">
           <a href="#" className="opacity-60">
             <svg
@@ -104,7 +104,7 @@ function EditUserProfile() {
                   </label>
                   <div className="mt-2 flex items-center gap-x-3">
                     <Avatar
-                      src={selectedImg || userDetails?.image}
+                      src={selectedImg || employerDetails?.image}
                       alt="image"
                       size="lg"
                       className="rounded-lg shadow-lg shadow-blue-gray-500/40"
@@ -132,9 +132,9 @@ function EditUserProfile() {
                   <div className="mt-2">
                     <input
                       type="text"
-                      id="profession"
+                      id="industry"
                       className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
-                      {...register("profession")}
+                      {...register("industry")}
                     />
                   </div>
                 </div>
@@ -148,9 +148,9 @@ function EditUserProfile() {
                   <div className="mt-2">
                     <input
                       type="text"
-                      id="name"
+                      id="companyName"
                       required
-                      {...register("name")}
+                      {...register("companyName")}
                       className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-purple-600 sm:text-sm sm:leading-6"
                     />
                   </div>
@@ -206,9 +206,7 @@ function EditUserProfile() {
                     />
                   </div>
                   <p className="mt-3 text-sm leading-6 text-gray-600">
-                    Your profile summary should mention the highlights of your
-                    career and education, what your professional interests are,
-                    and what kind of a career you are looking for
+                    Write a few word about your company..
                   </p>
                 </div>
               </div>
@@ -226,8 +224,8 @@ function EditUserProfile() {
         </form>
         <ToastContainer />
       </div>
-    </>
+    </div>
   );
 }
 
-export default EditUserProfile;
+export default EmployerEditProfile;
