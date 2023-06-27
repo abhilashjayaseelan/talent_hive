@@ -41,7 +41,7 @@ export default function Applications() {
   useEffect(() => {
     const applications = async () => {
       const data = await allApplications();
-      setApplicationData(data.applications);
+      setApplicationData(data?.applications);
     };
     applications();
   }, []);
@@ -73,10 +73,12 @@ export default function Applications() {
         .includes(debouncedSearchQuery?.toLocaleLowerCase())
   );
 
+  const reverseFilterApplication = [...filterApplication].reverse();
+
   const getPaginatedData = () => {
     const startIndex = (currentPage - 1) * ITEMS_PER_PAGE;
     const endIndex = startIndex + ITEMS_PER_PAGE;
-    return filterApplication.slice(startIndex, endIndex);
+    return reverseFilterApplication?.slice(startIndex, endIndex);
   };
 
   const changePage = (pageNumber: number) => {
