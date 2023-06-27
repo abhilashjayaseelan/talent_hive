@@ -22,4 +22,11 @@ export class EmployerEntity {
     const employer = await this.model.findById(id);
     return employer;
   }
+
+  public async updateEmployer(employerId: string, updates: Partial<EmployerInterface>): Promise<any> {
+    const currentDetails = await this.model.findById(employerId);
+    Object.assign(currentDetails ?? {}, updates);
+    const updatedEmployer = await currentDetails?.save();
+    return updatedEmployer;
+  }
 }

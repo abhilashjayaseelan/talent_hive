@@ -1,4 +1,4 @@
-import { FaChartBar, FaBriefcase, FaEnvelope, FaFacebookMessenger } from "react-icons/fa";
+import { FaChartBar, FaBriefcase, FaEnvelope, FaFacebookMessenger, FaUser } from "react-icons/fa";
 
 const icon = {
   className: "w-5 h-5 text-inherit",
@@ -27,6 +27,11 @@ export const NavRoutes = [
         icon: <FaFacebookMessenger {...icon} />,
         name: "Chats",
         path: "/employer/chat",
+      },
+      {
+        icon: <FaUser {...icon} />,
+        name: "Profile",
+        path: "/employer/profile",
       },
     ],
   },

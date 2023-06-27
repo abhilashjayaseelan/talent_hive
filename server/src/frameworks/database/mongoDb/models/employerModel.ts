@@ -37,6 +37,9 @@ const employerSchema = new Schema({
     type: Date,
     default: Date.now()
   },
+  image: {
+    type: String
+  }
 });
 
 export const Employer = model("Employer", employerSchema, "employers")

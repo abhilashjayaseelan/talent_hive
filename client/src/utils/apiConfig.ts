@@ -12,6 +12,7 @@ const apiConfig = {
     employerRegister: `${configKeys.API_URL}employer-auth/register`,
     employerLogin: `${configKeys.API_URL}employer-auth/login`,
     employerData: `${configKeys.API_URL}employer/employer-data`,
+    updateEmployer: `${configKeys.API_URL}employer/update-employer`,
 
     employerJObs: `${configKeys.API_URL}job/employer-jobs`,
     createNewJob: `${configKeys.API_URL}job/create-job`,

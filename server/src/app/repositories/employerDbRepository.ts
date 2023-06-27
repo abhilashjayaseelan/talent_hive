@@ -1,5 +1,5 @@
  import { EmployerRepositoryMongoDB } from "../../frameworks/database/mongoDb/repositories/employerRepositoryMongoDB";
- import { CreateEmployerInterface } from "../../types/employerInterface";
+ import { CreateEmployerInterface, EmployerInterface } from "../../types/employerInterface";
 
  export const employerDbRepository = (
     repository: ReturnType<EmployerRepositoryMongoDB>
@@ -17,10 +17,16 @@
         return employer;
     }
 
+    const updateEmployer = async (employerId: string, updates: Partial<EmployerInterface> ) => {
+        const employer  = await repository.updateEmployer(employerId, updates);
+        return employer;
+    }
+
     return {
         getEmployerByEmail,
         createEmployer,
-        findEmployerById
+        findEmployerById,
+        updateEmployer
     }
  }
 

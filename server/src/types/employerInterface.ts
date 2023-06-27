@@ -8,7 +8,8 @@ export interface CreateEmployerInterface {
     password?: string,
     isActive?: boolean,
     type?: string,
-    createdAt?: Date
+    createdAt?: Date,
+    image?: string
 }
 
 export interface EmployerInterface extends CreateEmployerInterface {
