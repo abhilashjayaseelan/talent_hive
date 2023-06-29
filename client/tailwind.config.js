@@ -12,9 +12,7 @@ export default withMT({
       colors: {
         foundItBg: "#f7f2fa",
         footerBg: "#1d1934",
-        scrollbarTrack: "var(--scrollbar-track-color)",
-        scrollbarThumb: "var(--scrollbar-thumb-color)",
-        scrollbarThumbHover: "var(--scrollbar-thumb-color-hover)",
+        limeGreen: '#0AD20A',
       },
     },
     plugins: [require("tailwind-scrollbar"), require("@tailwindcss/forms")],

@@ -5,6 +5,7 @@ import NotFound from "./components/Error/NotFound";
 import HomeRouter from "./routes/home/HomeRouter";
 import JobRouter from "./routes/jobs/JobRouter";
 import ApplicationRouter from "./routes/applications/applicationRouter";
+import MessengerRouter from "./routes/messsenger/MessengerRouter";
 function App() {
   return (
     <div className="font-roboto">
@@ -15,6 +16,7 @@ function App() {
           <Route path="/employer/*" element={<EmployerRouter />} />
           <Route path="/job/*" element= {<JobRouter/>} />
           <Route path="/application/*" element = {<ApplicationRouter/>} />
+          <Route path="/messenger/*" element = {<MessengerRouter/>} />
           <Route path="*" element= {<NotFound/>} />
         </Routes>
       </Router>
