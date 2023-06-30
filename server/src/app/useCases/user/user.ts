@@ -1,4 +1,3 @@
-import { ParsedTsconfig } from "typescript";
 import { HttpStatus } from "../../../types/httpStatus";
 import AppError from "../../../utils/appError";
 import { UserDbInterface } from "../../repositories/userDbRepository";
