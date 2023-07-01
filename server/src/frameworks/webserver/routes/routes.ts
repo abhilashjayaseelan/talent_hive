@@ -7,6 +7,7 @@ import authenticationMiddleware from "../middleware/authenticationMiddleware";
 import employerRouter from "./employer";
 import jobApplicationRouter from "./jobApplication";
 import conversationRouter from "./conversation";
+import messageRouter  from "./message";
 
 const routes = (app: Application) => {
     app.use('/api/user',authenticationMiddleware, userRouter());
@@ -16,6 +17,7 @@ const routes = (app: Application) => {
     app.use('/api/job', authenticationMiddleware, jobRouter());
     app.use('/api/job-application',authenticationMiddleware, jobApplicationRouter());
     app.use('/api/messenger-conversation', authenticationMiddleware, conversationRouter());
+    app.use('/api/messenger-message', authenticationMiddleware, messageRouter());
 }
 
 export default routes;
