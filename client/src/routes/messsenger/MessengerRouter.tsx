@@ -1,11 +1,11 @@
 import { Route, Routes } from "react-router-dom";
-import Messenger from "../../pages/messenger/Messenger";
+import UserMessenger from "../../pages/messenger/UserMessenger";
 
 const MessengerRouter = () => {
   return (
     <div>
       <Routes>
-        <Route path="/" element={<Messenger isEmployer={true} />} />
+        <Route path="/user" element={<UserMessenger/>} />
       </Routes>
     </div>
   );

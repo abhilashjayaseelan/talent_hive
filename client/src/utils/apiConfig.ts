@@ -29,6 +29,9 @@ const apiConfig = {
     applicationDetails: `${configKeys.API_URL}job-application/applicant-details`,
     changeStatus: `${configKeys.API_URL}job-application/change-status`,
     allUserApplications: `${configKeys.API_URL}job-application/user-applications`,
+
+    getConversations: `${configKeys.API_URL}messenger-conversation`,
+    getMessages: `${configKeys.API_URL}messenger-message`,
 }
 
 export default apiConfig;

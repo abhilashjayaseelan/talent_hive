@@ -13,7 +13,6 @@ function EmployerEditProfile() {
   const [employerDetails, setEmployerDetails] = useState<EmployerRegisterPayload | undefined>();
   const [selectedImg, setSelectedImg] = useState<string | null>(null);
 
-  console.log(employerDetails)
   useEffect(() => {
     async function getEmployerDetails() {
       const data = await employerData();
