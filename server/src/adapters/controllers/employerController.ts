@@ -16,7 +16,8 @@ const employerController = (
   const dbRepositoryEmployer = employerDbRepository(
     employerDbRepositoryImpl(employerModel)
   );
-
+  
+  //for getting the data with token data.
   const getEmployerById = expressAsyncHandler(
     async (req: Request, res: Response) => {
       const customReq = req as CustomRequest;
@@ -24,7 +25,15 @@ const employerController = (
       const employerData = await dbRepositoryEmployer.findEmployerById(id);
       res.json({ status: "success", employerData });
     }
-  );
+    );
+  //for getting the data with id only.
+  const getEmployerByIdParam = expressAsyncHandler(
+    async (req: Request, res: Response) => {
+      const employerId = req.params.empId
+      const employerData = await dbRepositoryEmployer.findEmployerById(employerId);
+      res.json(employerData);
+    }
+  )
 
   const updateEmployer = expressAsyncHandler(
     async (req: Request, res: Response) => {
@@ -53,7 +62,8 @@ const employerController = (
 
   return {
     getEmployerById,
-    updateEmployer
+    updateEmployer,
+    getEmployerByIdParam
   };
 };
 

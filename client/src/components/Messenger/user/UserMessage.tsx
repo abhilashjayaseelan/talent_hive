@@ -1,8 +1,11 @@
+import {format} from 'timeago.js';
+
 type MessageType = {
+  message: any;
   own: boolean;
 };
 
-function Message({ own }: MessageType) {
+function Message({ message, own }: MessageType) {
   return (
     <div className={`flex flex-col mt-3 ${own ? "items-end" : ""}`}>
       <div className="flex">
@@ -15,10 +18,10 @@ function Message({ own }: MessageType) {
           className={`p-3 rounded-3xl max-w-xs ${
             own ? "bg-gray-300 text-black" : "bg-purple-600 text-white"}`}
         >
-          They urge you to put down your sword and come join the winners
+          {message?.text}
         </p>
       </div>
-      <div className="text-xs mt-2">1 hour ago</div>
+      <div className="text-xs mt-2">{format(message?.createdAt)}</div>
     </div>
   );
 }
