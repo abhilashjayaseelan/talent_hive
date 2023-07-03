@@ -10,7 +10,7 @@ import conversationRouter from "./conversation";
 import messageRouter  from "./message";
 
 const routes = (app: Application) => {
-    app.use('/api/user',authenticationMiddleware, userRouter());
+    app.use('/api/user', userRouter());
     app.use('/api/employer',employerRouter());
     app.use('/api/user-auth', userAuthRouter());
     app.use('/api/employer-auth', employerAuthRouter());
