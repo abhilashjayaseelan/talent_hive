@@ -29,6 +29,7 @@ export interface UserDataPayload {
   education?: Array<object>;
   skills?: Array<string>;
   createdAt?: Date;
+  image?:string;
 }
 
 export interface JobCreationPayload {

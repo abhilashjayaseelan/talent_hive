@@ -1,6 +1,7 @@
 import {Server} from 'http';
+import configKeys from '../../config';
 
-const PORT = process.env.PORT || 5000;
+const PORT = configKeys.PORT || 5000;
 
 const serverConfig = (server: Server) => {
     const startServer = () => {

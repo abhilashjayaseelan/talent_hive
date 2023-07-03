@@ -10,6 +10,8 @@ import { useEffect, useRef, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../../features/redux/reducers/Reducer";
 import { getUserConversations } from "../../features/axios/api/messenger/conversation";
+import {io, Socket} from "socket.io-client";
+import configKeys from "../../utils/config";
 import {
   getUserMessages,
   postUserMessages,
@@ -18,7 +20,7 @@ import {
 function Messenger() {
   const dispatch = useDispatch();
   const scrollRef = useRef<HTMLDivElement>(null);
-
+  const socket = useRef<Socket | null>(null);
   const user = useSelector(
     (state: RootState) => state?.userDetails?.userDetails
   );
@@ -26,6 +28,31 @@ function Messenger() {
   const [currentChat, setCurrentChat] = useState<any>(null);
   const [messages, setMessages] = useState<any>(null);
   const [newMessage, setNewMessage] = useState<any>("");
+  const [arrivalMessage, setArrivalMessage] = useState<any>(null);
+
+  useEffect(()=> {
+    socket.current = io(configKeys.SOCKET_PORT);
+    socket.current.on("getMessage", data => {
+      setArrivalMessage({
+        sender: data?.senderId,
+        text: data?.text,
+        createdAt: Date.now(),
+      })
+    })
+  });
+
+  useEffect(()=> {
+    arrivalMessage && currentChat?.members?.includes(arrivalMessage.sender) &&
+    setMessages((prev: any)=> [...prev, arrivalMessage] );
+  }, [arrivalMessage, currentChat])
+
+
+  useEffect(()=> {
+    socket?.current?.emit("addUser", user?._id)
+    socket?.current?.on("getUsers", users => {
+      console.log(users)
+    })
+  }, [user?._id])
 
   useEffect(() => {
     dispatch(fetchUser());
@@ -66,6 +93,14 @@ function Messenger() {
       sender: user?._id,
       text: newMessage,
     };
+
+    const receiverId = currentChat?.members?.find((member: any) => member !== user._id)
+
+    socket?.current?.emit("sendMessage", {
+      senderId: user?._id,
+      receiverId,
+      text: newMessage,
+    })
 
     try {
       const res = await postUserMessages(message);

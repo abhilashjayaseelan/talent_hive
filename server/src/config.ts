@@ -8,6 +8,8 @@ const configKeys = {
   GOOGLE_CLIENT_ID:process.env.GOOGLE_CLIENT_ID as string,
   CLOUD_NAME: process.env.CLOUD_NAME as string,
   API_KEY: process.env.API_KEY as string,
-  APP_SECRET: process.env.APP_SECRET as string
+  APP_SECRET: process.env.APP_SECRET as string,
+  PORT: process.env.PORT as string,
+  ORIGIN_PORT: process.env.ORIGIN_PORT as string,
 };
 export default configKeys;

@@ -30,6 +30,7 @@ const userController = (
     }
   );
 
+  // get user by toke id
   const getUserDataById = expressAsyncHandler(
     async (req: Request, res: Response) => {
       const customReq = req as CustomRequest;
@@ -38,6 +39,15 @@ const userController = (
       res.json(userData);
     }
   );
+  // by id in param
+  const getUserDataByIdParam = expressAsyncHandler(
+    async (req: Request, res: Response) => {
+      const id = req.params?.userId ?? "";
+      const userData = await findUserDataById(id, dbRepositoryUser);
+      res.json(userData);
+    }
+  );
+
 
   const updateTheUser = expressAsyncHandler(
     async(req: Request, res: Response) => {
@@ -84,7 +94,7 @@ const userController = (
       const customReq = req as CustomRequest;
       const id = customReq.payload ?? '' ;
       if (!id) {
-        throw new AppError('Unauthorized reques invalid token', HttpStatus.UNAUTHORIZED);
+        throw new AppError('Unauthorized request invalid token', HttpStatus.UNAUTHORIZED);
       }
       await deleteResume(id, dbRepositoryUser);
       res.json({
@@ -99,7 +109,8 @@ const userController = (
     getUserDataById,
     updateTheUser,
     updateTheResume,
-    userDeleteResume
+    userDeleteResume,
+    getUserDataByIdParam
   };
 };
 
