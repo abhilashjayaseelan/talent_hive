@@ -20,7 +20,8 @@ export class ConversationEntity {
   ): Promise<ConversationInterface | any> {
     const conversation = await this.model.find({
       members: { $in: [id] },
-    });
+    }).sort({ updatedAt: -1 }); 
     return conversation;
   }
+  
 }

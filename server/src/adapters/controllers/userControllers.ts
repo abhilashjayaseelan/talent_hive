@@ -104,6 +104,8 @@ const userController = (
     }
   )
 
+  
+
   return {
     getUserByEmail,
     getUserDataById,

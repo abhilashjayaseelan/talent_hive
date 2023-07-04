@@ -5,7 +5,7 @@ import NotFound from "./components/Error/NotFound";
 import HomeRouter from "./routes/home/HomeRouter";
 import JobRouter from "./routes/jobs/JobRouter";
 import ApplicationRouter from "./routes/applications/applicationRouter";
-import MessengerRouter from "./routes/messsenger/MessengerRouter";
+import MessengerRouter from "./routes/messenger/MessengerRouter";
 function App() {
   return (
     <div className="font-roboto">

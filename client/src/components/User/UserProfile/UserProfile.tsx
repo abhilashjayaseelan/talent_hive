@@ -6,6 +6,7 @@ import { ToastContainer } from "react-toastify";
 import { deleteResume } from "../../../features/axios/api/user/userDetails";
 import ConfirmResumeDelete from "./ConfirmResumeDelete";
 import AddResume from "./AddResumeModal";
+import AddKeySkillsModal from "./AddKeySkills";
 import {
   Card,
   CardBody,
@@ -13,6 +14,7 @@ import {
   Typography,
   Tooltip,
   Button,
+  Chip,
 } from "@material-tailwind/react";
 import {
   PencilIcon,
@@ -26,7 +28,7 @@ function UserProfile() {
   const [resumeDeleted, setResumeDeleted] = useState(false);
   const [isUploaded, setIsUploaded] = useState(false);
   const [showResumeUpload, setResumeUpload] = useState(false);
-
+  const [showKeySkillUpload, setShowSkillUpload] = useState(false);
 
   useEffect(() => {
     const userInfo = async () => {
@@ -38,6 +40,10 @@ function UserProfile() {
 
   const resumeUploadButtonHandle = () => {
     setResumeUpload(true);
+  };
+
+  const skillUploadButtonHandle = () => {
+    setShowSkillUpload(true);
   };
 
   const deleteButtonHandle = () => {
@@ -161,6 +167,46 @@ function UserProfile() {
                       color="blue-gray"
                       className="font-semibold capitalize"
                     >
+                      Key Skills:
+                    </Typography>
+                    <div>
+                      <Typography
+                        variant="small"
+                        className="font-normal text-blue-gray-500 flex gap-x-2"
+                      >
+                        <div>
+                          <div className="flex gap-2">
+                            {userDetails?.skills &&
+                              userDetails?.skills?.map((skill) => (
+                                <Chip
+                                  variant="ghost"
+                                  color="teal"
+                                  className="rounded-full py-1.5"
+                                  size="sm"
+                                  value={skill}
+                                />
+                              ))}
+                          </div>
+                          <Tooltip content={"Manage"}>
+                            <Button
+                              variant="text"
+                              onClick={() => skillUploadButtonHandle()}
+                              className="pt-5"
+                            >
+                              <PencilIcon className="h-4 w-4 cursor-pointer text-blue-500" />
+                            </Button>
+                          </Tooltip>
+                        </div>
+                      </Typography>
+                    </div>
+                  </li>
+                  <hr className="my-1 border-blue-gray-50" />
+                  <li className="flex items-center gap-4">
+                    <Typography
+                      variant="small"
+                      color="blue-gray"
+                      className="font-semibold capitalize"
+                    >
                       Resume:
                     </Typography>
 
@@ -229,11 +275,19 @@ function UserProfile() {
           <AddResume
             isOpen={showResumeUpload}
             onClose={() => setResumeUpload(false)}
-            setIsUploaded={()=> setIsUploaded(!isUploaded)}
+            setIsUploaded={() => setIsUploaded(!isUploaded)}
           />
         )}
       </div>
-      <ToastContainer className="z-50"/>
+
+      <div>
+        <AddKeySkillsModal
+          isOpen={showKeySkillUpload}
+          onClose={() => setShowSkillUpload(false)}
+          setIsUploaded={() => setIsUploaded(!isUploaded)}
+        />
+      </div>
+      <ToastContainer className="z-50" />
     </div>
   );
 }

@@ -8,4 +8,5 @@ export interface UserInterface {
   about?: string;
   profession?: string;
   location?: string;
+  skills?: Array<string>;
 }
