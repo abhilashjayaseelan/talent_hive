@@ -139,7 +139,7 @@ function Messenger() {
                 <div className="pr-2 h-full overflow-y-auto scrollbar-thin scrollbar-thumb-gray-500 scrollbar-track-gray-200">
                   {messages?.map((msg: any, index: any) => (
                     <div key={index} ref={scrollRef}>
-                      <Message message={msg} own={msg?.sender === user?._id} />
+                      <Message message={msg} own={msg?.sender === user?._id} id={msg?.sender}/>
                     </div>
                   ))}
                 </div>

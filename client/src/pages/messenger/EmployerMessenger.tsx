@@ -1,4 +1,3 @@
-import EmployerHeader from "../../components/Header/EmployerHeader";
 import Conversations from "../../components/Messenger/employer/EmployerCoversations";
 import Message from "../../components/Messenger/employer/EmployerMessenger";
 import ChatOnline from "../../components/Messenger/employer/EmployerChatOnline";
@@ -114,7 +113,6 @@ function Messenger() {
 
   return (
     <div>
-      <EmployerHeader />
       <div className=" h-screen pb-[70px] flex mx-auto max-w-screen-xl p-2 mt-4 rounded">
         <div className="flex-auto p-3">
           <div>
@@ -140,7 +138,7 @@ function Messenger() {
                 <div className="pr-2 h-full overflow-y-auto scrollbar-thin scrollbar-thumb-gray-500 scrollbar-track-gray-200">
                   {messages?.map((msg: any, index: any) => (
                     <div key={index} ref={scrollRef}>
-                      <Message message={msg} own={msg?.sender === employer?.employerData?._id} />
+                      <Message message={msg} own={msg?.sender === employer?.employerData?._id} id={msg?.sender} />
                     </div>
                   ))}
                 </div>

@@ -8,6 +8,7 @@ import Applications from "../../components/Employer/Employer/Applications";
 import EmployerHeaderWithNav from "../../components/Header/EmployerHeaderWithNav";
 import EmployerProfile from "../../components/Employer/Profile/EmployerProfile";
 import EmployerEditProfile from "../../components/Employer/Profile/EmployerEditProfile";
+import EmployerMessenger from "../messenger/EmployerMessenger";
 
 function EmployerHomePage() {
   return (
@@ -25,6 +26,7 @@ function EmployerHomePage() {
           <Route path="/applications" element={<Applications />} />
           <Route path="/profile" element={<EmployerProfile/>}/>
           <Route path="/edit-profile" element={ <EmployerEditProfile/>} />
+          <Route path="/messenger" element={<EmployerMessenger/>} />
           {/* Add more routes here */}
         </Routes>
       </div>
