@@ -9,4 +9,5 @@ export interface UserInterface {
   profession?: string;
   location?: string;
   skills?: Array<string>;
+  experience?: string;
 }

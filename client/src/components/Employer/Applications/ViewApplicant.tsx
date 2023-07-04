@@ -2,12 +2,13 @@ import React, { useEffect, useState } from "react";
 import { PaperClipIcon } from "@heroicons/react/20/solid";
 import ApplicationDetails from "../../../types/ApplicationsInterface";
 import { applicationDetails } from "../../../features/axios/api/applications/applicationDetails";
-import { useParams } from "react-router-dom";
-import { Chip, Button } from "@material-tailwind/react";
+import { Link, useParams } from "react-router-dom";
+import { Chip, Button, Tooltip } from "@material-tailwind/react";
 import { changeApplicationStatus } from "../../../features/axios/api/applications/changeApplication";
 import "react-toastify/dist/ReactToastify.css";
 import { ToastContainer, toast } from "react-toastify";
 import { Breadcrumbs } from "@material-tailwind/react";
+import { EyeIcon } from "@heroicons/react/24/outline";
 import {
   Menu,
   MenuHandler,
@@ -18,6 +19,7 @@ import {
 function ViewApplicant() {
   const [applicationData, setApplicationData] = useState<ApplicationDetails>();
   const [status, setStatus] = useState(true);
+  const resumeUrl = applicationData?.userId?.resume;
   const { id } = useParams();
 
   useEffect(() => {
@@ -180,28 +182,34 @@ function ViewApplicant() {
                     className="divide-y divide-gray-100 rounded-md border border-gray-200"
                   >
                     <li className="flex items-center justify-between py-4 pl-4 pr-5 text-sm leading-6">
-                      <div className="flex w-0 flex-1 items-center">
-                        <PaperClipIcon
-                          className="h-5 w-5 flex-shrink-0 text-gray-400"
-                          aria-hidden="true"
-                        />
-                        <div className="ml-4 flex min-w-0 flex-1 gap-2">
-                          <span className="truncate font-medium">
-                            coverletter_back_end_developer.pdf
-                          </span>
-                          <span className="flex-shrink-0 text-gray-400">
-                            4.5mb
-                          </span>
+                      {resumeUrl ? (
+                        <div className="flex w-80">
+                          <PaperClipIcon
+                            className="h-5 w-5 flex-shrink-0 text-gray-400"
+                            aria-hidden="true"
+                          />
+                          <div className="ml-4 flex min-w-0 flex-1 gap-2">
+                            <span className="truncate font-medium">
+                              {`${applicationData?.userId?.name}.pdf`}
+                            </span>
+                            <span className="flex-shrink-0 text-gray-400">
+                              4.5mb
+                            </span>
+                          </div>
+                          <Tooltip content="view resume">
+                            <Link
+                              to={resumeUrl}
+                              target="_blank"
+                              rel="noopener noreferrer"
+                            >
+                              <EyeIcon
+                                className="ml-2 h-5 w-5 flex-shrink-0 text-blue-400"
+                                aria-hidden="true"
+                              />
+                            </Link>
+                          </Tooltip>
                         </div>
-                      </div>
-                      <div className="ml-4 flex-shrink-0">
-                        <a
-                          href="h"
-                          className="font-medium text-indigo-600 hover:text-indigo-500"
-                        >
-                          Download
-                        </a>
-                      </div>
+                      ) : null}
                     </li>
                   </ul>
                 </dd>

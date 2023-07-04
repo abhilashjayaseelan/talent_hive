@@ -7,6 +7,7 @@ export default interface ApplicationDetails {
       phone?: number;
       about?: string;
       image?: string;
+      resume?:string;
     };
     employerId: string;
     applicationStatus: string;

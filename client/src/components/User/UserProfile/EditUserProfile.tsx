@@ -31,8 +31,9 @@ function EditUserProfile() {
       setValue("location", userDetails?.location);
       setValue("about", userDetails?.about);
       setValue("profession", userDetails?.profession);
+      setValue("experience", userDetails?.experience);
     }
-  }, [userDetails]);
+  }, [setValue, userDetails]);
 
   const notify = (msg: string, type: string) => {
     type === "error"
@@ -66,7 +67,7 @@ function EditUserProfile() {
     <>
       <div className="pt-16 pl-40">
         <Breadcrumbs className="bg-white">
-          <a href="#" className="opacity-60">
+          <a href="h" className="opacity-60">
             <svg
               xmlns="http://www.w3.org/2000/svg"
               className="h-4 w-4"
@@ -76,10 +77,10 @@ function EditUserProfile() {
               <path d="M10.707 2.293a1 1 0 00-1.414 0l-7 7a1 1 0 001.414 1.414L4 10.414V17a1 1 0 001 1h2a1 1 0 001-1v-2a1 1 0 011-1h2a1 1 0 011 1v2a1 1 0 001 1h2a1 1 0 001-1v-6.586l.293.293a1 1 0 001.414-1.414l-7-7z" />
             </svg>
           </a>
-          <a href="#" className="opacity-60">
+          <a href="h" className="opacity-60">
             <span>Profile</span>
           </a>
-          <a href="#">Edit profile</a>
+          <a href="h">Edit profile</a>
         </Breadcrumbs>
       </div>
       <div className=" mx-auto max-w-screen-xl p-2 mt-4 rounded lg:pl-6">
@@ -169,6 +170,23 @@ function EditUserProfile() {
                       id="email"
                       className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300   placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-purple-600 sm:text-sm sm:leading-6"
                       {...register("email")}
+                    />
+                  </div>
+                </div>
+
+                <div className="sm:col-span-3">
+                  <label
+                    htmlFor="experience"
+                    className="block text-sm font-medium leading-6 text-gray-900"
+                  >
+                    Experience
+                  </label>
+                  <div className="mt-2">
+                    <input
+                      type="text"
+                      id="experience"
+                      className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300   placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-purple-600 sm:text-sm sm:leading-6"
+                      {...register("experience")}
                     />
                   </div>
                 </div>

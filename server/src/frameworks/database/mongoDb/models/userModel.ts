@@ -52,6 +52,9 @@ const userSchema = new Schema({
     }, 
     location: {
         type: String
+    },
+    experience: {
+        type: String
     }
 })
 

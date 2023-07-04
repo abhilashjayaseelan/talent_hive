@@ -51,7 +51,7 @@ export class JobApplicationEntity {
       .findOne({ _id: jobId })
       .populate({
         path: "userId",
-        select: "name email phone about image",
+        select: "name email phone about image resume",
         model: User,
       })
       .populate({ path: "jobId", select: "title location", model: Job })

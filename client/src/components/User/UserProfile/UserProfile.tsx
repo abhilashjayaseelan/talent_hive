@@ -20,6 +20,7 @@ import {
   PencilIcon,
   PaperClipIcon,
   TrashIcon,
+  EyeIcon
 } from "@heroicons/react/24/solid";
 
 function UserProfile() {
@@ -29,6 +30,8 @@ function UserProfile() {
   const [isUploaded, setIsUploaded] = useState(false);
   const [showResumeUpload, setResumeUpload] = useState(false);
   const [showKeySkillUpload, setShowSkillUpload] = useState(false);
+
+  const resumeUrl = userDetails?.resume;
 
   useEffect(() => {
     const userInfo = async () => {
@@ -167,6 +170,23 @@ function UserProfile() {
                       color="blue-gray"
                       className="font-semibold capitalize"
                     >
+                      Experience:
+                    </Typography>
+
+                    <Typography
+                      variant="small"
+                      className="font-normal text-blue-gray-500"
+                    >
+                      {userDetails?.experience ?? ""}
+                    </Typography>
+                  </li>
+                  <hr className="my-1 border-blue-gray-50" />
+                  <li className="flex items-center gap-4">
+                    <Typography
+                      variant="small"
+                      color="blue-gray"
+                      className="font-semibold capitalize"
+                    >
                       Key Skills:
                     </Typography>
                     <div>
@@ -179,6 +199,7 @@ function UserProfile() {
                             {userDetails?.skills &&
                               userDetails?.skills?.map((skill) => (
                                 <Chip
+                                  key={skill}
                                   variant="ghost"
                                   color="teal"
                                   className="rounded-full py-1.5"
@@ -211,7 +232,7 @@ function UserProfile() {
                     </Typography>
 
                     {userDetails?.resume ? (
-                      <div className="rounded-md border border-gray-300 p-1 lg:w-80">
+                      <div className="rounded-md border border-gray-300 p-1 lg:w-96">
                         <Typography
                           variant="small"
                           className="font-normal text-blue-gray-500 flex gap-x-2"
@@ -236,6 +257,20 @@ function UserProfile() {
                                 aria-hidden="true"
                               />
                             </button>
+                          </Tooltip>
+                          <Tooltip content="view resume">
+                            {resumeUrl ? (
+                              <Link
+                                to={resumeUrl}
+                                target="_blank"
+                                rel="noopener noreferrer"
+                              >
+                                <EyeIcon
+                                  className="ml-2 h-5 w-5 flex-shrink-0 text-blue-400"
+                                  aria-hidden="true"
+                                />
+                              </Link>
+                            ) : null}
                           </Tooltip>
                         </Typography>
                       </div>

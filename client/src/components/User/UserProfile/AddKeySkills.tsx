@@ -28,7 +28,7 @@ export default function AddKeySkillsModal({
   const user = useSelector((state: RootState) => state.userDetails.userDetails);
   
   useEffect(()=> {
-      setSkills(user?.skills)
+    setSkills(user?.skills)
   }, [user, isOpen]);
 
   const handleSkillChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -49,6 +49,7 @@ export default function AddKeySkillsModal({
   };
 
   const handleSaveSkills = async () => {
+    setSkills(skills);
     try {
       const payload = {
         skills: [...skills],
