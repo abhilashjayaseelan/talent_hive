@@ -26,7 +26,7 @@ export const NavRoutes = [
       {
         icon: <FaFacebookMessenger {...icon} />,
         name: "Chats",
-        path: "/employer/chat",
+        path: "/employer/messenger",
       },
       {
         icon: <FaUser {...icon} />,

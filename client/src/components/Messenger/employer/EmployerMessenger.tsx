@@ -1,22 +1,46 @@
-import {format} from 'timeago.js';
+import axios from "axios";
+import { useEffect, useState } from "react";
+import { format } from "timeago.js";
+import configKeys from "../../../utils/config";
 
 type MessageType = {
   message: any;
   own: boolean;
+  id: string;
 };
 
-function Message({ message, own }: MessageType) {
+function Message({ message, own, id }: MessageType) {
+  const [user, setUser] = useState<any>();
+
+  useEffect(() => {
+    const getUser = async () => {
+      try {
+        if (!own) {
+          const res = await axios(`${configKeys.API_URL}user/user-data/${id}`);
+          setUser(res?.data);
+        } else {
+          const res = await axios(`${configKeys.API_URL}employer/employer-data/${id}`);
+          setUser(res?.data)
+        }
+      } catch (error) {
+        console.log(error);
+      }
+    };
+    getUser();
+  }, [id, own]);
+
   return (
     <div className={`flex flex-col mt-3 ${own ? "items-end" : ""}`}>
       <div className="flex">
         <img
           className="mr-2 w-8 h-8 rounded-full object-cover"
-          src="https://res.cloudinary.com/dgjwhf8i3/image/upload/v1687802064/Job-portal-profile/pexels-dominykas-4411214.jpg"
+          src={user?.image}
           alt=""
         />
         <p
           className={`p-3 rounded-3xl max-w-xs ${
-            own ? "bg-gray-300 text-black" : "bg-purple-600 text-white"}`}
+            own ? "bg-gray-300 text-black" : "bg-purple-600 text-white"
+          }`}
         >
           {message?.text}
         </p>
