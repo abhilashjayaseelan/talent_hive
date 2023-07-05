@@ -174,6 +174,34 @@ function ViewApplicant() {
               </div>
               <div className="px-4 py-6 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0">
                 <dt className="text-sm font-medium leading-6 text-gray-900">
+                  Experience
+                </dt>
+                <dd className="mt-1 text-sm leading-6 text-gray-700 sm:col-span-2 sm:mt-0">
+                  {applicationData?.userId?.experience}
+                </dd>
+              </div>
+              <div className="px-4 py-6 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0">
+                <dt className="text-sm font-medium leading-6 text-gray-900">
+                  Key Skills
+                </dt>
+                <dd className="mt-1 text-sm leading-6 text-gray-700 sm:col-span-2 sm:mt-0">
+                  <div className="flex gap-2">
+                    {applicationData?.userId?.skills &&
+                      applicationData?.userId?.skills?.map((skill) => (
+                        <Chip
+                          key={skill}
+                          variant="ghost"
+                          color="teal"
+                          className="rounded-full py-1.5"
+                          size="sm"
+                          value={skill}
+                        />
+                      ))}
+                  </div>
+                </dd>
+              </div>
+              <div className="px-4 py-6 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0">
+                <dt className="text-sm font-medium leading-6 text-gray-900">
                   Attachments
                 </dt>
                 <dd className="mt-2 text-sm text-gray-900 sm:col-span-2 sm:mt-0">

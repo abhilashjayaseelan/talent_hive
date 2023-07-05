@@ -8,6 +8,8 @@ export default interface ApplicationDetails {
       about?: string;
       image?: string;
       resume?:string;
+      skills?: Array<string>;
+      experience?: string;
     };
     employerId: string;
     applicationStatus: string;
