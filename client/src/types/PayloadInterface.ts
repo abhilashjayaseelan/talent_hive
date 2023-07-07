@@ -10,6 +10,7 @@ export interface SignupPayload extends LoginPayload {
 }
 
 export interface EmployerRegisterPayload extends LoginPayload {
+  _id: string;
   companyName: string;
   industry: string;
   confirmPassword: string;

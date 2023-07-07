@@ -5,7 +5,7 @@ export class EmployerEntity {
   private model: EmployerModel;
 
   constructor(model: EmployerModel) {
-    this.model = model;
+    this.model = model; 
   }
 
   public async getEmployerByEmail(email: string): Promise<EmployerInterface | null> {

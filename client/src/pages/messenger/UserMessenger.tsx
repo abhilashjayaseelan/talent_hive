@@ -2,7 +2,6 @@ import UserHeader from "../../components/Header/UserHeader";
 import UserSideFooter from "../../components/Footer/UserSideFooter";
 import Conversations from "../../components/Messenger/user/UserConversations";
 import Message from "../../components/Messenger/user/UserMessage";
-import ChatOnline from "../../components/Messenger/user/UserChatOnline";
 import { Tooltip } from "@material-tailwind/react";
 import { IoPaperPlaneSharp } from "react-icons/io5";
 import { fetchUser } from "../../features/redux/slices/user/userDetailsSlice";
@@ -10,7 +9,7 @@ import { useEffect, useRef, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../../features/redux/reducers/Reducer";
 import { getUserConversations } from "../../features/axios/api/messenger/conversation";
-import {io, Socket} from "socket.io-client";
+import { io, Socket } from "socket.io-client";
 import configKeys from "../../utils/config";
 import {
   getUserMessages,
@@ -29,30 +28,31 @@ function Messenger() {
   const [messages, setMessages] = useState<any>(null);
   const [newMessage, setNewMessage] = useState<any>("");
   const [arrivalMessage, setArrivalMessage] = useState<any>(null);
+  const [onlineUsers, setOnlineUsers] = useState<any>([]);
 
-  useEffect(()=> {
+  useEffect(() => {
     socket.current = io(configKeys.SOCKET_PORT);
-    socket.current.on("getMessage", data => {
+    socket.current.on("getMessage", (data) => {
       setArrivalMessage({
         sender: data?.senderId,
         text: data?.text,
         createdAt: Date.now(),
-      })
-    })
+      });
+    });
   });
 
-  useEffect(()=> {
-    arrivalMessage && currentChat?.members?.includes(arrivalMessage.sender) &&
-    setMessages((prev: any)=> [...prev, arrivalMessage] );
-  }, [arrivalMessage, currentChat])
+  useEffect(() => {
+    arrivalMessage &&
+      currentChat?.members?.includes(arrivalMessage.sender) &&
+      setMessages((prev: any) => [...prev, arrivalMessage]);
+  }, [arrivalMessage, currentChat]);
 
-
-  useEffect(()=> {
-    socket?.current?.emit("addUser", user?._id)
-    socket?.current?.on("getUsers", users => {
-      console.log(users)
-    })
-  }, [user?._id])
+  useEffect(() => {
+    socket?.current?.emit("addUser", user?._id);
+    socket?.current?.on("getUsers", (users) => {
+      setOnlineUsers(users);
+    });
+  }, [user?._id]);
 
   useEffect(() => {
     dispatch(fetchUser());
@@ -94,13 +94,15 @@ function Messenger() {
       text: newMessage,
     };
 
-    const receiverId = currentChat?.members?.find((member: any) => member !== user._id)
+    const receiverId = currentChat?.members?.find(
+      (member: any) => member !== user._id
+    );
 
     socket?.current?.emit("sendMessage", {
       senderId: user?._id,
       receiverId,
       text: newMessage,
-    })
+    });
 
     try {
       const res = await postUserMessages(message);
@@ -125,7 +127,11 @@ function Messenger() {
             <div className="h-96 overflow-y-auto">
               {conversations?.map((c, index) => (
                 <div onClick={() => setCurrentChat(c)} key={index}>
-                  <Conversations conversation={c} currentUser={user} />
+                  <Conversations
+                    conversation={c}
+                    currentUser={user}
+                    onlineUsers={onlineUsers}
+                  />
                 </div>
               ))}
             </div>
@@ -139,7 +145,11 @@ function Messenger() {
                 <div className="pr-2 h-full overflow-y-auto scrollbar-thin scrollbar-thumb-gray-500 scrollbar-track-gray-200">
                   {messages?.map((msg: any, index: any) => (
                     <div key={index} ref={scrollRef}>
-                      <Message message={msg} own={msg?.sender === user?._id} id={msg?.sender}/>
+                      <Message
+                        message={msg}
+                        own={msg?.sender === user?._id}
+                        id={msg?.sender}
+                      />
                     </div>
                   ))}
                 </div>
@@ -168,11 +178,7 @@ function Messenger() {
           </div>
         </div>
 
-        <div className="flex-auto p-3">
-          <div>
-            <ChatOnline />
-          </div>
-        </div>
+        <div className="flex-auto p-3"></div>
       </div>
       <UserSideFooter />
     </div>

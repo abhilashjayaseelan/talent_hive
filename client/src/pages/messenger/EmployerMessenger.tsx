@@ -1,6 +1,5 @@
 import Conversations from "../../components/Messenger/employer/EmployerCoversations";
 import Message from "../../components/Messenger/employer/EmployerMessenger";
-import ChatOnline from "../../components/Messenger/employer/EmployerChatOnline";
 import { Tooltip } from "@material-tailwind/react";
 import { IoPaperPlaneSharp } from "react-icons/io5";
 import { fetchEmployer } from "../../features/redux/slices/employer/employerDetailsSlice";
@@ -8,13 +7,12 @@ import { useEffect, useRef, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../../features/redux/reducers/Reducer";
 import { getEmployerConversations } from "../../features/axios/api/messenger/conversation";
-import {io, Socket} from "socket.io-client";
+import { io, Socket } from "socket.io-client";
 import configKeys from "../../utils/config";
 import {
   getEmployerMessages,
   postEmployerMessages,
 } from "../../features/axios/api/messenger/messages";
-
 
 function Messenger() {
   const dispatch = useDispatch();
@@ -28,30 +26,31 @@ function Messenger() {
   const [messages, setMessages] = useState<any>(null);
   const [newMessage, setNewMessage] = useState<any>("");
   const [arrivalMessage, setArrivalMessage] = useState<any>(null);
+  const [onlineUsers, setOnlineUsers] = useState<any>([]);
 
-  useEffect(()=> {
+  useEffect(() => {
     socket.current = io(configKeys.SOCKET_PORT);
-    socket.current.on("getMessage", data => {
+    socket.current.on("getMessage", (data) => {
       setArrivalMessage({
         sender: data?.senderId,
         text: data?.text,
         createdAt: Date.now(),
-      })
-    })
+      });
+    });
   });
 
-  useEffect(()=> {
-    arrivalMessage && currentChat?.members?.includes(arrivalMessage.sender) &&
-    setMessages((prev: any)=> [...prev, arrivalMessage] );
-  }, [arrivalMessage, currentChat])
+  useEffect(() => {
+    arrivalMessage &&
+      currentChat?.members?.includes(arrivalMessage.sender) &&
+      setMessages((prev: any) => [...prev, arrivalMessage]);
+  }, [arrivalMessage, currentChat]);
 
-
-  useEffect(()=> {
-    socket?.current?.emit("addUser", employer?.employerData?._id)
-    socket?.current?.on("getUsers", users => {
-      console.log(users)
-    })
-  }, [employer?.employerData?._id])
+  useEffect(() => {
+    socket?.current?.emit("addUser", employer?.employerData?._id);
+    socket?.current?.on("getUsers", (users) => {
+      setOnlineUsers(users);
+    });
+  }, [employer?.employerData?._id]);
 
   useEffect(() => {
     dispatch(fetchEmployer());
@@ -81,7 +80,6 @@ function Messenger() {
     getMessages();
   }, [currentChat]);
 
-
   useEffect(() => {
     scrollRef.current?.scrollIntoView({ behavior: "smooth" });
   }, [messages]);
@@ -94,13 +92,15 @@ function Messenger() {
       text: newMessage,
     };
 
-    const receiverId = currentChat?.members?.find((member: any) => member !== employer?.employerData?._id)
+    const receiverId = currentChat?.members?.find(
+      (member: any) => member !== employer?.employerData?._id
+    );
 
     socket?.current?.emit("sendMessage", {
       senderId: employer?.employerData?._id,
       receiverId,
       text: newMessage,
-    })
+    });
 
     try {
       const res = await postEmployerMessages(message);
@@ -124,7 +124,11 @@ function Messenger() {
             <div className="h-96 overflow-y-auto">
               {conversations?.map((c, index) => (
                 <div onClick={() => setCurrentChat(c)} key={index}>
-                  <Conversations conversation={c} currentUser={employer?.employerData} />
+                  <Conversations
+                    conversation={c}
+                    currentUser={employer?.employerData}
+                    onlineUsers={onlineUsers}
+                  />
                 </div>
               ))}
             </div>
@@ -138,7 +142,11 @@ function Messenger() {
                 <div className="pr-2 h-full overflow-y-auto scrollbar-thin scrollbar-thumb-gray-500 scrollbar-track-gray-200">
                   {messages?.map((msg: any, index: any) => (
                     <div key={index} ref={scrollRef}>
-                      <Message message={msg} own={msg?.sender === employer?.employerData?._id} id={msg?.sender} />
+                      <Message
+                        message={msg}
+                        own={msg?.sender === employer?.employerData?._id}
+                        id={msg?.sender}
+                      />
                     </div>
                   ))}
                 </div>
@@ -167,11 +175,7 @@ function Messenger() {
           </div>
         </div>
 
-        <div className="flex-auto p-3">
-          <div>
-            <ChatOnline />
-          </div>
-        </div>
+       
       </div>
     </div>
   );
