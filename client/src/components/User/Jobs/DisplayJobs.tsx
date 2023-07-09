@@ -7,6 +7,7 @@ import { Navbar, Button, Input } from "@material-tailwind/react";
 import JobList from "./JobList";
 import JobDetails from "./JobDetails";
 import UserSideJobListingShimmer from "../../shimmer/UserSideJobListingShimmer";
+import { isApplied } from "../../../features/axios/api/user/applyForJob";
 import {
   distinctTitleLocationSalary,
   filterJobs,
@@ -17,6 +18,7 @@ function DisplayJobs(this: any) {
   const jobs = useSelector((state: RootState) => state.allJobs.jobs);
   const status = useSelector((state: RootState) => state.allJobs.status);
   const error = useSelector((state: RootState) => state.allJobs.error);
+  const user = useSelector((state: RootState) => state.userDetails.userDetails);
   // variable for job selection ring
   const [selected, setSelected] = useState("");
   // variables for search searching
@@ -29,8 +31,7 @@ function DisplayJobs(this: any) {
   const [selectedLocation, setSelectedLocation] = useState("");
   const [selectedSalary, setSelectedSalary] = useState("");
 
-  const [filtered, setFiltered] = useState([]);
-  const [isFiltered, setIsFiltered] = useState(false);
+  const [filtered, setFiltered] = useState<any>([]);
 
   // for the scroll behavior of nav
   const [prevScrollPos, setPrevScrollPos] = useState(0);
@@ -75,8 +76,38 @@ function DisplayJobs(this: any) {
       selectedSalary
     );
     setFiltered(filteredJobs);
-    setIsFiltered(true);
   };
+
+  // for filtering out the applied jobs
+  useEffect(() => {
+    const fetchFilteredJobs = async () => {
+      let filteredJobs = [];
+      if (filtered?.length > 0) {
+        filteredJobs = await Promise.all(
+          (filtered ?? [])?.map(async (job: JobsInterface) => {
+            const jobStatus = await isApplied(job?._id, user?._id);
+            if (jobStatus?.status !== "Applied") {
+              return job;
+            }
+            return null;
+          })
+        );
+      } else {
+        filteredJobs = await Promise.all(
+          (filterJob ?? [])?.map(async (job: JobsInterface) => {
+            const jobStatus = await isApplied(job?._id, user?._id);
+            if (jobStatus?.status !== "Applied") {
+              return job;
+            }
+            return null;
+          })
+        );
+      }
+      setFiltered(filteredJobs?.filter(Boolean));
+    };
+  
+    fetchFilteredJobs();
+  }, [jobs]);
 
   if (status === "loading") {
     return (
@@ -173,7 +204,7 @@ function DisplayJobs(this: any) {
             className="overflow-y-auto p-6"
             style={{ maxHeight: "calc(100vh - 80px)" }}
           >
-            {isFiltered
+            {filtered?.length > 0
               ? filtered.map((job: JobsInterface) => (
                   <JobList
                     key={job._id}

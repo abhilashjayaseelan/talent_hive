@@ -31,7 +31,6 @@ export class JobApplicationEntity {
       jobId: jobId,
       userId: userId,
     });
-    console.log(appliedJod, "applied");
     if (appliedJod) {
       return appliedJod;
     }

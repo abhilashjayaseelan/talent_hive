@@ -22,7 +22,7 @@ export class JobEntity {
       return null;
     }
     Object.assign(existingJob, updates);
-    const updatedJob = await existingJob.save();
+    const updatedJob = await existingJob.save(); 
     return updatedJob;
   }
 
