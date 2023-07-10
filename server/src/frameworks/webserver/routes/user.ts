@@ -5,6 +5,9 @@ import { UserRepositoryMongoDB } from '../../database/mongoDb/repositories/userR
 import { User } from '../../database/mongoDb/models/userModel';
 import { upload } from '../middleware/multerCloudinary';
 import authenticationMiddleware from '../middleware/authenticationMiddleware';
+import roleMiddleware from '../middleware/roleMiddleware';
+
+const userMiddleware = roleMiddleware('user');
 
 const userRouter = ()=> {
     const route = express.Router();
@@ -15,10 +18,10 @@ const userRouter = ()=> {
         User
     );
 
-    route.get('/user-data',authenticationMiddleware, controller.getUserDataById);
-    route.put('/update-user',authenticationMiddleware, upload, controller.updateTheUser);
-    route.put('/update-resume',authenticationMiddleware, upload, controller.updateTheResume);
-    route.delete('/delete-resume' ,authenticationMiddleware, controller.userDeleteResume);
+    route.get('/user-data',authenticationMiddleware, userMiddleware, controller.getUserDataById);
+    route.put('/update-user',authenticationMiddleware, userMiddleware, upload, controller.updateTheUser);
+    route.put('/update-resume',authenticationMiddleware, userMiddleware, upload, controller.updateTheResume);
+    route.delete('/delete-resume' ,authenticationMiddleware, userMiddleware, controller.userDeleteResume);
     route.get('/user-data/:userId', controller.getUserDataByIdParam);
 
     return route;

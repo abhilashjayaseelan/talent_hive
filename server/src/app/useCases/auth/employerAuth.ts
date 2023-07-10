@@ -39,6 +39,6 @@ export const employerLogin = async (
   if (!isPasswordCorrect) {
     throw new AppError("Incorrect password", HttpStatus.UNAUTHORIZED);
   }
-  const token = authService.generateToken(employer._id.toString())
+  const token = authService.generateToken(employer._id.toString(), 'employer')
   return token;
 };

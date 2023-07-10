@@ -18,9 +18,10 @@ const authenticationMiddleware = (
     throw new AppError('Token not found', HttpStatus.UNAUTHORIZED);
   }
   try {
-    const {payload}: any = authService().verifyToken(token);
+    const { payload, role }: any = authService().verifyToken(token);
     customReq.payload = payload;
-    next()
+    customReq.role = role;
+    next();
   } catch (error) {
     throw new AppError('UnAuthorized user', HttpStatus.UNAUTHORIZED);
   }

@@ -29,7 +29,7 @@ export const userLogin = async (
   userRepository: ReturnType<UserDbInterface>,
   authService: ReturnType<AuthServiceInterface>
 ) => {
-  const user = await userRepository.getUserByEmail(email);
+  const user   = await userRepository.getUserByEmail(email);
   if (!user) {
     throw new AppError("this user does not exist", HttpStatus.UNAUTHORIZED);
   }
@@ -43,7 +43,8 @@ export const userLogin = async (
   if (!isPasswordCorrect) {
     throw new AppError("Sorry, incorrect password", HttpStatus.UNAUTHORIZED);
   }
-  const token = authService.generateToken(user?._id?.toString() ?? '');
+  const payload = user._id ? user._id.toString() : '';
+  const token = authService.generateToken(payload, 'user');
   return token;
 };
 
@@ -58,12 +59,12 @@ export const signInWithGoogle = async (
   const isUserExist = await userRepository.getUserByEmail(user.email);
   if (isUserExist) {
     const payload = isUserExist?._id?.toString();
-    const token = authService.generateToken(payload ?? '');
+    const token = authService.generateToken(payload ?? '', 'user');
     return token;
   } else {
     const { _id: userId} = await userRepository.createUser(user);
     const payload = userId?.toString();
-    const token = authService.generateToken(payload ?? '');
+    const token = authService.generateToken(payload ?? '', 'user');
     return token;
   }
 };
