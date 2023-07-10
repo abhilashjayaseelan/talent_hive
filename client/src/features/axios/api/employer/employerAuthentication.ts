@@ -52,7 +52,7 @@ export const emailVerify = async (email: string) => {
     return response.data;
   } catch (error: any) {
     if (error.message === "Request failed with status code 409") {
-      throw new Error("Email already exists !!!");
+      throw new Error("Try another email !!!");
     } else {
       throw new Error("verification failed");
     }

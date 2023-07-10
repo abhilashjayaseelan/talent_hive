@@ -1,9 +1,19 @@
 import { useState } from 'react';
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 import { emailVerify } from '../../../features/axios/api/employer/employerAuthentication';
+import { useNavigate } from 'react-router-dom';
 
 function EmailVerify() {
   const [email, setEmail] = useState('');
   const [isValidEmail, setIsValidEmail] = useState(true);
+  const navigate = useNavigate();
+
+  const notify = (msg: string, type: string) => {
+    type === "error"
+      ? toast.error(msg, { position: toast.POSITION.BOTTOM_RIGHT })
+      : toast.success(msg, { position: toast.POSITION.TOP_RIGHT });
+  };
 
   const handleSubmit = (e:any) => {
     e.preventDefault();
@@ -19,11 +29,11 @@ function EmailVerify() {
     emailVerify(email)
       .then((response) => {
         // Handle the response
-        console.log(response);
+        navigate('/employer/register/OTP');
       })
       .catch((error) => {
         // Handle the error
-        console.error(error);
+        notify(error?.message, 'error');
       });
   };
 
@@ -81,6 +91,7 @@ function EmailVerify() {
           </form>
         </div>
       </div>
+      <ToastContainer/>
     </>
   );
 }
