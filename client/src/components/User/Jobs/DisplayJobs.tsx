@@ -19,6 +19,8 @@ function DisplayJobs(this: any) {
   const status = useSelector((state: RootState) => state.allJobs.status);
   const error = useSelector((state: RootState) => state.allJobs.error);
   const user = useSelector((state: RootState) => state.userDetails.userDetails);
+
+  const [jobsList, setJobsList] = useState<any>([]);
   // variable for job selection ring
   const [selected, setSelected] = useState("");
   // variables for search searching
@@ -32,6 +34,7 @@ function DisplayJobs(this: any) {
   const [selectedSalary, setSelectedSalary] = useState("");
 
   const [filtered, setFiltered] = useState<any>([]);
+  const [isFiltered, setIsFiltered] = useState(false);
 
   // for the scroll behavior of nav
   const [prevScrollPos, setPrevScrollPos] = useState(0);
@@ -55,19 +58,21 @@ function DisplayJobs(this: any) {
     dispatch(fetchAllJobs());
   }, [dispatch]);
 
-  
   useEffect(() => {
     distinctTitleLocationSalary("location", setLocations);
     distinctTitleLocationSalary("title", setTitles);
     distinctTitleLocationSalary("salary", setSalaries);
   }, []);
 
-  const filterJob = jobs?.filter(
-    (job: JobsInterface) =>
-      job?.title?.toLowerCase().includes(searchQuery?.toLowerCase()) ||
-      job?.location?.toLowerCase().includes(searchQuery?.toLowerCase()) ||
-      job?.employmentType?.toLowerCase().includes(searchQuery?.toLowerCase())
-  );
+  useEffect(() => {
+    let filterJob = jobs?.filter(
+      (job: JobsInterface) =>
+        job?.title?.toLowerCase().includes(searchQuery?.toLowerCase()) ||
+        job?.location?.toLowerCase().includes(searchQuery?.toLowerCase()) ||
+        job?.employmentType?.toLowerCase().includes(searchQuery?.toLowerCase())
+    );
+    setJobsList(filterJob);
+  }, [jobs, searchQuery]);
 
   const handleFilter = async () => {
     const filteredJobs = await filterJobs(
@@ -76,13 +81,14 @@ function DisplayJobs(this: any) {
       selectedSalary
     );
     setFiltered(filteredJobs);
+    setIsFiltered(true);
   };
 
   // for filtering out the applied jobs
   useEffect(() => {
     const fetchFilteredJobs = async () => {
       let filteredJobs = [];
-      if (filtered?.length > 0) {
+      if (isFiltered) {
         filteredJobs = await Promise.all(
           (filtered ?? [])?.map(async (job: JobsInterface) => {
             const jobStatus = await isApplied(job?._id, user?._id);
@@ -94,7 +100,7 @@ function DisplayJobs(this: any) {
         );
       } else {
         filteredJobs = await Promise.all(
-          (filterJob ?? [])?.map(async (job: JobsInterface) => {
+          (jobsList ?? [])?.map(async (job: JobsInterface) => {
             const jobStatus = await isApplied(job?._id, user?._id);
             if (jobStatus?.status !== "Applied") {
               return job;
@@ -105,7 +111,7 @@ function DisplayJobs(this: any) {
       }
       setFiltered(filteredJobs?.filter(Boolean));
     };
-  
+
     fetchFilteredJobs();
   }, [jobs]);
 
@@ -204,7 +210,7 @@ function DisplayJobs(this: any) {
             className="overflow-y-auto p-6"
             style={{ maxHeight: "calc(100vh - 80px)" }}
           >
-            {filtered?.length > 0
+            {isFiltered
               ? filtered.map((job: JobsInterface) => (
                   <JobList
                     key={job._id}
@@ -213,7 +219,7 @@ function DisplayJobs(this: any) {
                     setSelected={setSelected}
                   />
                 ))
-              : filterJob?.map((job: JobsInterface) => (
+              : jobsList?.map((job: JobsInterface) => (
                   <JobList
                     key={job._id}
                     jobs={job}
