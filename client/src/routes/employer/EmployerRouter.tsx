@@ -1,7 +1,9 @@
 import { Routes, Route } from "react-router-dom";
 import EmployerLoginPage from "../../pages/employer/EmployerLoginPage";
-import EmployerRegisterPage from "../../pages/employer/EmployerRegisterPage";
 import EmployerHomePage from "../../pages/employer/EmployerHomePage";
+import EmailVerifyPage from "../../pages/employer/EmailVerifyPage";
+import EmployerRegisterPage from "../../pages/employer/EmployerRegisterPage";
+import EmailOTPPage from "../../pages/employer/EmailOTPPage";
 
 const EmployerRouter = () => {
     return (
@@ -9,7 +11,9 @@ const EmployerRouter = () => {
             <Routes>
                 <Route path="/*" element ={<EmployerHomePage/>}/>
                 <Route path="/login" element={<EmployerLoginPage/>}/>
-                <Route path="/register" element={<EmployerRegisterPage/>}/>
+                <Route path="/register" element={<EmailVerifyPage/>}/>
+                <Route path="/register/form" element={<EmployerRegisterPage/>}/>
+                <Route path="/register/OTP" element={<EmailOTPPage/>}/>
             </Routes>
         </div>
     )

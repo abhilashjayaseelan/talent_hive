@@ -3,6 +3,7 @@ import { CreateEmployerInterface } from "../../../types/employerInterface";
 import AppError from "../../../utils/appError";
 import { EmployerDbInterface } from "../../repositories/employerDbRepository";
 import { AuthServiceInterface } from "../../services/authServiceInterface";
+import { EmailServiceInterface } from "../../services/emailServiceInterface";
 
 export const registerEmployer = async (
   employer: CreateEmployerInterface,
@@ -39,6 +40,33 @@ export const employerLogin = async (
   if (!isPasswordCorrect) {
     throw new AppError("Incorrect password", HttpStatus.UNAUTHORIZED);
   }
-  const token = authService.generateToken(employer._id.toString())
+  const token = authService.generateToken(employer._id.toString(), 'employer')
   return token;
 };
+
+export const employerEmailVerification = async (
+  email: string,
+  employerRepository: ReturnType<EmployerDbInterface>,
+  emailService: ReturnType<EmailServiceInterface>
+) => {
+  const existingEmail = await employerRepository.getEmployerByEmail(email);
+
+  if(existingEmail) {
+    throw new AppError("email already exists", HttpStatus.CONFLICT);
+  }
+
+  emailService.sendOtpEmail(email);
+}
+
+export const verifyEmailOTP = async (
+  OTP: string,
+  emailService: ReturnType<EmailServiceInterface>
+) => {
+  const response = emailService.verifyOTP(OTP);
+
+  if (response.message !== 'OTP verified') {
+    throw new AppError("Invalid OTP", HttpStatus.NOT_FOUND)
+  }
+
+  return response;
+}

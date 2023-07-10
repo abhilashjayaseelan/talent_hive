@@ -5,6 +5,9 @@ import { EmployerRepositoryMongoDB } from '../../database/mongoDb/repositories/e
 import { Employer } from '../../database/mongoDb/models/employerModel';
 import { upload } from '../middleware/multerCloudinary';
 import authenticationMiddleware from '../middleware/authenticationMiddleware';
+import roleMiddleware from '../middleware/roleMiddleware';
+
+const employerMiddleware = roleMiddleware('employer');
 
 
 const employerRouter = () => {
@@ -16,8 +19,8 @@ const employerRouter = () => {
         Employer
     );
 
-    route.get('/employer-data',authenticationMiddleware, controller.getEmployerById);
-    route.put('/update-employer',authenticationMiddleware, upload, controller.updateEmployer);
+    route.get('/employer-data',authenticationMiddleware, employerMiddleware, controller.getEmployerById);
+    route.put('/update-employer',authenticationMiddleware, employerMiddleware, upload, controller.updateEmployer);
     route.get('/employer-data/:empId', controller.getEmployerByIdParam);
 
     return route;

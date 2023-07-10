@@ -1,7 +1,8 @@
 import React from "react";
 import { Fragment } from "react";
-import { Disclosure} from "@headlessui/react";
+import { Disclosure } from "@headlessui/react";
 import { Bars3Icon, XMarkIcon } from "@heroicons/react/24/outline";
+import { Link } from "react-router-dom";
 
 const navigation = [
   { name: "Employer Login", href: "employer/login", current: false },
@@ -38,37 +39,36 @@ function CommonHeader() {
                     src="https://res.cloudinary.com/dgjwhf8i3/image/upload/v1685793152/Screenshot_2023-06-03_172145_pfhklc.jpg"
                     alt="Your Company"
                   />
-                  <img
-                    className="hidden h-8 w-auto lg:block"
-                    src="https://res.cloudinary.com/dgjwhf8i3/image/upload/v1685793152/Screenshot_2023-06-03_172145_pfhklc.jpg"
-                    alt="Your Company"
-                  />
+                  <Link to={"/"}>
+                    <img
+                      className="hidden h-8 w-auto lg:block"
+                      src="https://res.cloudinary.com/dgjwhf8i3/image/upload/v1685793152/Screenshot_2023-06-03_172145_pfhklc.jpg"
+                      alt="Your Company"
+                    />
+                  </Link>
                 </div>
-               
               </div>
-              <div className="absolute inset-y-0 right-0 flex items-center pr-2 sm:static sm:inset-auto sm:ml-6 sm:pr-0">
-                
-              </div>
+              <div className="absolute inset-y-0 right-0 flex items-center pr-2 sm:static sm:inset-auto sm:ml-6 sm:pr-0"></div>
 
-               <div className="hidden sm:ml-6 sm:block">
-                  <div className="flex space-x-4">
-                    {navigation.map((item) => (
-                      <a
-                        key={item.name}
-                        href={item.href}
-                        className={classNames(
-                          item.current
-                            ? "bg-purple-600 text-white"
-                            : "text-black hover:bg-purple-500 hover:text-white",
-                          "rounded-md px-3 py-2 text-sm font-medium"
-                        )}
-                        aria-current={item.current ? "page" : undefined}
-                      >
-                        {item.name}
-                      </a>
-                    ))}
-                  </div>
+              <div className="hidden sm:ml-6 sm:block">
+                <div className="flex space-x-4">
+                  {navigation.map((item) => (
+                    <a
+                      key={item.name}
+                      href={item.href}
+                      className={classNames(
+                        item.current
+                          ? "bg-purple-600 text-white"
+                          : "text-black hover:bg-purple-500 hover:text-white",
+                        "rounded-md px-3 py-2 text-sm font-medium"
+                      )}
+                      aria-current={item.current ? "page" : undefined}
+                    >
+                      {item.name}
+                    </a>
+                  ))}
                 </div>
+              </div>
             </div>
           </div>
 

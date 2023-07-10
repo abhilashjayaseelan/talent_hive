@@ -13,21 +13,21 @@ export const authService = () => {
     return bcrypt.compare(password, hashedPassword);
   };
 
-  const generateToken = (payload: string) => {
-    const token = jwt.sign({ payload }, configKeys.JWT_KEY, {
+  const generateToken = (payload: {payload: string, role: string}) => {
+    const token = jwt.sign( payload , configKeys.JWT_KEY, {
       expiresIn: "5d",
     });
     return token;
   };
 
   const verifyToken = (token: string) => {
-    return jwt.verify(token, configKeys.JWT_KEY);
+    return jwt.verify(token, configKeys.JWT_KEY); 
   };
 
   return {
     encryptPassword,
     comparePassword,
-    generateToken,
+    generateToken,    
     verifyToken
   };
 };
