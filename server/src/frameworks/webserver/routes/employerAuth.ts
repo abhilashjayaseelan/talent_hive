@@ -5,6 +5,8 @@ import { EmployerRepositoryMongoDB } from "../../database/mongoDb/repositories/e
 import { authService } from "../../services/authService";
 import { authServiceInterface } from "../../../app/services/authServiceInterface";
 import {Employer} from "../../database/mongoDb/models/employerModel";
+import { emailServiceInterface } from "../../../app/services/emailServiceInterface";
+import { sendEmailService } from "../../services/emailService";
 
 const employerAuthRouter = () => {
   const route = express.Router();
@@ -14,11 +16,15 @@ const employerAuthRouter = () => {
     authService,
     employerDbRepository,
     EmployerRepositoryMongoDB,
-    Employer
+    Employer,
+    emailServiceInterface,
+    sendEmailService
   );
 
   route.post("/register", controller.employerRegister);
   route.post("/login", controller.loginEmployer);
+  route.get("/email-verify/:emailId", controller.emailVerification);
+  route.get("/email-OTP/:OTP", controller.OTPVerification);
 
   return route;
 };

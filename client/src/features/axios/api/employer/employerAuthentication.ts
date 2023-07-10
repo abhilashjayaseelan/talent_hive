@@ -41,3 +41,20 @@ export const registerEmployer = async (payload: EmployerRegisterPayload) => {
     }
   }
 };
+
+export const emailVerify = async (email: string) => {
+  try {
+    const config: AxiosRequestConfig = {
+      url: `${apiConfig.emailVerify}/${email}`,
+      method: "get",
+    };
+    const response = await axios(config);
+    return response.data;
+  } catch (error: any) {
+    if (error.message === "Request failed with status code 409") {
+      throw new Error("Email already exists !!!");
+    } else {
+      throw new Error("verification failed");
+    }
+  }
+};
