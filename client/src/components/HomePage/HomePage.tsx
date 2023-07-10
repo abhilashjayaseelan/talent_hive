@@ -68,6 +68,9 @@ function HomePage() {
       </div>
       <div className="mx-auto max-w-7xl px-6 lg:px-8">
         <div className="mx-auto max-w-2xl lg:mx-0 lg:h-96">
+          <button onClick={() => { throw new Error('Test error'); }}>
+  Trigger Error
+</button>
           <h2 className="text-4xl font-bold tracking-tight text-white sm:text-6xl">
             Find the job that is perfect for You
           </h2>
