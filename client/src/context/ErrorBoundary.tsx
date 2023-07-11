@@ -1,4 +1,5 @@
 import React, { ErrorInfo, ReactNode } from 'react';
+import NotFound from '../components/Error/NotFound';
 
 type ErrorBoundaryState = {
   error: Error | null;
@@ -29,7 +30,7 @@ class ErrorBoundary extends React.Component<ErrorBoundaryProps, ErrorBoundarySta
   render() {
     if (this.state.error) {
       // You can render any custom fallback UI
-      return <p>Something broke</p>;
+      return <NotFound/>
     }
     return this.props.children;
   }

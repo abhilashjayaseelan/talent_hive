@@ -58,3 +58,21 @@ export const emailVerify = async (email: string) => {
     }
   }
 };
+
+export const OTPVerify = async (OTP: string) => {
+  try {
+    const config: AxiosRequestConfig = {
+      url: `${apiConfig.OTPVerify}/${OTP}`,
+      method: "get",
+    };
+    const response = await axios(config);
+    console.log(response)
+    return response.data;
+  } catch (error: any) {
+    if (error.message === "Request failed with status code 400") {
+      throw new Error("Invalid OTP !!!");
+    } else {
+      throw new Error("verification failed");
+    }
+  }
+};

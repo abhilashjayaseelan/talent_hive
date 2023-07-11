@@ -65,7 +65,7 @@ export const verifyEmailOTP = async (
   const response = emailService.verifyOTP(OTP);
 
   if (response.message !== 'OTP verified') {
-    throw new AppError("Invalid OTP", HttpStatus.NOT_FOUND)
+    throw new AppError("Invalid OTP", HttpStatus.BAD_REQUEST);
   }
 
   return response;
