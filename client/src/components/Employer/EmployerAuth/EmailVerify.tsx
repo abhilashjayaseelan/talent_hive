@@ -2,12 +2,15 @@ import { useState } from 'react';
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { emailVerify } from '../../../features/axios/api/employer/employerAuthentication';
+import { employerEmail } from '../../../features/redux/slices/employer/employerDetailsSlice';
 import { useNavigate } from 'react-router-dom';
+import { useDispatch } from 'react-redux';
 
 function EmailVerify() {
   const [email, setEmail] = useState('');
   const [isValidEmail, setIsValidEmail] = useState(true);
   const navigate = useNavigate();
+  const dispatch = useDispatch();
 
   const notify = (msg: string, type: string) => {
     type === "error"
@@ -27,8 +30,9 @@ function EmailVerify() {
 
     // Call the emailVerify function with the email value
     emailVerify(email)
-      .then((response) => {
+      .then(() => {
         // Handle the response
+        dispatch(employerEmail(email));
         navigate('/employer/register/OTP');
       })
       .catch((error) => {

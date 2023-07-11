@@ -7,9 +7,12 @@ import { Link, useNavigate } from "react-router-dom";
 import { employerRegisterValidationSchema } from "../../../utils/validation";
 import { registerEmployer } from "../../../features/axios/api/employer/employerAuthentication";
 import { EmployerRegisterPayload } from "../../../types/PayloadInterface";
+import { useSelector } from "react-redux";
+import { RootState } from "../../../features/redux/reducers/Reducer";
 
 function EmployerRegister() {
   const navigate = useNavigate();
+  const employerEmail = useSelector((state: RootState) => state.employerDetails.employerEmail);
 
   const {
     register,
@@ -42,11 +45,11 @@ function EmployerRegister() {
     <>
       <div className="flex min-h-full flex-1 flex-col justify-center px-6 py-12 lg:px-8">
         <div className="sm:mx-auto sm:w-full sm:max-w-sm">
-          {/* <img
+          <img
                 className="mx-auto h-10 w-auto"
-                src="https://tailwindui.com/img/logos/mark.svg?color=indigo&shade=600"
+                src="https://res.cloudinary.com/dgjwhf8i3/image/upload/v1689059504/talentHive_cjcdcg.jpg"
                 alt="Your Company"
-            /> */}
+            />
           <h2 className="mt-10 text-center text-2xl font-bold leading-9 tracking-tight text-gray-900">
             Create your account
           </h2>
@@ -65,6 +68,7 @@ function EmployerRegister() {
                 <input
                   id="companyName"
                   type="text"
+                  maxLength={1}
                   placeholder="company Name"
                   {...register("companyName")}
                   className="w-full px-4 py-2 border border-gray-300 rounded focus:outline-none focus:border-purple-500"
@@ -99,24 +103,11 @@ function EmployerRegister() {
               </div>
             </div>
             <div>
-              <label
-                htmlFor="email"
-                className="block text-sm font-medium leading-6 text-gray-900"
-              >
-                Email address
-              </label>
-              <div className="mt-2">
-                <input
-                  id="email"
-                  type="email"
-                  placeholder="Email"
-                  {...register("email")}
-                  className="w-full px-4 py-2 border border-gray-300 rounded focus:outline-none focus:border-purple-500"
-                />
-                {errors.email && (
-                  <p className="text-red-500 text-sm">{errors.email.message}</p>
-                )}
-              </div>
+              <input
+                type="hidden"
+                {...register("email")}
+                defaultValue={employerEmail ?? ''}
+              />
             </div>
 
             <div>

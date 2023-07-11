@@ -10,6 +10,7 @@ export const fetchEmployer = createAsyncThunk(
 );
 
 interface EmployerDetailsState {
+  employerEmail: string | null;
   employerDetails: any;
   error: string | null;
   status: string;
@@ -17,6 +18,7 @@ interface EmployerDetailsState {
 }
 
 const initialState: EmployerDetailsState = {
+  employerEmail: null,
   employerDetails: null,
   error: null,
   status: "idle",
@@ -39,6 +41,12 @@ const employerDetailsSlice = createSlice({
     employerLogout: (state) => {
       state.isLoggedIn = false;
     },
+    employerEmail: (state, action: PayloadAction<string>) => {
+      state.employerEmail = action.payload;
+    },
+    clearEmployerEmail: (state) => {
+      state.employerEmail = null;
+    }
   },
   extraReducers: (builder) => {
     builder
@@ -61,6 +69,8 @@ export const {
   setError,
   employerLoginSuccess,
   employerLogout,
+  employerEmail,
+  clearEmployerEmail
 } = employerDetailsSlice.actions;
 
 export default employerDetailsSlice.reducer;
