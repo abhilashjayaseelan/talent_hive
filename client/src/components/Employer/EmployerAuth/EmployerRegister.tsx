@@ -68,6 +68,7 @@ function EmployerRegister() {
                 <input
                   id="companyName"
                   type="text"
+                  maxLength={1}
                   placeholder="company Name"
                   {...register("companyName")}
                   className="w-full px-4 py-2 border border-gray-300 rounded focus:outline-none focus:border-purple-500"
