@@ -19,9 +19,23 @@ const userDbRepository = (repository) => {
     const createUser = (user) => __awaiter(void 0, void 0, void 0, function* () {
         return yield repository.createUser(user);
     });
+    const getUserDataById = (id) => __awaiter(void 0, void 0, void 0, function* () {
+        const userData = yield repository.getUserDataById(id);
+        return userData;
+    });
+    const updateUser = (userId, updates) => __awaiter(void 0, void 0, void 0, function* () {
+        const updatedUser = yield repository.updateUser(userId, updates);
+        return updatedUser;
+    });
+    const deleteResume = (userId) => __awaiter(void 0, void 0, void 0, function* () {
+        yield repository.deleteResume(userId);
+    });
     return {
         getUserByEmail,
         createUser,
+        getUserDataById,
+        updateUser,
+        deleteResume
     };
 };
 exports.userDbRepository = userDbRepository;

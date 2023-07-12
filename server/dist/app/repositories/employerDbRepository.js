@@ -17,9 +17,19 @@ const employerDbRepository = (repository) => {
     const createEmployer = (employer) => __awaiter(void 0, void 0, void 0, function* () {
         return yield repository.createEmployer(employer);
     });
+    const findEmployerById = (id) => __awaiter(void 0, void 0, void 0, function* () {
+        const employer = yield repository.getEmployerById(id);
+        return employer;
+    });
+    const updateEmployer = (employerId, updates) => __awaiter(void 0, void 0, void 0, function* () {
+        const employer = yield repository.updateEmployer(employerId, updates);
+        return employer;
+    });
     return {
         getEmployerByEmail,
-        createEmployer
+        createEmployer,
+        findEmployerById,
+        updateEmployer
     };
 };
 exports.employerDbRepository = employerDbRepository;

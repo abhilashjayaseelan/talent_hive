@@ -9,11 +9,16 @@ const employerDbRepository_1 = require("../../../app/repositories/employerDbRepo
 const employerRepositoryMongoDB_1 = require("../../database/mongoDb/repositories/employerRepositoryMongoDB");
 const authService_1 = require("../../services/authService");
 const authServiceInterface_1 = require("../../../app/services/authServiceInterface");
+const employerModel_1 = require("../../database/mongoDb/models/employerModel");
+const emailServiceInterface_1 = require("../../../app/services/emailServiceInterface");
+const emailService_1 = require("../../services/emailService");
 const employerAuthRouter = () => {
     const route = express_1.default.Router();
-    const controller = (0, employerAuthController_1.default)(authServiceInterface_1.authServiceInterface, authService_1.authService, employerDbRepository_1.employerDbRepository, employerRepositoryMongoDB_1.EmployerRepositoryMongoDB);
+    const controller = (0, employerAuthController_1.default)(authServiceInterface_1.authServiceInterface, authService_1.authService, employerDbRepository_1.employerDbRepository, employerRepositoryMongoDB_1.EmployerRepositoryMongoDB, employerModel_1.Employer, emailServiceInterface_1.emailServiceInterface, emailService_1.sendEmailService);
     route.post("/register", controller.employerRegister);
     route.post("/login", controller.loginEmployer);
+    route.get("/email-verify/:emailId", controller.emailVerification);
+    route.get("/email-OTP/:OTP", controller.OTPVerification);
     return route;
 };
 exports.default = employerAuthRouter;

@@ -14,47 +14,40 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 const express_async_handler_1 = __importDefault(require("express-async-handler"));
 const userAuth_1 = require("../../app/useCases/auth/userAuth");
-const authController = (authServiceInterface, authServiceImpl, userDbRepository, userDbRepositoryImpl) => {
-    const dbRepositoryUser = userDbRepository(userDbRepositoryImpl());
+const authController = (authServiceInterface, authServiceImpl, userDbRepository, userDbRepositoryImpl, userModel, googleAuthServiceInterface, googleAuthServiceImpl) => {
+    const dbRepositoryUser = userDbRepository(userDbRepositoryImpl(userModel));
     const authService = authServiceInterface(authServiceImpl());
+    const googleAuthService = googleAuthServiceInterface(googleAuthServiceImpl());
     const userRegister = (0, express_async_handler_1.default)((req, res) => __awaiter(void 0, void 0, void 0, function* () {
-        var _a;
-        try {
-            const user = req.body;
-            yield (0, userAuth_1.registerUser)(user, dbRepositoryUser, authService);
-            res.json({
-                status: "success",
-                message: "user registered successfully",
-            });
-        }
-        catch (error) {
-            res.status((_a = error.statusCode) !== null && _a !== void 0 ? _a : 500).json({
-                status: "error",
-                error,
-            });
-        }
+        const user = req === null || req === void 0 ? void 0 : req.body;
+        yield (0, userAuth_1.registerUser)(user, dbRepositoryUser, authService);
+        res.json({
+            status: "success",
+            message: "user registered successfully",
+        });
     }));
     const loginUser = (0, express_async_handler_1.default)((req, res) => __awaiter(void 0, void 0, void 0, function* () {
-        var _b;
-        try {
-            const { email, password } = req.body;
-            const token = yield (0, userAuth_1.userLogin)(email, password, dbRepositoryUser, authService);
-            res.json({
-                status: "success",
-                message: "user verified",
-                token,
-            });
-        }
-        catch (error) {
-            res.status((_b = error.statusCode) !== null && _b !== void 0 ? _b : 500).json({
-                status: "error",
-                error,
-            });
-        }
+        const { email, password } = req.body;
+        const token = yield (0, userAuth_1.userLogin)(email, password, dbRepositoryUser, authService);
+        res.json({
+            status: "success",
+            message: "user verified",
+            token,
+        });
+    }));
+    const signWithGoogle = (0, express_async_handler_1.default)((req, res) => __awaiter(void 0, void 0, void 0, function* () {
+        const { credential } = req.body;
+        const token = yield (0, userAuth_1.signInWithGoogle)(credential, googleAuthService, dbRepositoryUser, authService);
+        res.json({
+            status: "success",
+            message: "user verified",
+            token
+        });
     }));
     return {
         loginUser,
         userRegister,
+        signWithGoogle
     };
 };
 exports.default = authController;

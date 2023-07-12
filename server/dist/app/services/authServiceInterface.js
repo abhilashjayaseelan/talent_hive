@@ -4,13 +4,13 @@ exports.authServiceInterface = void 0;
 const authServiceInterface = (service) => {
     const encryptPassword = (password) => service.encryptPassword(password);
     const comparePassword = (password, hashedPassword) => service.comparePassword(password, hashedPassword);
-    const generateToken = (payload) => service.generateToken(payload);
+    const generateToken = (payload, role) => service.generateToken({ payload, role });
     const verifyToken = (token) => service.verifyToken(token);
     return {
         encryptPassword,
         comparePassword,
         generateToken,
-        verifyToken
+        verifyToken,
     };
 };
 exports.authServiceInterface = authServiceInterface;

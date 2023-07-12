@@ -8,26 +8,38 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
         step((generator = generator.apply(thisArg, _arguments || [])).next());
     });
 };
-var __importDefault = (this && this.__importDefault) || function (mod) {
-    return (mod && mod.__esModule) ? mod : { "default": mod };
-};
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.UserRepositoryMongoDB = void 0;
-const userModel_1 = __importDefault(require("../models/userModel"));
-const UserRepositoryMongoDB = () => {
+const UserEntity_1 = require("../../../../entities/UserEntity");
+const UserRepositoryMongoDB = (model) => {
+    const userEntity = new UserEntity_1.UserEntity(model);
     // getting the registered user by the email id
     const getUserByEmail = (email) => __awaiter(void 0, void 0, void 0, function* () {
-        const user = yield userModel_1.default.findOne({ email });
+        const user = yield userEntity.getUserByEmail(email);
         return user;
     });
     // adding a new user
     const createUser = (user) => __awaiter(void 0, void 0, void 0, function* () {
-        const newUser = yield userModel_1.default.create(user);
+        const newUser = yield userEntity.creteUser(user);
         return newUser;
+    });
+    const getUserDataById = (id) => __awaiter(void 0, void 0, void 0, function* () {
+        const userData = yield userEntity.getUserDataById(id);
+        return userData;
+    });
+    const updateUser = (userId, updates) => __awaiter(void 0, void 0, void 0, function* () {
+        const updatedUser = yield userEntity.updateUser(userId, updates);
+        return updatedUser;
+    });
+    const deleteResume = (userId) => __awaiter(void 0, void 0, void 0, function* () {
+        yield userEntity.resumeDelete(userId);
     });
     return {
         getUserByEmail,
-        createUser
+        createUser,
+        getUserDataById,
+        updateUser,
+        deleteResume
     };
 };
 exports.UserRepositoryMongoDB = UserRepositoryMongoDB;

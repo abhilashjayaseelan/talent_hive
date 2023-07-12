@@ -8,24 +8,32 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
         step((generator = generator.apply(thisArg, _arguments || [])).next());
     });
 };
-var __importDefault = (this && this.__importDefault) || function (mod) {
-    return (mod && mod.__esModule) ? mod : { "default": mod };
-};
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.EmployerRepositoryMongoDB = void 0;
-const employerModel_1 = __importDefault(require("../models/employerModel"));
-const EmployerRepositoryMongoDB = () => {
+const EmployerEntity_1 = require("../../../../entities/EmployerEntity");
+const EmployerRepositoryMongoDB = (model) => {
+    const employerEntity = new EmployerEntity_1.EmployerEntity(model);
     const getEmployerByEmail = (email) => __awaiter(void 0, void 0, void 0, function* () {
-        const employer = yield employerModel_1.default.findOne({ email });
+        const employer = employerEntity.getEmployerByEmail(email);
         return employer;
     });
     const createEmployer = (employer) => __awaiter(void 0, void 0, void 0, function* () {
-        const newEmployer = yield employerModel_1.default.create(employer);
+        const newEmployer = employerEntity.createEmployer(employer);
         return newEmployer;
+    });
+    const getEmployerById = (id) => __awaiter(void 0, void 0, void 0, function* () {
+        const employer = employerEntity.getEmployerById(id);
+        return employer;
+    });
+    const updateEmployer = (employerId, updates) => __awaiter(void 0, void 0, void 0, function* () {
+        const employer = employerEntity.updateEmployer(employerId, updates);
+        return employer;
     });
     return {
         getEmployerByEmail,
-        createEmployer
+        createEmployer,
+        getEmployerById,
+        updateEmployer,
     };
 };
 exports.EmployerRepositoryMongoDB = EmployerRepositoryMongoDB;

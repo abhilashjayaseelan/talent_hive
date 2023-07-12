@@ -26,7 +26,7 @@ const authService = () => {
         return bcryptjs_1.default.compare(password, hashedPassword);
     };
     const generateToken = (payload) => {
-        const token = jsonwebtoken_1.default.sign({ payload }, config_1.default.JWT_KEY, {
+        const token = jsonwebtoken_1.default.sign(payload, config_1.default.JWT_KEY, {
             expiresIn: "5d",
         });
         return token;

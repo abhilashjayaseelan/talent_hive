@@ -1,5 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
+exports.Employer = void 0;
 const mongoose_1 = require("mongoose");
 const employerSchema = new mongoose_1.Schema({
     companyName: {
@@ -38,6 +39,8 @@ const employerSchema = new mongoose_1.Schema({
         type: Date,
         default: Date.now()
     },
+    image: {
+        type: String
+    }
 });
-const Employer = (0, mongoose_1.model)("Employer", employerSchema, "employers");
-exports.default = Employer;
+exports.Employer = (0, mongoose_1.model)("Employer", employerSchema, "employers");

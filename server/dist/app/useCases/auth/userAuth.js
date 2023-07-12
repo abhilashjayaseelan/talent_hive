@@ -12,7 +12,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.userLogin = exports.registerUser = void 0;
+exports.signInWithGoogle = exports.userLogin = exports.registerUser = void 0;
 const httpStatus_1 = require("../../../types/httpStatus");
 const appError_1 = __importDefault(require("../../../utils/appError"));
 // creating a new user
@@ -35,11 +35,33 @@ const userLogin = (email, password, userRepository, authService) => __awaiter(vo
     if (!user) {
         throw new appError_1.default("this user does not exist", httpStatus_1.HttpStatus.UNAUTHORIZED);
     }
+    if (user.isGoogleUser) {
+        throw new appError_1.default("this user is unauthorized", httpStatus_1.HttpStatus.UNAUTHORIZED);
+    }
     const isPasswordCorrect = yield authService.comparePassword(password, (_b = user.password) !== null && _b !== void 0 ? _b : "");
     if (!isPasswordCorrect) {
         throw new appError_1.default("Sorry, incorrect password", httpStatus_1.HttpStatus.UNAUTHORIZED);
     }
-    const token = authService.generateToken(user._id.toString());
+    const payload = user._id ? user._id.toString() : '';
+    const token = authService.generateToken(payload, 'user');
     return token;
 });
 exports.userLogin = userLogin;
+// login with google
+const signInWithGoogle = (credential, googleAuthService, userRepository, authService) => __awaiter(void 0, void 0, void 0, function* () {
+    var _c;
+    const user = yield googleAuthService.verify(credential);
+    const isUserExist = yield userRepository.getUserByEmail(user.email);
+    if (isUserExist) {
+        const payload = (_c = isUserExist === null || isUserExist === void 0 ? void 0 : isUserExist._id) === null || _c === void 0 ? void 0 : _c.toString();
+        const token = authService.generateToken(payload !== null && payload !== void 0 ? payload : '', 'user');
+        return token;
+    }
+    else {
+        const { _id: userId } = yield userRepository.createUser(user);
+        const payload = userId === null || userId === void 0 ? void 0 : userId.toString();
+        const token = authService.generateToken(payload !== null && payload !== void 0 ? payload : '', 'user');
+        return token;
+    }
+});
+exports.signInWithGoogle = signInWithGoogle;
