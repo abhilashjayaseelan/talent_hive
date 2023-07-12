@@ -1,6 +1,6 @@
 const configKeys = {
-  API_URL: "http://localhost:5000/api/",
-  SOCKET_PORT: "ws://localhost:5000"
+  API_URL: "https://talenthive.online/api/",
+  SOCKET_PORT: "ws://talenthive.online"
 };
  
 export default configKeys;
