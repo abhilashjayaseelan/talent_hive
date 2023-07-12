@@ -54,7 +54,7 @@ const userSchema = new Schema({
         type: String
     },
     experience: {
-        type: String
+        type: Object
     }
 })
 

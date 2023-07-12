@@ -14,7 +14,8 @@ export interface UserInterface {
     about?: string,
     resume?: string,
     profession?: string,
-    location?: string
+    location?: string,
+    experience?: object
 }
 
 export interface CreateUserInterface {
