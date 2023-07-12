@@ -39,7 +39,7 @@ function Messenger() {
         createdAt: Date.now(),
       });
     });
-  });
+  },[]);
 
   useEffect(() => {
     arrivalMessage &&
