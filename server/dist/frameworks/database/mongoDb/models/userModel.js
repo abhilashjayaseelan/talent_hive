@@ -56,7 +56,7 @@ const userSchema = new mongoose_1.Schema({
         type: String
     },
     experience: {
-        type: String
+        type: Object
     }
 });
 exports.User = (0, mongoose_1.model)("User", userSchema, "users");
