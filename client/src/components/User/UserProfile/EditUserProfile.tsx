@@ -31,10 +31,15 @@ function EditUserProfile() {
       setValue("location", userDetails?.location);
       setValue("about", userDetails?.about);
       setValue("profession", userDetails?.profession);
-      setValue("experience", userDetails?.experience);
+      if (userDetails.experience) {
+        setValue("experience.position", userDetails.experience.position);
+        setValue("experience.companyName", userDetails.experience.companyName);
+        setValue("experience.startDate", userDetails.experience.startDate);
+        setValue("experience.endDate", userDetails.experience.endDate);
+      }
     }
   }, [setValue, userDetails]);
-
+  
   const notify = (msg: string, type: string) => {
     type === "error"
       ? toast.error(msg, { position: toast.POSITION.TOP_RIGHT })
@@ -181,13 +186,72 @@ function EditUserProfile() {
                   >
                     Experience
                   </label>
-                  <div className="mt-2">
-                    <input
-                      type="text"
-                      id="experience"
-                      className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300   placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-purple-600 sm:text-sm sm:leading-6"
-                      {...register("experience")}
-                    />
+                  <div className="col-span-full">
+                    <label
+                      htmlFor="experience.position"
+                      className="block text-sm font-medium leading-6 text-gray-900"
+                    >
+                      Position
+                    </label>
+                    <div className="mt-2">
+                      <input
+                        type="text"
+                        id="experience.position"
+                        className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-purple-600 sm:text-sm sm:leading-6"
+                        {...register("experience.position")}
+                      />
+                    </div>
+                  </div>
+
+                  <div className="col-span-full">
+                    <label
+                      htmlFor="experience.companyName"
+                      className="block text-sm font-medium leading-6 text-gray-900"
+                    >
+                      Company Name
+                    </label>
+                    <div className="mt-2">
+                      <input
+                        type="text"
+                        id="experience.companyName"
+                        className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-purple-600 sm:text-sm sm:leading-6"
+                        {...register("experience.companyName")}
+                      />
+                    </div>
+                  </div>
+
+                  <div className="col-span-full">
+                    <label
+                      htmlFor="experience.startDate"
+                      className="block text-sm font-medium leading-6 text-gray-900"
+                    >
+                      Start Date
+                    </label>
+                    <div className="mt-2">
+                      <input
+                        type="date"
+                        id="experience.startDate"
+                        className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-purple-600 sm:text-sm sm:leading-6"
+                        {...register("experience.startDate")}
+                      />
+                    </div>
+                  </div>
+
+                  <div className="col-span-full">
+                    <label
+                      htmlFor="experience.endDate"
+                      className="block text-sm font-medium leading-6 text-gray-900"
+                    >
+                      End Date
+                    </label>
+                    <div className="mt-2">
+                      <input
+                        type="date"
+                        id="experience.endDate"
+                        className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-purple-600 sm:text-sm sm:leading-6"
+                        {...register("experience.endDate")}
+                      />
+                    </div>
                   </div>
                 </div>
 

@@ -20,7 +20,7 @@ import {
   PencilIcon,
   PaperClipIcon,
   TrashIcon,
-  EyeIcon
+  EyeIcon,
 } from "@heroicons/react/24/solid";
 
 function UserProfile() {
@@ -173,13 +173,63 @@ function UserProfile() {
                       Experience:
                     </Typography>
 
-                    <Typography
-                      variant="small"
-                      className="font-normal text-blue-gray-500"
-                    >
-                      {userDetails?.experience ?? ""}
-                    </Typography>
+                    {userDetails?.experience ? (
+                      <div className="flex flex-col">
+                        <Typography
+                          variant="medium"
+                          className="font-bold text-blue-gray-500"
+                        >
+                          {userDetails.experience.position}
+                        </Typography>
+                        <Typography
+                          variant="large"
+                          className="font-bold text-blue-gray-500"
+                        >
+                          {userDetails.experience.companyName}
+                        </Typography>
+                        {userDetails.experience.startDate && (
+                          <Typography
+                            variant="small"
+                            className="font-normal text-blue-gray-500"
+                          >
+                            Start Date:{" "}
+                            {new Date(
+                              userDetails.experience.startDate
+                            ).toLocaleDateString()}
+                          </Typography>
+                        )}
+                        {userDetails.experience.endDate === "present" ? (
+                          <Typography
+                            variant="small"
+                            className="font-normal text-blue-gray-500"
+                          >
+                            End Date: present
+                          </Typography>
+                        ) : (
+                          userDetails.experience.endDate && (
+                            <Typography
+                              variant="small"
+                              className="font-normal text-blue-gray-500"
+                            >
+                              End Date:{" "}
+                              {new Date(
+                                userDetails.experience.endDate
+                              ).toLocaleDateString()}
+                            </Typography>
+                          )
+                        )}
+                        {/* Display any other necessary information from the experience object */}
+                      </div>
+                    ) : (
+                      <Typography
+                        variant="small"
+                        className="font-normal text-blue-gray-500"
+                      >
+                        No experience available.
+                      </Typography>
+                    )}
                   </li>
+
                   <hr className="my-1 border-blue-gray-50" />
                   <li className="flex items-center gap-4">
                     <Typography
