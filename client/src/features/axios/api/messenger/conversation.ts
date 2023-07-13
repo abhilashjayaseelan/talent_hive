@@ -1,4 +1,4 @@
-import { AxiosRequestConfig } from "axios";
+import axios, { AxiosRequestConfig } from "axios";
 import apiConfig from "../../../../utils/apiConfig";
 import setupAxiosInterceptors from "../../interceptors/axiosInterceptor";
 import setupAxiosInterceptorsEmployer from "../../interceptors/axiosInterceptorEmployer";   
@@ -29,5 +29,23 @@ export const getEmployerConversations = async(empId: string): Promise<any> => {
         return res.data;
     } catch (error) {
         throw new Error('Error while getting employer conversations');
+    }
+}
+
+export const createConversation = async(user1: string, user2: string) : Promise<any> => {
+    try {
+        const config: AxiosRequestConfig = {
+            url: `${apiConfig.getConversations}`,
+            method: 'post',
+            data: {
+                senderId: user1,
+                receiverId: user2
+            }
+        }
+        const res = await axios(config);
+        return res.data;
+
+    } catch (error) {
+        throw new Error('Error while creating conversation');
     }
 }

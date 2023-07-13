@@ -1,26 +1,39 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { PaperClipIcon } from "@heroicons/react/20/solid";
 import ApplicationDetails from "../../../types/ApplicationsInterface";
 import { applicationDetails } from "../../../features/axios/api/applications/applicationDetails";
-import { Link, useParams } from "react-router-dom";
-import { Chip, Button, Tooltip } from "@material-tailwind/react";
+import { Link, useNavigate, useParams } from "react-router-dom";
+import { Chip, Tooltip, Typography } from "@material-tailwind/react";
 import { changeApplicationStatus } from "../../../features/axios/api/applications/changeApplication";
+import { createConversation } from "../../../features/axios/api/messenger/conversation";
 import "react-toastify/dist/ReactToastify.css";
 import { ToastContainer, toast } from "react-toastify";
 import { Breadcrumbs } from "@material-tailwind/react";
 import { EyeIcon } from "@heroicons/react/24/outline";
+import { FaFacebookMessenger } from "react-icons/fa";
+
 import {
   Menu,
   MenuHandler,
   MenuList,
   MenuItem,
 } from "@material-tailwind/react";
+import { useSelector, useDispatch } from "react-redux";
+import { RootState } from "../../../features/redux/reducers/Reducer";
+import { fetchEmployer } from "../../../features/redux/slices/employer/employerDetailsSlice";
 
 function ViewApplicant() {
   const [applicationData, setApplicationData] = useState<ApplicationDetails>();
   const [status, setStatus] = useState(true);
+  const employerId = useSelector((state: RootState) => state.employerDetails.employerDetails)?.employerData?._id;
   const resumeUrl = applicationData?.userId?.resume;
   const { id } = useParams();
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+
+  useEffect(()=> {
+    dispatch(fetchEmployer());
+  }, [dispatch])
 
   useEffect(() => {
     const applications = async () => {
@@ -46,6 +59,13 @@ function ViewApplicant() {
         notify(err.message, "error");
       });
   };
+
+  const startConversation = async (user1: string, user2: string) => {
+    const response = await createConversation(user1, user2);
+    if(response) {
+      navigate('/employer/messenger');
+    }
+  }
 
   return (
     <>
@@ -79,11 +99,20 @@ function ViewApplicant() {
           </div>
           <div className="flex justify-end mb-4">
             <Menu>
-              <MenuHandler>
-                <Button color="purple" size="sm">
-                  Change Status
-                </Button>
-              </MenuHandler>
+              <div className="flex gap-5">
+                <Tooltip content="Start conversation">
+                  <button className="flex justify-center items-center bg-purple-500 text-white rounded-full w-12"
+                  onClick={() => startConversation(employerId, applicationData?.userId?._id)}
+                  >
+                    <FaFacebookMessenger />
+                  </button>
+                </Tooltip>
+                <MenuHandler>
+                  <button className="bg-purple-500 rounded-full w-11/12 text-white font-normal">
+                    Change Status
+                  </button>
+                </MenuHandler>
+              </div>
               <MenuList>
                 <MenuItem
                   onClick={() =>
@@ -177,7 +206,57 @@ function ViewApplicant() {
                   Experience
                 </dt>
                 <dd className="mt-1 text-sm leading-6 text-gray-700 sm:col-span-2 sm:mt-0">
-                  {applicationData?.userId?.experience}
+                  {applicationData?.userId?.experience ? (
+                    <div className="flex flex-col">
+                      <Typography
+                        variant="medium"
+                        className="font-bold text-blue-gray-500"
+                      >
+                        {applicationData?.userId?.experience?.position}
+                      </Typography>
+                      <Typography
+                        variant="large"
+                        className="font-bold text-blue-gray-500"
+                      >
+                        {applicationData?.userId?.experience?.companyName}
+                      </Typography>
+                      {applicationData?.userId?.experience && (
+                        <Typography
+                          variant="small"
+                          className="font-normal text-blue-gray-500"
+                        >
+                          Start Date:{" "}
+                          {applicationData?.userId?.experience?.startDate}
+                        </Typography>
+                      )}
+                      {applicationData?.userId?.experience?.endDate === "present" ? (
+                        <Typography
+                          variant="small"
+                          className="font-normal text-blue-gray-500"
+                        >
+                          End Date: present
+                        </Typography>
+                      ) : (
+                        applicationData?.userId?.experience && (
+                          <Typography
+                            variant="small"
+                            className="font-normal text-blue-gray-500"
+                          >
+                            End Date:{" "}
+                            {applicationData?.userId?.experience?.endDate}
+                          </Typography>
+                        )
+                      )}
+                      {/* Display any other necessary information from the experience object */}
+                    </div>
+                  ) : (
+                    <Typography
+                      variant="small"
+                      className="font-normal text-blue-gray-500"
+                    >
+                      No experience available.
+                    </Typography>
+                  )}
                 </dd>
               </div>
               <div className="px-4 py-6 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0">

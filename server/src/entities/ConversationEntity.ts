@@ -11,17 +11,32 @@ export class ConversationEntity {
   public async newConversation(
     conversations: ConversationInterface
   ): Promise<ConversationInterface | null> {
-    const conversation = await this.model.create(conversations);
-    return conversation;
+    const senderId: string | any = conversations?.members[0] ;
+    const receiverId: string | any = conversations?.members[1] ;
+
+    // Check if conversation already exists
+    const existingConversation = await this.model.findOne({
+      members: {
+        $all: [senderId, receiverId],
+      },
+    });
+
+    if (existingConversation) {
+      return existingConversation;
+    }
+    // Create new conversation
+    const newConversation = await this.model.create(conversations);
+    return newConversation;
   }
 
   public async getConversation(
     id: string
   ): Promise<ConversationInterface | any> {
-    const conversation = await this.model.find({
-      members: { $in: [id] },
-    }).sort({ updatedAt: -1 }); 
+    const conversation = await this.model
+      .find({
+        members: { $in: [id] },
+      })
+      .sort({ updatedAt: -1 });
     return conversation;
   }
-  
 }

@@ -1,16 +1,8 @@
+import { UserInterface } from "./UserInterface";
+
 export default interface ApplicationDetails {
     _id: string;
-    userId: {
-      _id: string;
-      name: string;
-      email: string;
-      phone?: number;
-      about?: string;
-      image?: string;
-      resume?:string;
-      skills?: Array<string>;
-      experience?: string;
-    };
+    userId: UserInterface
     employerId: string;
     applicationStatus: string;
     createdAt: Date;

@@ -1,6 +1,6 @@
 
 export interface ConversationInterface {
-    members?: Array<string>;
+    members: Array<string>;
 }
 
 export interface MessagesInterface {

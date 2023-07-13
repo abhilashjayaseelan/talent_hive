@@ -19,7 +19,7 @@ const routes = (app) => {
     app.use('/api/employer-auth', (0, employerAuth_1.default)());
     app.use('/api/job', authenticationMiddleware_1.default, (0, jobs_1.default)());
     app.use('/api/job-application', authenticationMiddleware_1.default, (0, jobApplication_1.default)());
-    app.use('/api/messenger-conversation', authenticationMiddleware_1.default, (0, conversation_1.default)());
+    app.use('/api/messenger-conversation', (0, conversation_1.default)());
     app.use('/api/messenger-message', authenticationMiddleware_1.default, (0, message_1.default)());
 };
 exports.default = routes;

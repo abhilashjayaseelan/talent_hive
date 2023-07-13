@@ -16,15 +16,29 @@ class ConversationEntity {
     }
     newConversation(conversations) {
         return __awaiter(this, void 0, void 0, function* () {
-            const conversation = yield this.model.create(conversations);
-            return conversation;
+            const senderId = conversations === null || conversations === void 0 ? void 0 : conversations.members[0];
+            const receiverId = conversations === null || conversations === void 0 ? void 0 : conversations.members[1];
+            // Check if conversation already exists
+            const existingConversation = yield this.model.findOne({
+                members: {
+                    $all: [senderId, receiverId],
+                },
+            });
+            if (existingConversation) {
+                return existingConversation;
+            }
+            // Create new conversation
+            const newConversation = yield this.model.create(conversations);
+            return newConversation;
         });
     }
     getConversation(id) {
         return __awaiter(this, void 0, void 0, function* () {
-            const conversation = yield this.model.find({
+            const conversation = yield this.model
+                .find({
                 members: { $in: [id] },
-            }).sort({ updatedAt: -1 });
+            })
+                .sort({ updatedAt: -1 });
             return conversation;
         });
     }
