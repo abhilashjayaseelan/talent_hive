@@ -33,3 +33,4 @@ export const updatedEmployer = (
         throw new Error(`error while updating the employer ${error.message}`);
     }
 }
+

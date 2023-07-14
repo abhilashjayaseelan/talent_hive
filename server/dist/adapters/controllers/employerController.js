@@ -15,6 +15,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const express_async_handler_1 = __importDefault(require("express-async-handler"));
 const appError_1 = __importDefault(require("../../utils/appError"));
 const httpStatus_1 = require("../../types/httpStatus");
+const employer_1 = require("../../app/useCases/employer/employer");
 const employerController = (employerDbRepository, employerDbRepositoryImpl, employerModel) => {
     const dbRepositoryEmployer = employerDbRepository(employerDbRepositoryImpl(employerModel));
     //for getting the data with token data.
@@ -22,13 +23,13 @@ const employerController = (employerDbRepository, employerDbRepositoryImpl, empl
         var _a;
         const customReq = req;
         const id = (_a = customReq.payload) !== null && _a !== void 0 ? _a : "";
-        const employerData = yield dbRepositoryEmployer.findEmployerById(id);
+        const employerData = yield (0, employer_1.findEmployerById)(id, dbRepositoryEmployer);
         res.json({ status: "success", employerData });
     }));
     //for getting the data with id only.
     const getEmployerByIdParam = (0, express_async_handler_1.default)((req, res) => __awaiter(void 0, void 0, void 0, function* () {
         const employerId = req.params.empId;
-        const employerData = yield dbRepositoryEmployer.findEmployerById(employerId);
+        const employerData = yield (0, employer_1.findEmployerById)(employerId, dbRepositoryEmployer);
         res.json(employerData);
     }));
     const updateEmployer = (0, express_async_handler_1.default)((req, res) => __awaiter(void 0, void 0, void 0, function* () {
@@ -42,16 +43,16 @@ const employerController = (employerDbRepository, employerDbRepositoryImpl, empl
         if ((_c = req === null || req === void 0 ? void 0 : req.file) === null || _c === void 0 ? void 0 : _c.path) {
             updates.image = (_d = req === null || req === void 0 ? void 0 : req.file) === null || _d === void 0 ? void 0 : _d.path;
         }
-        const updatedEmployer = yield dbRepositoryEmployer.updateEmployer(employerId, updates);
+        const updateEmployerData = yield (0, employer_1.updatedEmployer)(employerId, updates, dbRepositoryEmployer);
         res.json({
-            status: 'success',
-            updatedEmployer
+            status: "success",
+            updateEmployerData,
         });
     }));
     return {
         getEmployerById,
         updateEmployer,
-        getEmployerByIdParam
+        getEmployerByIdParam,
     };
 };
 exports.default = employerController;
