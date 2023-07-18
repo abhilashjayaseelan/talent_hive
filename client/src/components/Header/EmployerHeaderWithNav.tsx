@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { clearEmployerToken } from "../../features/redux/slices/employer/employerTokenSlice";
 import { employerLogout } from "../../features/redux/slices/employer/employerDetailsSlice";
 import {
@@ -17,8 +17,10 @@ import {
   InboxArrowDownIcon,
   PowerIcon,
 } from "@heroicons/react/24/outline";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
+import { RootState } from "../../features/redux/reducers/Reducer";
+import { fetchEmployer } from "../../features/redux/slices/employer/employerDetailsSlice";
 
 interface ProfileMenuItem {
   label: string;
@@ -44,6 +46,7 @@ function ProfileMenu() {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const employer = useSelector((state: RootState) => state.employerDetails.employerDetails);
 
   const closeMenu = () => setIsMenuOpen(false);
   const handleLogout = () => {
@@ -51,6 +54,10 @@ function ProfileMenu() {
     dispatch(clearEmployerToken());
     navigate('/');
   }
+
+  useEffect(() => {
+    dispatch(fetchEmployer());
+  }, [dispatch]);
 
   return (
     <Menu open={isMenuOpen} handler={setIsMenuOpen} placement="bottom-end">
@@ -65,7 +72,7 @@ function ProfileMenu() {
             size="sm"
             alt="candice wu"
             className="border border-blue-500 p-0.5"
-            src="https://avatars.githubusercontent.com/u/113935267?v=4"
+            src={employer?.employerData?.image ?? "../user.jpg"}
           />
           <ChevronDownIcon
             strokeWidth={2.5}

@@ -38,7 +38,7 @@ function Conversations({ conversation, currentUser, onlineUsers }: any) {
     <div className="flex items-center mt-5 p-3 cursor-pointer hover:bg-blue-gray-50 relative">
       <img
         className="mr-5 w-10 h-10 rounded-full object-cover"
-        src={employer?.image}
+        src={employer?.image ?? '../user.jpg'}
         alt=""
       />
       <div className="flex flex-col">

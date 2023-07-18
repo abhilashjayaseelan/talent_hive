@@ -101,7 +101,7 @@ function UserHeader() {
                         <span className="sr-only">Open user menu</span>
                         <img
                           className="h-8 w-8 rounded-full"
-                          src={user?.image}
+                          src={user?.image ?? '../user.jpg'}
                           alt="user"
                         />
                       </Menu.Button>
