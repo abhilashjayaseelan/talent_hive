@@ -33,7 +33,7 @@ function AllJobsEmployer() {
 
 
   const employerAllJobs = useSelector(
-    (state: any) => state.employerJobs.employerJobs.jobs
+    (state: any) => (state.employerJobs.employerJobs.jobs)
   );
 
   useEffect(() => {
@@ -77,7 +77,7 @@ function AllJobsEmployer() {
   const getPaginatedData = () => {
     const startIndex = (currentPage - 1) * ITEMS_PER_PAGE;
     const endIndex = startIndex + ITEMS_PER_PAGE;
-    return filterJobs.slice(startIndex, endIndex);
+    return (filterJobs).reverse().slice(startIndex, endIndex);
   };
 
   const changePage = (pageNumber: number) => {
